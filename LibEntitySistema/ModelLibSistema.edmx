@@ -107,6 +107,15 @@
           <Property Name="nombre" Type="varchar" MaxLength="120" Nullable="false" />
           <Property Name="idPrecio" Type="varchar" MaxLength="1" Nullable="false" />
         </EntityType>
+        <EntityType Name="empresa_hnd_precios">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="codigo" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="descrpcion" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="estatus" Type="varchar" MaxLength="1" Nullable="false" />
+        </EntityType>
         <EntityType Name="empresa_series_fiscales">
           <Key>
             <PropertyRef Name="auto" />
@@ -265,6 +274,24 @@
           <Property Name="pdmf_1" Type="decimal" Precision="16" Scale="2" Nullable="false" />
           <Property Name="pdmf_2" Type="decimal" Precision="16" Scale="2" Nullable="false" />
           <Property Name="pdmf_3" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="productos_hnd_precios">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idEmpresaPrecio" Type="int" Nullable="false" />
+          <Property Name="idProducto" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="idMedida_1" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="idMedida_2" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="contenido_1" Type="int" Nullable="false" />
+          <Property Name="neto_1" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="netoDivisa_1" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="utilidad_1" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="contenido_2" Type="int" Nullable="false" />
+          <Property Name="neto_2" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="netoDivisa_2" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="utilidad_2" Type="decimal" Precision="18" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="productos_precios">
           <Key>
@@ -614,6 +641,30 @@ warning 6002: The table/view 'pita.sistema_contadores' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="productos_hnd_precios_ibfk_1">
+          <End Role="empresa_hnd_precios" Type="Self.empresa_hnd_precios" Multiplicity="1" />
+          <End Role="productos_hnd_precios" Type="Self.productos_hnd_precios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="empresa_hnd_precios">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="productos_hnd_precios">
+              <PropertyRef Name="idEmpresaPrecio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="productos_hnd_precios_ibfk_2">
+          <End Role="productos" Type="Self.productos" Multiplicity="1" />
+          <End Role="productos_hnd_precios" Type="Self.productos_hnd_precios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="productos">
+              <PropertyRef Name="auto" />
+            </Principal>
+            <Dependent Role="productos_hnd_precios">
+              <PropertyRef Name="idProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="productos_precios_ibfk_1">
           <End Role="productos" Type="Self.productos" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -635,11 +686,13 @@ warning 6002: The table/view 'pita.sistema_contadores' does not have a primary k
           <EntitySet Name="empresa_depositos" EntityType="Self.empresa_depositos" Schema="pita" store:Type="Tables" />
           <EntitySet Name="empresa_depositos_ext" EntityType="Self.empresa_depositos_ext" Schema="pita" store:Type="Tables" />
           <EntitySet Name="empresa_grupo" EntityType="Self.empresa_grupo" Schema="pita" store:Type="Tables" />
+          <EntitySet Name="empresa_hnd_precios" EntityType="Self.empresa_hnd_precios" Schema="pita" store:Type="Tables" />
           <EntitySet Name="empresa_series_fiscales" EntityType="Self.empresa_series_fiscales" Schema="pita" store:Type="Tables" />
           <EntitySet Name="empresa_sucursal" EntityType="Self.empresa_sucursal" Schema="pita" store:Type="Tables" />
           <EntitySet Name="productos" EntityType="Self.productos" Schema="pita" store:Type="Tables" />
           <EntitySet Name="productos_costos" EntityType="Self.productos_costos" Schema="pita" store:Type="Tables" />
           <EntitySet Name="productos_ext" EntityType="Self.productos_ext" Schema="pita" store:Type="Tables" />
+          <EntitySet Name="productos_hnd_precios" EntityType="Self.productos_hnd_precios" Schema="pita" store:Type="Tables" />
           <EntitySet Name="productos_precios" EntityType="Self.productos_precios" Schema="pita" store:Type="Tables" />
           <EntitySet Name="proveedores" EntityType="Self.proveedores" Schema="pita" store:Type="Tables" />
           <EntitySet Name="reconversion_monetaria" EntityType="Self.reconversion_monetaria" Schema="pita" store:Type="Tables" />
@@ -740,6 +793,14 @@ FROM `sistema_contadores` AS `sistema_contadores`</DefiningQuery>
             <End Role="productos" EntitySet="productos" />
             <End Role="productos_costos" EntitySet="productos_costos" />
           </AssociationSet>
+          <AssociationSet Name="productos_hnd_precios_ibfk_1" Association="Self.productos_hnd_precios_ibfk_1">
+            <End Role="empresa_hnd_precios" EntitySet="empresa_hnd_precios" />
+            <End Role="productos_hnd_precios" EntitySet="productos_hnd_precios" />
+          </AssociationSet>
+          <AssociationSet Name="productos_hnd_precios_ibfk_2" Association="Self.productos_hnd_precios_ibfk_2">
+            <End Role="productos" EntitySet="productos" />
+            <End Role="productos_hnd_precios" EntitySet="productos_hnd_precios" />
+          </AssociationSet>
           <AssociationSet Name="productos_precios_ibfk_1" Association="Self.productos_precios_ibfk_1">
             <End Role="productos" EntitySet="productos" />
             <End Role="productos_precios" EntitySet="productos_precios" />
@@ -799,6 +860,16 @@ FROM `sistema_contadores` AS `sistema_contadores`</DefiningQuery>
           </AssociationSet>
           <EntitySet Name="productos_ext" EntityType="sistemaModel.productos_ext" />
           <EntitySet Name="empresa_depositos_ext" EntityType="sistemaModel.empresa_depositos_ext" />
+          <EntitySet Name="empresa_hnd_precios" EntityType="sistemaModel.empresa_hnd_precios" />
+          <EntitySet Name="productos_hnd_precios" EntityType="sistemaModel.productos_hnd_precios" />
+          <AssociationSet Name="productos_hnd_precios_ibfk_1" Association="sistemaModel.productos_hnd_precios_ibfk_1">
+            <End Role="empresa_hnd_precios" EntitySet="empresa_hnd_precios" />
+            <End Role="productos_hnd_precios" EntitySet="productos_hnd_precios" />
+          </AssociationSet>
+          <AssociationSet Name="productos_hnd_precios_ibfk_2" Association="sistemaModel.productos_hnd_precios_ibfk_2">
+            <End Role="productos" EntitySet="productos" />
+            <End Role="productos_hnd_precios" EntitySet="productos_hnd_precios" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="empresa">
           <Key>
@@ -976,6 +1047,7 @@ FROM `sistema_contadores` AS `sistema_contadores`</DefiningQuery>
           <Property Name="pdf_pto" Type="Decimal" Nullable="false" />
           <NavigationProperty Name="productos_costos" Relationship="sistemaModel.productos_costos_ibfk_1" FromRole="productos" ToRole="productos_costos" />
           <NavigationProperty Name="productos_precios" Relationship="sistemaModel.productos_precios_ibfk_1" FromRole="productos" ToRole="productos_precios" />
+          <NavigationProperty Name="productos_hnd_precios" Relationship="sistemaModel.productos_hnd_precios_ibfk_2" FromRole="productos" ToRole="productos_hnd_precios" />
         </EntityType>
         <EntityType Name="productos_costos">
           <Key>
@@ -1410,6 +1482,60 @@ FROM `sistema_contadores` AS `sistema_contadores`</DefiningQuery>
           <Property Name="es_predeterminado" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="es_activo" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="empresa_hnd_precios">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="codigo" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="descrpcion" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="estatus" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="productos_hnd_precios" Relationship="sistemaModel.productos_hnd_precios_ibfk_1" FromRole="empresa_hnd_precios" ToRole="productos_hnd_precios" />
+        </EntityType>
+        <EntityType Name="productos_hnd_precios">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idEmpresaPrecio" Type="Int32" Nullable="false" />
+          <Property Name="idProducto" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="idMedida_1" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="idMedida_2" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="contenido_1" Type="Int32" Nullable="false" />
+          <Property Name="neto_1" Type="Decimal" Nullable="false" />
+          <Property Name="netoDivisa_1" Type="Decimal" Nullable="false" />
+          <Property Name="utilidad_1" Type="Decimal" Nullable="false" />
+          <Property Name="contenido_2" Type="Int32" Nullable="false" />
+          <Property Name="neto_2" Type="Decimal" Nullable="false" />
+          <Property Name="netoDivisa_2" Type="Decimal" Nullable="false" />
+          <Property Name="utilidad_2" Type="Decimal" Nullable="false" />
+          <NavigationProperty Name="empresa_hnd_precios" Relationship="sistemaModel.productos_hnd_precios_ibfk_1" FromRole="productos_hnd_precios" ToRole="empresa_hnd_precios" />
+          <NavigationProperty Name="productos" Relationship="sistemaModel.productos_hnd_precios_ibfk_2" FromRole="productos_hnd_precios" ToRole="productos" />
+        </EntityType>
+        <Association Name="productos_hnd_precios_ibfk_1">
+          <End Type="sistemaModel.empresa_hnd_precios" Role="empresa_hnd_precios" Multiplicity="1" />
+          <End Type="sistemaModel.productos_hnd_precios" Role="productos_hnd_precios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="empresa_hnd_precios">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="productos_hnd_precios">
+              <PropertyRef Name="idEmpresaPrecio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="productos_hnd_precios_ibfk_2">
+          <End Type="sistemaModel.productos" Role="productos" Multiplicity="1" />
+          <End Type="sistemaModel.productos_hnd_precios" Role="productos_hnd_precios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="productos">
+              <PropertyRef Name="auto" />
+            </Principal>
+            <Dependent Role="productos_hnd_precios">
+              <PropertyRef Name="idProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1935,6 +2061,35 @@ FROM `sistema_contadores` AS `sistema_contadores`</DefiningQuery>
                 <ScalarProperty Name="es_activo" ColumnName="es_activo" />
                 <ScalarProperty Name="es_predeterminado" ColumnName="es_predeterminado" />
                 <ScalarProperty Name="auto_deposito" ColumnName="auto_deposito" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="empresa_hnd_precios">
+            <EntityTypeMapping TypeName="sistemaModel.empresa_hnd_precios">
+              <MappingFragment StoreEntitySet="empresa_hnd_precios">
+                <ScalarProperty Name="estatus" ColumnName="estatus" />
+                <ScalarProperty Name="descrpcion" ColumnName="descrpcion" />
+                <ScalarProperty Name="codigo" ColumnName="codigo" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="productos_hnd_precios">
+            <EntityTypeMapping TypeName="sistemaModel.productos_hnd_precios">
+              <MappingFragment StoreEntitySet="productos_hnd_precios">
+                <ScalarProperty Name="utilidad_2" ColumnName="utilidad_2" />
+                <ScalarProperty Name="netoDivisa_2" ColumnName="netoDivisa_2" />
+                <ScalarProperty Name="neto_2" ColumnName="neto_2" />
+                <ScalarProperty Name="contenido_2" ColumnName="contenido_2" />
+                <ScalarProperty Name="utilidad_1" ColumnName="utilidad_1" />
+                <ScalarProperty Name="netoDivisa_1" ColumnName="netoDivisa_1" />
+                <ScalarProperty Name="neto_1" ColumnName="neto_1" />
+                <ScalarProperty Name="contenido_1" ColumnName="contenido_1" />
+                <ScalarProperty Name="idMedida_2" ColumnName="idMedida_2" />
+                <ScalarProperty Name="idMedida_1" ColumnName="idMedida_1" />
+                <ScalarProperty Name="idProducto" ColumnName="idProducto" />
+                <ScalarProperty Name="idEmpresaPrecio" ColumnName="idEmpresaPrecio" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

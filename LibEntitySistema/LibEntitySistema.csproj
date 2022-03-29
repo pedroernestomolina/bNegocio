@@ -76,6 +76,9 @@
     <Compile Include="empresa_grupo.cs">
       <DependentUpon>ModelLibSistema.tt</DependentUpon>
     </Compile>
+    <Compile Include="empresa_hnd_precios.cs">
+      <DependentUpon>ModelLibSistema.tt</DependentUpon>
+    </Compile>
     <Compile Include="empresa_series_fiscales.cs">
       <DependentUpon>ModelLibSistema.tt</DependentUpon>
     </Compile>
@@ -105,6 +108,9 @@
       <DependentUpon>ModelLibSistema.tt</DependentUpon>
     </Compile>
     <Compile Include="productos_ext.cs">
+      <DependentUpon>ModelLibSistema.tt</DependentUpon>
+    </Compile>
+    <Compile Include="productos_hnd_precios.cs">
       <DependentUpon>ModelLibSistema.tt</DependentUpon>
     </Compile>
     <Compile Include="productos_precios.cs">
