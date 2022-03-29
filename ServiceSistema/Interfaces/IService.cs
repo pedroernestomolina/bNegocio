@@ -10,7 +10,7 @@ namespace ServiceSistema.Interfaces
 
     public interface IService: ISucursal, IDeposito, ISucursalGrupo, IUsuario, IPrecio, IUsuarioGrupo,
         IFuncion, IServConf, IPermisos, IConfiguracion, IVendedor, ICobrador, ISerieFiscal, IReconversionMonetaria,
-        INegocio, IControlAcceso
+        INegocio, IControlAcceso, ITablaPrecio
     {
 
         DtoLib.ResultadoEntidad<DateTime> FechaServidor();

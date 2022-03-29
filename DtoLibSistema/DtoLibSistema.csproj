@@ -103,7 +103,10 @@
     <Compile Include="Sucursal\Editar.cs" />
     <Compile Include="Sucursal\Ficha.cs" />
     <Compile Include="Sucursal\Resumen.cs" />
-    <Compile Include="TablaPrecio\Crear\Ficha.cs" />
+    <Compile Include="TablaPrecio\Agregar\Ficha.cs" />
+    <Compile Include="TablaPrecio\Editar\Ficha.cs" />
+    <Compile Include="TablaPrecio\Entidad\Ficha.cs" />
+    <Compile Include="TablaPrecio\Lista\Ficha.cs" />
     <Compile Include="Usuario\Activar.cs" />
     <Compile Include="Usuario\ActualizarSesion\Ficha.cs" />
     <Compile Include="Usuario\Agregar.cs" />
@@ -122,6 +125,7 @@
     <Compile Include="Vendedor\Lista\Ficha.cs" />
     <Compile Include="Vendedor\Lista\Filtro.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

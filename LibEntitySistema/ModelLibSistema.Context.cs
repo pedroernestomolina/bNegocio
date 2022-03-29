@@ -45,5 +45,7 @@ namespace LibEntitySistema
         public virtual DbSet<cxp> cxp { get; set; }
         public virtual DbSet<productos_ext> productos_ext { get; set; }
         public virtual DbSet<empresa_depositos_ext> empresa_depositos_ext { get; set; }
+        public virtual DbSet<empresa_hnd_precios> empresa_hnd_precios { get; set; }
+
     }
 }

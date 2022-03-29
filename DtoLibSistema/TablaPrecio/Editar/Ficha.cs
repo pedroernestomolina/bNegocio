@@ -5,19 +5,20 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace DtoLibSistema.TablaPrecio.Crear
+namespace DtoLibSistema.TablaPrecio.Editar
 {
-    
+
+
     public class Ficha
     {
 
-        public string codigo { get; set; }
+        public int id { get; set; }
         public string descripcion { get; set; }
 
 
         public Ficha() 
         {
-            codigo = "";
+            id = -1;
             descripcion = "";
         }
 

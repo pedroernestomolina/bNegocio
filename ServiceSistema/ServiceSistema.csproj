@@ -53,6 +53,7 @@
     <Compile Include="Interfaces\IService.cs" />
     <Compile Include="Interfaces\ISucursal.cs" />
     <Compile Include="Interfaces\ISucursalGrupo.cs" />
+    <Compile Include="Interfaces\ITablaPrecio.cs" />
     <Compile Include="Interfaces\IUsuario.cs" />
     <Compile Include="Interfaces\IUsuarioGrupo.cs" />
     <Compile Include="Interfaces\IVendedor.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="MyService\Service.cs" />
     <Compile Include="MyService\Sucursal.cs" />
     <Compile Include="MyService\SucursalGrupo.cs" />
+    <Compile Include="MyService\TablaPrecio.cs" />
     <Compile Include="MyService\Usuario.cs" />
     <Compile Include="MyService\UsuarioGrupo.cs" />
     <Compile Include="MyService\Vendedor.cs" />

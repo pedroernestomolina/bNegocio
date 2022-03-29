@@ -112,7 +112,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="codigo" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="codigo" Type="varchar" MaxLength="1" Nullable="false" />
           <Property Name="descrpcion" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="estatus" Type="varchar" MaxLength="1" Nullable="false" />
         </EntityType>
@@ -860,14 +860,14 @@ FROM `sistema_contadores` AS `sistema_contadores`</DefiningQuery>
           </AssociationSet>
           <EntitySet Name="productos_ext" EntityType="sistemaModel.productos_ext" />
           <EntitySet Name="empresa_depositos_ext" EntityType="sistemaModel.empresa_depositos_ext" />
-          <EntitySet Name="empresa_hnd_precios" EntityType="sistemaModel.empresa_hnd_precios" />
           <EntitySet Name="productos_hnd_precios" EntityType="sistemaModel.productos_hnd_precios" />
-          <AssociationSet Name="productos_hnd_precios_ibfk_1" Association="sistemaModel.productos_hnd_precios_ibfk_1">
-            <End Role="empresa_hnd_precios" EntitySet="empresa_hnd_precios" />
-            <End Role="productos_hnd_precios" EntitySet="productos_hnd_precios" />
-          </AssociationSet>
           <AssociationSet Name="productos_hnd_precios_ibfk_2" Association="sistemaModel.productos_hnd_precios_ibfk_2">
             <End Role="productos" EntitySet="productos" />
+            <End Role="productos_hnd_precios" EntitySet="productos_hnd_precios" />
+          </AssociationSet>
+          <EntitySet Name="empresa_hnd_precios" EntityType="sistemaModel.empresa_hnd_precios" />
+          <AssociationSet Name="productos_hnd_precios_ibfk_1" Association="sistemaModel.productos_hnd_precios_ibfk_1">
+            <End Role="empresa_hnd_precios" EntitySet="empresa_hnd_precios" />
             <End Role="productos_hnd_precios" EntitySet="productos_hnd_precios" />
           </AssociationSet>
         </EntityContainer>
@@ -1482,16 +1482,6 @@ FROM `sistema_contadores` AS `sistema_contadores`</DefiningQuery>
           <Property Name="es_predeterminado" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="es_activo" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="empresa_hnd_precios">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="codigo" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Name="descrpcion" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="estatus" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="productos_hnd_precios" Relationship="sistemaModel.productos_hnd_precios_ibfk_1" FromRole="empresa_hnd_precios" ToRole="productos_hnd_precios" />
-        </EntityType>
         <EntityType Name="productos_hnd_precios">
           <Key>
             <PropertyRef Name="id" />
@@ -1509,8 +1499,30 @@ FROM `sistema_contadores` AS `sistema_contadores`</DefiningQuery>
           <Property Name="neto_2" Type="Decimal" Nullable="false" />
           <Property Name="netoDivisa_2" Type="Decimal" Nullable="false" />
           <Property Name="utilidad_2" Type="Decimal" Nullable="false" />
-          <NavigationProperty Name="empresa_hnd_precios" Relationship="sistemaModel.productos_hnd_precios_ibfk_1" FromRole="productos_hnd_precios" ToRole="empresa_hnd_precios" />
           <NavigationProperty Name="productos" Relationship="sistemaModel.productos_hnd_precios_ibfk_2" FromRole="productos_hnd_precios" ToRole="productos" />
+          <NavigationProperty Name="empresa_hnd_precios" Relationship="sistemaModel.productos_hnd_precios_ibfk_1" FromRole="productos_hnd_precios" ToRole="empresa_hnd_precios" />
+        </EntityType>
+        <Association Name="productos_hnd_precios_ibfk_2">
+          <End Type="sistemaModel.productos" Role="productos" Multiplicity="1" />
+          <End Type="sistemaModel.productos_hnd_precios" Role="productos_hnd_precios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="productos">
+              <PropertyRef Name="auto" />
+            </Principal>
+            <Dependent Role="productos_hnd_precios">
+              <PropertyRef Name="idProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="empresa_hnd_precios">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="codigo" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="descrpcion" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="estatus" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="productos_hnd_precios" Relationship="sistemaModel.productos_hnd_precios_ibfk_1" FromRole="empresa_hnd_precios" ToRole="productos_hnd_precios" />
         </EntityType>
         <Association Name="productos_hnd_precios_ibfk_1">
           <End Type="sistemaModel.empresa_hnd_precios" Role="empresa_hnd_precios" Multiplicity="1" />
@@ -1521,18 +1533,6 @@ FROM `sistema_contadores` AS `sistema_contadores`</DefiningQuery>
             </Principal>
             <Dependent Role="productos_hnd_precios">
               <PropertyRef Name="idEmpresaPrecio" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="productos_hnd_precios_ibfk_2">
-          <End Type="sistemaModel.productos" Role="productos" Multiplicity="1" />
-          <End Type="sistemaModel.productos_hnd_precios" Role="productos_hnd_precios" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="productos">
-              <PropertyRef Name="auto" />
-            </Principal>
-            <Dependent Role="productos_hnd_precios">
-              <PropertyRef Name="idProducto" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2064,16 +2064,6 @@ FROM `sistema_contadores` AS `sistema_contadores`</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="empresa_hnd_precios">
-            <EntityTypeMapping TypeName="sistemaModel.empresa_hnd_precios">
-              <MappingFragment StoreEntitySet="empresa_hnd_precios">
-                <ScalarProperty Name="estatus" ColumnName="estatus" />
-                <ScalarProperty Name="descrpcion" ColumnName="descrpcion" />
-                <ScalarProperty Name="codigo" ColumnName="codigo" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="productos_hnd_precios">
             <EntityTypeMapping TypeName="sistemaModel.productos_hnd_precios">
               <MappingFragment StoreEntitySet="productos_hnd_precios">
@@ -2089,6 +2079,16 @@ FROM `sistema_contadores` AS `sistema_contadores`</DefiningQuery>
                 <ScalarProperty Name="idMedida_1" ColumnName="idMedida_1" />
                 <ScalarProperty Name="idProducto" ColumnName="idProducto" />
                 <ScalarProperty Name="idEmpresaPrecio" ColumnName="idEmpresaPrecio" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="empresa_hnd_precios">
+            <EntityTypeMapping TypeName="sistemaModel.empresa_hnd_precios">
+              <MappingFragment StoreEntitySet="empresa_hnd_precios">
+                <ScalarProperty Name="estatus" ColumnName="estatus" />
+                <ScalarProperty Name="descrpcion" ColumnName="descrpcion" />
+                <ScalarProperty Name="codigo" ColumnName="codigo" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

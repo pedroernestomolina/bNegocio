@@ -28,7 +28,7 @@ namespace LibEntitySistema
         public decimal netoDivisa_2 { get; set; }
         public decimal utilidad_2 { get; set; }
     
-        public virtual empresa_hnd_precios empresa_hnd_precios { get; set; }
         public virtual productos productos { get; set; }
+        public virtual empresa_hnd_precios empresa_hnd_precios { get; set; }
     }
 }

@@ -141,6 +141,15 @@ namespace ConsoleSistema
             //var r01 = sistPrv.TablaPrecio_Crear(ficha);
 
             //var r01 = sistPrv.FechaServidor();
+
+
+            //var ficha = new DtoLibSistema.TablaPrecio.Agregar.Ficha() { descripcion = "BODEGA TIPO 2" };
+            //var r01 = sistPrv.TablaPrecio_Agregar(ficha);
+            //var ficha = new DtoLibSistema.TablaPrecio.Editar.Ficha() { id = 6, descripcion = "BODEGA TIPO 1" };
+            //var r01 = sistPrv.TablaPrecio_Editar(ficha);
+            //var r01 = sistPrv.TablaPrecio_GetById(1);
+            //var r01 = sistPrv.TablaPrecio_GetLista();
+
         }
 
     }

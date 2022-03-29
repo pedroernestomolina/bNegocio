@@ -28,10 +28,10 @@
         <AssociationConnector Association="sistemaModel.cxp_ibfk_1" />
         <EntityTypeShape EntityType="sistemaModel.productos_ext" Width="1.5" PointX="14.375" PointY="0.75" />
         <EntityTypeShape EntityType="sistemaModel.empresa_depositos_ext" Width="1.5" PointX="14.375" PointY="5.75" />
-        <EntityTypeShape EntityType="sistemaModel.empresa_hnd_precios" Width="1.5" PointX="16.375" PointY="0.75" />
         <EntityTypeShape EntityType="sistemaModel.productos_hnd_precios" Width="1.5" PointX="18.625" PointY="10.875" />
-        <AssociationConnector Association="sistemaModel.productos_hnd_precios_ibfk_1" />
         <AssociationConnector Association="sistemaModel.productos_hnd_precios_ibfk_2" />
+        <EntityTypeShape EntityType="sistemaModel.empresa_hnd_precios" Width="1.5" PointX="22.625" PointY="5.375" />
+        <AssociationConnector Association="sistemaModel.productos_hnd_precios_ibfk_1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
