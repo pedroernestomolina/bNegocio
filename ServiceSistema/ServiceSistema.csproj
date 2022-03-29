@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A4D6CBCC-7B14-4614-B670-213EB9B412D2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ServiceSistema</RootNamespace>
+    <AssemblyName>ServiceSistema</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interfaces\ICobrador.cs" />
+    <Compile Include="Interfaces\IConfiguracion.cs" />
+    <Compile Include="Interfaces\IControlAcceso.cs" />
+    <Compile Include="Interfaces\IDeposito.cs" />
+    <Compile Include="Interfaces\IFuncion.cs" />
+    <Compile Include="Interfaces\INegocio.cs" />
+    <Compile Include="Interfaces\IPermisos.cs" />
+    <Compile Include="Interfaces\IPrecio.cs" />
+    <Compile Include="Interfaces\IReconversionMonetaria.cs" />
+    <Compile Include="Interfaces\ISerieFiscal.cs" />
+    <Compile Include="Interfaces\IServConf.cs" />
+    <Compile Include="Interfaces\IService.cs" />
+    <Compile Include="Interfaces\ISucursal.cs" />
+    <Compile Include="Interfaces\ISucursalGrupo.cs" />
+    <Compile Include="Interfaces\IUsuario.cs" />
+    <Compile Include="Interfaces\IUsuarioGrupo.cs" />
+    <Compile Include="Interfaces\IVendedor.cs" />
+    <Compile Include="MyService\Cobrador.cs" />
+    <Compile Include="MyService\Configuracion.cs" />
+    <Compile Include="MyService\ControlAcceso.cs" />
+    <Compile Include="MyService\Deposito.cs" />
+    <Compile Include="MyService\Funcion.cs" />
+    <Compile Include="MyService\Negocio.cs" />
+    <Compile Include="MyService\Permisos.cs" />
+    <Compile Include="MyService\Precio.cs" />
+    <Compile Include="MyService\ReconversionMonetaria.cs" />
+    <Compile Include="MyService\SerieFiscal.cs" />
+    <Compile Include="MyService\ServConf.cs" />
+    <Compile Include="MyService\Service.cs" />
+    <Compile Include="MyService\Sucursal.cs" />
+    <Compile Include="MyService\SucursalGrupo.cs" />
+    <Compile Include="MyService\Usuario.cs" />
+    <Compile Include="MyService\UsuarioGrupo.cs" />
+    <Compile Include="MyService\Vendedor.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DtoLibSistema\DtoLibSistema.csproj">
+      <Project>{e85c0b14-0ece-4c62-bb4f-65d8072956e0}</Project>
+      <Name>DtoLibSistema</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DtoLib\DtoLib.csproj">
+      <Project>{9755cf02-b633-4f91-a155-d67b88b1ebe8}</Project>
+      <Name>DtoLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ILibSistema\ILibSistema.csproj">
+      <Project>{1795e3b9-aa08-4b2c-9feb-a03393b9b163}</Project>
+      <Name>ILibSistema</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ProvLibSistema\ProvLibSistema.csproj">
+      <Project>{a87fe8ba-ea1a-4a10-92fa-cc9243dce076}</Project>
+      <Name>ProvLibSistema</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
