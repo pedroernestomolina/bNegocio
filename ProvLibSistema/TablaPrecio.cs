@@ -100,19 +100,12 @@ namespace ProvLibSistema
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                if (ex.Number == 1451)
-                {
-                    result.Mensaje = "REGISTRO CONTIENE DATA RELACIONADA";
-                    result.Result = DtoLib.Enumerados.EnumResult.isError;
-                    return result;
-                }
-                if (ex.Number == 1062)
-                {
-                    result.Mensaje = "CAMPO DUPLICADO" + Environment.NewLine + ex.Message;
-                    result.Result = DtoLib.Enumerados.EnumResult.isError;
-                    return result;
-                }
-                result.Mensaje = ex.Message;
+                result.Mensaje = Helpers.MYSQL_VerificaError(ex);
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+            catch (DbUpdateException ex)
+            {
+                result.Mensaje = Helpers.ENTITY_VerificaError(ex);
                 result.Result = DtoLib.Enumerados.EnumResult.isError;
             }
             catch (Exception e)
@@ -149,30 +142,14 @@ namespace ProvLibSistema
                     }
                 }
             }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                result.Mensaje = Helpers.MYSQL_VerificaError(ex);
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
             catch (DbUpdateException ex)
             {
-                var dbUpdateEx = ex as DbUpdateException;
-                var sqlEx = dbUpdateEx.InnerException;
-                if (sqlEx != null)
-                {
-                    var exx = (MySql.Data.MySqlClient.MySqlException)sqlEx.InnerException;
-                    if (exx != null)
-                    {
-                        if (exx.Number == 1451)
-                        {
-                            result.Mensaje = "REGISTRO CONTIENE DATA RELACIONADA";
-                            result.Result = DtoLib.Enumerados.EnumResult.isError;
-                            return result;
-                        }
-                        if (exx.Number == 1062)
-                        {
-                            result.Mensaje = "CAMPO DUPLICADO" + Environment.NewLine + exx.Message;
-                            result.Result = DtoLib.Enumerados.EnumResult.isError;
-                            return result;
-                        }
-                    }
-                }
-                result.Mensaje = ex.Message;
+                result.Mensaje = Helpers.ENTITY_VerificaError(ex);
                 result.Result = DtoLib.Enumerados.EnumResult.isError;
             }
             catch (Exception e)

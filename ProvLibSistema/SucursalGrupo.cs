@@ -95,13 +95,19 @@ namespace ProvLibSistema
                         var aEmpresaGrupo = cnn.Database.SqlQuery<int>("select a_empresa_grupo from sistema_contadores").FirstOrDefault();
                         var autoEmpresaGrupo = aEmpresaGrupo.ToString().Trim().PadLeft(10, '0');
 
-                        var ent = new empresa_grupo()
+                        var xp1 = new MySql.Data.MySqlClient.MySqlParameter("@xp1", autoEmpresaGrupo);
+                        var xp2 = new MySql.Data.MySqlClient.MySqlParameter("@xp2", ficha.nombre);
+                        var xp3 = new MySql.Data.MySqlClient.MySqlParameter("@xp3", "");
+                        var sql_1 = @"INSERT INTO empresa_grupo (
+                                    auto, nombre, idPrecio) 
+                                    values(@xp1, @xp2, @xp3)";
+                        var r2 = cnn.Database.ExecuteSqlCommand(sql_1, xp1, xp2, xp3);
+                        if (r2 == 0)
                         {
-                            auto = autoEmpresaGrupo,
-                            idPrecio = "",
-                            nombre = ficha.nombre,
-                        };
-                        cnn.empresa_grupo.Add(ent);
+                            result.Mensaje = "PROBLEMA AL REGISTRAR GRUPO";
+                            result.Result = DtoLib.Enumerados.EnumResult.isError;
+                            return result;
+                        }
                         cnn.SaveChanges();
 
                         var p1 = new MySql.Data.MySqlClient.MySqlParameter("@p1", autoEmpresaGrupo);
@@ -110,10 +116,10 @@ namespace ProvLibSistema
                         var sql_2 = @"INSERT INTO empresa_grupo_ext (
                                     auto_empresaGrupo, idEmpresaHndPrecio, estatus) 
                                     values(@p1, @p2, @p3)";
-                        var r = cnn.Database.ExecuteSqlCommand(sql_2, p1, p2, p3);
-                        if (r == 0) 
+                        var r3 = cnn.Database.ExecuteSqlCommand(sql_2, p1, p2, p3);
+                        if (r3 == 0) 
                         {
-                            result.Mensaje = "PROBLEMA AL REGISTRAR GRUPO SUCURSAL EXT";
+                            result.Mensaje = "PROBLEMA AL REGISTRAR GRUPO_EXT";
                             result.Result = DtoLib.Enumerados.EnumResult.isError;
                             return result;
                         }
@@ -124,30 +130,14 @@ namespace ProvLibSistema
                     }
                 }
             }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                result.Mensaje = Helpers.MYSQL_VerificaError(ex);
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
             catch (DbUpdateException ex)
             {
-                var dbUpdateEx = ex as DbUpdateException;
-                var sqlEx = dbUpdateEx.InnerException;
-                if (sqlEx != null)
-                {
-                    var exx = (MySql.Data.MySqlClient.MySqlException)sqlEx.InnerException;
-                    if (exx != null)
-                    {
-                        if (exx.Number == 1451)
-                        {
-                            result.Mensaje = "REGISTRO CONTIENE DATA RELACIONADA";
-                            result.Result = DtoLib.Enumerados.EnumResult.isError;
-                            return result;
-                        }
-                        if (exx.Number == 1062)
-                        {
-                            result.Mensaje = "CAMPO DUPLICADO" + Environment.NewLine + exx.Message;
-                            result.Result = DtoLib.Enumerados.EnumResult.isError;
-                            return result;
-                        }
-                    }
-                }
-                result.Mensaje = ex.Message;
+                result.Mensaje = Helpers.ENTITY_VerificaError(ex);
                 result.Result = DtoLib.Enumerados.EnumResult.isError;
             }
             catch (Exception e)
@@ -194,31 +184,14 @@ namespace ProvLibSistema
                     }
                 }
             }
-            catch (DbEntityValidationException e)
+            catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                var msg = "";
-                foreach (var eve in e.EntityValidationErrors)
-                {
-                    foreach (var ve in eve.ValidationErrors)
-                    {
-                        msg += ve.ErrorMessage;
-                    }
-                }
-                result.Mensaje = msg;
+                result.Mensaje = Helpers.MYSQL_VerificaError(ex);
                 result.Result = DtoLib.Enumerados.EnumResult.isError;
             }
-            catch (System.Data.Entity.Infrastructure.DbUpdateException e)
+            catch (DbUpdateException ex)
             {
-                var msg = "";
-                foreach (var eve in e.Entries)
-                {
-                    //msg += eve.m;
-                    foreach (var ve in eve.CurrentValues.PropertyNames)
-                    {
-                        msg += ve.ToString();
-                    }
-                }
-                result.Mensaje = msg;
+                result.Mensaje = Helpers.ENTITY_VerificaError(ex);
                 result.Result = DtoLib.Enumerados.EnumResult.isError;
             }
             catch (Exception e)
@@ -229,7 +202,8 @@ namespace ProvLibSistema
 
             return result;
         }
-        public DtoLib.Resultado SucursalGrupo_Eliminar(string id)
+        public DtoLib.Resultado 
+            SucursalGrupo_Eliminar(string id)
         {
             var result = new DtoLib.Resultado();
 
@@ -270,19 +244,12 @@ namespace ProvLibSistema
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                if (ex.Number == 1451)
-                {
-                    result.Mensaje = "REGISTRO CONTIENE DATA RELACIONADA";
-                    result.Result = DtoLib.Enumerados.EnumResult.isError;
-                    return result;
-                }
-                if (ex.Number == 1062)
-                {
-                    result.Mensaje = "CAMPO DUPLICADO" + Environment.NewLine + ex.Message;
-                    result.Result = DtoLib.Enumerados.EnumResult.isError;
-                    return result;
-                }
-                result.Mensaje = ex.Message;
+                result.Mensaje = Helpers.MYSQL_VerificaError(ex);
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+            catch (DbUpdateException ex)
+            {
+                result.Mensaje = Helpers.ENTITY_VerificaError(ex);
                 result.Result = DtoLib.Enumerados.EnumResult.isError;
             }
             catch (Exception e)

@@ -12,7 +12,7 @@ namespace ServiceSistema.Interfaces
     {
 
         DtoLib.ResultadoId
-        TablaPrecio_Agregar(DtoLibSistema.TablaPrecio.Agregar.Ficha ficha);
+            TablaPrecio_Agregar(DtoLibSistema.TablaPrecio.Agregar.Ficha ficha);
         DtoLib.Resultado
             TablaPrecio_Editar(DtoLibSistema.TablaPrecio.Editar.Ficha ficha);
         DtoLib.ResultadoEntidad<DtoLibSistema.TablaPrecio.Entidad.Ficha>

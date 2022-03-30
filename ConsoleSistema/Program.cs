@@ -153,11 +153,11 @@ namespace ConsoleSistema
 
             //var r01 = sistPrv.SucursalGrupo_GetLista();
             //var r01 = sistPrv.SucursalGrupo_GetById("0000000008");
-            //var ficha = new DtoLibSistema.GrupoSucursal.Agregar.Ficha() { idPrecio = 1, nombre = "BODEGA TIPO 6" };
+            //var ficha = new DtoLibSistema.GrupoSucursal.Agregar.Ficha() { idPrecio = 3, nombre = "BODEGA TIPO 3" };
             //var r01 = sistPrv.SucursalGrupo_Agregar (ficha);
             //var r01 = sistPrv.SucursalGrupo_Eliminar("0000000002");
-            var ficha = new DtoLibSistema.GrupoSucursal.Editar.Ficha() { auto = "0000000003", idPrecio = 3, nombre = "PRECIO TIPO 3" };
-            var r01 = sistPrv.SucursalGrupo_Editar(ficha);
+            //var ficha = new DtoLibSistema.GrupoSucursal.Editar.Ficha() { auto = "0000000003", idPrecio = 3, nombre = "PRECIO TIPO 3" };
+            //var r01 = sistPrv.SucursalGrupo_Editar(ficha);
 
         }
 

@@ -11,10 +11,16 @@ namespace ServiceSistema.Interfaces
     public interface ISucursalGrupo
     {
 
-        DtoLib.ResultadoLista<DtoLibSistema.GrupoSucursal.Resumen> SucursalGrupo_GetLista();
-        DtoLib.ResultadoEntidad<DtoLibSistema.GrupoSucursal.Ficha> SucursalGrupo_GetFicha(string auto);
-        DtoLib.ResultadoAuto SucursalGrupo_Agregar(DtoLibSistema.GrupoSucursal.Agregar ficha);
-        DtoLib.Resultado SucursalGrupo_Editar(DtoLibSistema.GrupoSucursal.Editar ficha);
+        DtoLib.ResultadoLista<DtoLibSistema.GrupoSucursal.Lista.Ficha>
+            SucursalGrupo_GetLista();
+        DtoLib.ResultadoEntidad<DtoLibSistema.GrupoSucursal.Entidad.Ficha>
+            SucursalGrupo_GetFicha(string auto);
+        DtoLib.ResultadoAuto 
+            SucursalGrupo_Agregar(DtoLibSistema.GrupoSucursal.Agregar.Ficha ficha);
+        DtoLib.Resultado 
+            SucursalGrupo_Editar(DtoLibSistema.GrupoSucursal.Editar.Ficha ficha);
+        DtoLib.Resultado
+            SucursalGrupo_Eliminar(string id);
 
     }
 
