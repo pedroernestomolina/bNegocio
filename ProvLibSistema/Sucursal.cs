@@ -14,7 +14,8 @@ namespace ProvLibSistema
     public partial class Provider : ILibSistema.IProvider 
     {
 
-        public DtoLib.ResultadoLista<DtoLibSistema.Sucursal.Resumen> Sucursal_GetLista()
+        public DtoLib.ResultadoLista<DtoLibSistema.Sucursal.Resumen> 
+            Sucursal_GetLista(DtoLibSistema.Sucursal.Lista.Filtro filtro)
         {
             var result = new DtoLib.ResultadoLista<DtoLibSistema.Sucursal.Resumen>();
 
@@ -23,6 +24,10 @@ namespace ProvLibSistema
                 using (var cnn = new sistemaEntities(_cnSist.ConnectionString))
                 {
                     var q = cnn.empresa_sucursal.ToList();
+                    if (filtro.autoGrupo != "") 
+                    {
+                        q = q.Where(w => w.autoEmpresaGrupo == filtro.autoGrupo).ToList();
+                    }
 
                     var list = new List<DtoLibSistema.Sucursal.Resumen>();
                     if (q != null)

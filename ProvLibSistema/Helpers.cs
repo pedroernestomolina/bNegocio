@@ -52,10 +52,12 @@ namespace ProvLibSistema
                     if (exx.Number == 1451)
                     {
                         msg = "REGISTRO CONTIENE DATA RELACIONADA" + Environment.NewLine + exx.Message;
+                        return msg;
                     }
                     if (exx.Number == 1062)
                     {
                         msg="CAMPO DUPLICADO" + Environment.NewLine + exx.Message;
+                        return msg;
                     }
                 }
             }

@@ -11,7 +11,8 @@ namespace ServiceSistema.Interfaces
     public interface ISucursal
     {
 
-        DtoLib.ResultadoLista<DtoLibSistema.Sucursal.Resumen> Sucursal_GetLista();
+        DtoLib.ResultadoLista<DtoLibSistema.Sucursal.Resumen> 
+            Sucursal_GetLista(DtoLibSistema.Sucursal.Lista.Filtro filtro);
         DtoLib.ResultadoEntidad<DtoLibSistema.Sucursal.Ficha> Sucursal_GetFicha(string auto);
         DtoLib.ResultadoAuto Sucursal_Agregar(DtoLibSistema.Sucursal.Agregar ficha);
         DtoLib.Resultado Sucursal_Editar(DtoLibSistema.Sucursal.Editar ficha);

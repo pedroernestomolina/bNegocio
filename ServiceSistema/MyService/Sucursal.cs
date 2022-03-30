@@ -12,9 +12,10 @@ namespace ServiceSistema.MyService
     public partial class Service : IService
     {
 
-        public DtoLib.ResultadoLista<DtoLibSistema.Sucursal.Resumen> Sucursal_GetLista()
+        public DtoLib.ResultadoLista<DtoLibSistema.Sucursal.Resumen> 
+            Sucursal_GetLista(DtoLibSistema.Sucursal.Lista.Filtro filtro)
         {
-            return ServiceProv.Sucursal_GetLista();
+            return ServiceProv.Sucursal_GetLista(filtro);
         }
 
         public DtoLib.ResultadoEntidad<DtoLibSistema.Sucursal.Ficha> Sucursal_GetFicha(string auto)

@@ -102,6 +102,7 @@
     <Compile Include="Sucursal\AsignarDepositoPrincipal.cs" />
     <Compile Include="Sucursal\Editar.cs" />
     <Compile Include="Sucursal\Ficha.cs" />
+    <Compile Include="Sucursal\Lista\Filtro.cs" />
     <Compile Include="Sucursal\Resumen.cs" />
     <Compile Include="TablaPrecio\Agregar\Ficha.cs" />
     <Compile Include="TablaPrecio\Editar\Ficha.cs" />
