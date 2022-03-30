@@ -63,10 +63,10 @@
     <Compile Include="Deposito\Resumen.cs" />
     <Compile Include="Empresa\Data\Ficha.cs" />
     <Compile Include="Funciones\Resumen.cs" />
-    <Compile Include="GrupoSucursal\Agregar.cs" />
-    <Compile Include="GrupoSucursal\Editar.cs" />
-    <Compile Include="GrupoSucursal\Ficha.cs" />
-    <Compile Include="GrupoSucursal\Resumen.cs" />
+    <Compile Include="GrupoSucursal\Agregar\Ficha.cs" />
+    <Compile Include="GrupoSucursal\Editar\Ficha.cs" />
+    <Compile Include="GrupoSucursal\Entidad\Ficha.cs" />
+    <Compile Include="GrupoSucursal\Lista\Ficha.cs" />
     <Compile Include="GrupoUsuario\Agregar.cs" />
     <Compile Include="GrupoUsuario\Editar.cs" />
     <Compile Include="GrupoUsuario\Ficha.cs" />

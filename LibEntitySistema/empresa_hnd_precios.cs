@@ -17,7 +17,7 @@ namespace LibEntitySistema
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public empresa_hnd_precios()
         {
-            this.productos_hnd_precios = new HashSet<productos_hnd_precios>();
+            this.empresa_grupo_ext = new HashSet<empresa_grupo_ext>();
         }
     
         public int id { get; set; }
@@ -26,6 +26,6 @@ namespace LibEntitySistema
         public string estatus { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<productos_hnd_precios> productos_hnd_precios { get; set; }
+        public virtual ICollection<empresa_grupo_ext> empresa_grupo_ext { get; set; }
     }
 }

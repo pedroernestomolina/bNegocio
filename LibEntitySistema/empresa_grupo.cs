@@ -14,8 +14,17 @@ namespace LibEntitySistema
     
     public partial class empresa_grupo
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public empresa_grupo()
+        {
+            this.empresa_grupo_ext = new HashSet<empresa_grupo_ext>();
+        }
+    
         public string auto { get; set; }
         public string nombre { get; set; }
         public string idPrecio { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<empresa_grupo_ext> empresa_grupo_ext { get; set; }
     }
 }

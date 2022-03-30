@@ -76,6 +76,9 @@
     <Compile Include="empresa_grupo.cs">
       <DependentUpon>ModelLibSistema.tt</DependentUpon>
     </Compile>
+    <Compile Include="empresa_grupo_ext.cs">
+      <DependentUpon>ModelLibSistema.tt</DependentUpon>
+    </Compile>
     <Compile Include="empresa_hnd_precios.cs">
       <DependentUpon>ModelLibSistema.tt</DependentUpon>
     </Compile>
@@ -85,17 +88,17 @@
     <Compile Include="empresa_sucursal.cs">
       <DependentUpon>ModelLibSistema.tt</DependentUpon>
     </Compile>
-    <Compile Include="ModelLibSistema.Context.cs" />
-    <Compile Include="ModelLibSistema.cs" />
-    <Compile Include="ModelLibSistema.designer.cs">
-      <DependentUpon>ModelLibSistema.cs</DependentUpon>
+    <Compile Include="ModelLibSistema.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelLibSistema.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="ModelLibSistema1.cs">
+    <Compile Include="ModelLibSistema.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelLibSistema.tt</DependentUpon>
     </Compile>
-    <Compile Include="ModelLibSistema1.Designer.cs">
+    <Compile Include="ModelLibSistema.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelLibSistema.edmx</DependentUpon>
@@ -108,9 +111,6 @@
       <DependentUpon>ModelLibSistema.tt</DependentUpon>
     </Compile>
     <Compile Include="productos_ext.cs">
-      <DependentUpon>ModelLibSistema.tt</DependentUpon>
-    </Compile>
-    <Compile Include="productos_hnd_precios.cs">
       <DependentUpon>ModelLibSistema.tt</DependentUpon>
     </Compile>
     <Compile Include="productos_precios.cs">
@@ -146,7 +146,7 @@
     <None Include="App.config" />
     <EntityDeploy Include="ModelLibSistema.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ModelLibSistema1.Designer.cs</LastGenOutput>
+      <LastGenOutput>ModelLibSistema.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <None Include="ModelLibSistema.edmx.diagram">
       <DependentUpon>ModelLibSistema.edmx</DependentUpon>
@@ -154,13 +154,19 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ModelLibSistema.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ModelLibSistema1.cs</LastGenOutput>
-    </Content>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+    <Content Include="ModelLibSistema.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelLibSistema.edmx</DependentUpon>
+      <LastGenOutput>ModelLibSistema.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="ModelLibSistema.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelLibSistema.edmx</DependentUpon>
+      <LastGenOutput>ModelLibSistema.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
