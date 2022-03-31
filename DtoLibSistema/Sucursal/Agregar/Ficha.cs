@@ -5,22 +5,22 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace DtoLibSistema.Sucursal
+namespace DtoLibSistema.Sucursal.Agregar
 {
+
     
-    public class Agregar
+    public class Ficha
     {
 
+
         public string autoGrupo { get; set; }
-        public string codigo { get; set; }
         public string nombre { get; set; }
         public string estatusFactMayor { get; set; }
 
 
-        public Agregar()
+        public Ficha()
         {
             autoGrupo = "";
-            codigo = "";
             nombre = "";
             estatusFactMayor = "";
         }

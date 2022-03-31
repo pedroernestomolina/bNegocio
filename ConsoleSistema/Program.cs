@@ -159,6 +159,26 @@ namespace ConsoleSistema
             //var ficha = new DtoLibSistema.GrupoSucursal.Editar.Ficha() { auto = "0000000003", idPrecio = 3, nombre = "PRECIO TIPO 3" };
             //var r01 = sistPrv.SucursalGrupo_Editar(ficha);
 
+
+            //var filtroDTO = new DtoLibSistema.Sucursal.Lista.Filtro() {  autoGrupo="0000000002"};
+            //var r01 = sistPrv.Sucursal_GetLista(filtroDTO);
+            //var fichaDTO = new DtoLibSistema.Sucursal.Agregar.Ficha()
+            //{
+            //    autoGrupo = "0000000002",
+            //    estatusFactMayor = "1",
+            //    nombre = "PRUEBA 1",
+            //};
+            //var r01 = sistPrv.Sucursal_Agregar(fichaDTO);
+            //var r01 = sistPrv.Sucursal_GetFicha("0000000029");
+            //var fichaDTO = new DtoLibSistema.Sucursal.Editar.Ficha()
+            //{
+            //    auto="0000000025",
+            //    autoGrupo = "0000000001",
+            //    estatusFactMayor = "0",
+            //    nombre = "DISTRIB / VIVERES",
+            //};
+            //var r01 = sistPrv.Sucursal_Editar(fichaDTO);
+
         }
 
     }

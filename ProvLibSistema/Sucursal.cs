@@ -1,6 +1,7 @@
 ﻿using LibEntitySistema;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
@@ -14,55 +15,33 @@ namespace ProvLibSistema
     public partial class Provider : ILibSistema.IProvider 
     {
 
-        public DtoLib.ResultadoLista<DtoLibSistema.Sucursal.Resumen> 
+        public DtoLib.ResultadoLista<DtoLibSistema.Sucursal.Lista.Ficha> 
             Sucursal_GetLista(DtoLibSistema.Sucursal.Lista.Filtro filtro)
         {
-            var result = new DtoLib.ResultadoLista<DtoLibSistema.Sucursal.Resumen>();
+            var result = new DtoLib.ResultadoLista<DtoLibSistema.Sucursal.Lista.Ficha>();
 
             try
             {
                 using (var cnn = new sistemaEntities(_cnSist.ConnectionString))
                 {
-                    var q = cnn.empresa_sucursal.ToList();
+                    var p1= new MySql.Data.MySqlClient.MySqlParameter();
+                    var sql_1 =@"SELECT eSuc.auto, eSuc.codigo, eSuc.nombre, 
+                                    eSucExt.es_activo as estatus, eSuc.estatus_facturar_mayor as estatusFactMayor, 
+                                    eDep.nombre as nombreDeposito, eGrupo.nombre as nombreGrupo
+                                    from empresa_sucursal as eSuc
+                                    join empresa_sucursal_ext as eSucExt on eSucExt.auto_sucursal=eSuc.auto
+                                    join empresa_grupo as eGrupo on eGrupo.auto=eSuc.autoEmpresaGrupo
+                                    left join empresa_depositos as eDep on eDep.auto=eSuc.autodepositoPrincipal ";
+                    var sql_2 =" where 1=1 ";
                     if (filtro.autoGrupo != "") 
                     {
-                        q = q.Where(w => w.autoEmpresaGrupo == filtro.autoGrupo).ToList();
+                        p1.ParameterName="@p1";
+                        p1.Value=filtro.autoGrupo;
+                        sql_2+= " and eSuc.autoEmpresaGrupo=@p1 ";
                     }
-
-                    var list = new List<DtoLibSistema.Sucursal.Resumen>();
-                    if (q != null)
-                    {
-                        if (q.Count() > 0)
-                        {
-                            list = q.Select(s =>
-                            {
-                                var _grupo="";
-                                var entGrupo = cnn.empresa_grupo.Find(s.autoEmpresaGrupo);
-                                if (entGrupo != null) 
-                                {
-                                    _grupo = entGrupo.nombre;
-                                }
-                                var _deposito = "";
-                                var entDeposito = cnn.empresa_depositos.Find(s.autoDepositoPrincipal);
-                                if (entDeposito != null) 
-                                {
-                                    _deposito = entDeposito.nombre;
-                                }
-
-                                var r = new DtoLibSistema.Sucursal.Resumen()
-                                {
-                                    auto = s.auto,
-                                    codigo = s.codigo,
-                                    nombre = s.nombre,
-                                    grupo = _grupo,
-                                    deposito = _deposito,
-                                    estatusFactMayor = s.estatus_facturar_mayor,
-                                };
-                                return r;
-                            }).ToList();
-                        }
-                    }
-                    result.Lista = list;
+                    var sql= sql_1+sql_2;
+                    var lst=cnn.Database.SqlQuery<DtoLibSistema.Sucursal.Lista.Ficha>(sql,p1).ToList();
+                    result.Lista = lst;
                 }
             }
             catch (Exception e)
@@ -73,59 +52,33 @@ namespace ProvLibSistema
 
             return result;
         }
-
-        public DtoLib.ResultadoEntidad<DtoLibSistema.Sucursal.Ficha> Sucursal_GetFicha(string auto)
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Sucursal.Entidad.Ficha> 
+            Sucursal_GetFicha(string auto)
         {
-            var result = new DtoLib.ResultadoEntidad<DtoLibSistema.Sucursal.Ficha>();
+            var result = new DtoLib.ResultadoEntidad<DtoLibSistema.Sucursal.Entidad.Ficha>();
 
             try
             {
                 using (var cnn = new sistemaEntities(_cnSist.ConnectionString))
                 {
-                    var ent = cnn.empresa_sucursal.Find(auto);
+                    var p1 = new MySql.Data.MySqlClient.MySqlParameter("@p1", auto);
+                    var sql_1 = @"SELECT eSuc.auto, eSuc.codigo, eSuc.nombre, eSuc.autoEmpresaGrupo as autoGrupo, 
+                                    eSuc.autoDepositoPrincipal as autoDepositoPrincipal,
+                                    eSucExt.es_activo as estatus, eSuc.estatus_facturar_mayor as estatusFactMayor,
+                                    eGrupo.nombre as nombreGrupo
+                                    from empresa_sucursal as eSuc
+                                    join empresa_sucursal_ext as eSucExt on eSucExt.auto_sucursal=eSuc.auto
+                                    join empresa_grupo as eGrupo on eGrupo.auto=eSuc.autoEmpresaGrupo ";
+                    var sql_2 = " where eSuc.auto=@p1 ";
+                    var sql = sql_1 + sql_2;
+                    var ent = cnn.Database.SqlQuery<DtoLibSistema.Sucursal.Entidad.Ficha>(sql, p1).FirstOrDefault();
                     if (ent == null)
                     {
-                        result.Mensaje = "[ ID ] ENTIDAD SUCURSAL NO ENCONTRADO";
+                        result.Mensaje = "[ ID ] SUCURSAL NO ENCONTRADO";
                         result.Result = DtoLib.Enumerados.EnumResult.isError;
                         return result;
                     }
-
-                    var autoGrupo="";
-                    var nomGrupo="";
-                    var idPrecioGrupo="";
-                    var entGrupo= cnn.empresa_grupo.Find(ent.autoEmpresaGrupo);
-                    if (entGrupo!=null)
-                    {
-                        autoGrupo=entGrupo.auto;
-                        nomGrupo=entGrupo.nombre;
-                        idPrecioGrupo=entGrupo.idPrecio;
-                    };
-
-                    var autoDep="";
-                    var nomDep="";
-                    var codDep="";
-                    var entDep = cnn.empresa_depositos.Find(ent.autoDepositoPrincipal);
-                    if (entDep!=null)
-                    {
-                        autoDep=entDep.auto;
-                        nomDep=entDep.nombre;
-                        codDep=entDep.codigo;
-                    }
-
-                    var nr = new DtoLibSistema.Sucursal.Ficha()
-                    {
-                        auto = ent.auto,
-                        autoDepositoPrincipal = autoDep,
-                        autoGrupoSucursal = autoGrupo,
-                        codigo = ent.codigo,
-                        codigoDepositoPrincipal = codDep,
-                        nombreDepositoPrincipal = nomDep,
-                        nombreGrupoSucursal = nomGrupo,
-                        nombre = ent.nombre,
-                        precioId = idPrecioGrupo,
-                        estatusFacturarMayor = ent.estatus_facturar_mayor,
-                    };
-                    result.Entidad = nr;
+                    result.Entidad = ent;
                 }
             }
             catch (Exception e)
@@ -136,8 +89,8 @@ namespace ProvLibSistema
 
             return result;
         }
-
-        public DtoLib.ResultadoAuto Sucursal_Agregar(DtoLibSistema.Sucursal.Agregar ficha)
+        public DtoLib.ResultadoAuto 
+            Sucursal_Agregar(DtoLibSistema.Sucursal.Agregar.Ficha ficha)
         {
             var result = new DtoLib.ResultadoAuto();
 
@@ -155,59 +108,58 @@ namespace ProvLibSistema
                             result.Result = DtoLib.Enumerados.EnumResult.isError;
                             return result;
                         }
+                        cnn.SaveChanges();
                         var aEmpresaSucursal = cnn.Database.SqlQuery<int>("select a_empresa_sucursal from sistema_contadores").FirstOrDefault();
                         var autoEmpresaSucursal = aEmpresaSucursal.ToString().Trim().PadLeft(10, '0');
 
-                        var ent = cnn.empresa_sucursal.FirstOrDefault(f => f.codigo == ficha.codigo);
-                        if (ent != null) 
+
+                        var cnt = cnn.empresa_sucursal.Count()+1;
+                        var sCnt = cnt.ToString("X").Trim().PadLeft(2, '0');
+                        var p1 = new MySql.Data.MySqlClient.MySqlParameter("@p1", autoEmpresaSucursal);
+                        var p2 = new MySql.Data.MySqlClient.MySqlParameter("@p2", "");
+                        var p3 = new MySql.Data.MySqlClient.MySqlParameter("@p3", ficha.autoGrupo);
+                        var p4 = new MySql.Data.MySqlClient.MySqlParameter("@p4", sCnt);
+                        var p5 = new MySql.Data.MySqlClient.MySqlParameter("@p5", ficha.nombre);
+                        var p6 = new MySql.Data.MySqlClient.MySqlParameter("@p6", ficha.estatusFactMayor);
+                        var sql_1 = @"INSERT INTO empresa_sucursal (
+                                        auto, autoDepositoPrincipal, autoEmpresaGrupo, codigo, nombre, estatus_facturar_mayor)
+                                        VALUES (@p1, @p2, @p3, @p4, @p5, @p6)";
+                        var r2 = cnn.Database.ExecuteSqlCommand(sql_1, p1, p2, p3, p4, p5, p6);
+                        if (r2 == 0)
                         {
-                            result.Mensaje = "CODIGO SUCURSAL YA REGISTRADO";
+                            result.Mensaje = "PROBLEMA AL REGISTRAR SUCURSAL";
                             result.Result = DtoLib.Enumerados.EnumResult.isError;
                             return result;
                         }
 
-                        ent = new empresa_sucursal()
+
+                        var xp1 = new MySql.Data.MySqlClient.MySqlParameter("@xp1", autoEmpresaSucursal);
+                        var sql_2 = @"INSERT INTO empresa_sucursal_ext (
+                                        auto_sucursal, es_activo)
+                                        VALUES (@xp1, '1')";
+                        var r3 = cnn.Database.ExecuteSqlCommand(sql_2, xp1);
+                        if (r3 == 0)
                         {
-                            auto = autoEmpresaSucursal,
-                            autoEmpresaGrupo = ficha.autoGrupo,
-                            autoDepositoPrincipal = "",
-                            nombre = ficha.nombre,
-                            codigo = ficha.codigo,
-                            estatus_facturar_mayor = ficha.estatusFactMayor,
-                        };
-                        cnn.empresa_sucursal.Add(ent);
+                            result.Mensaje = "PROBLEMA AL REGISTRAR SUCURSAL_EXT";
+                            result.Result = DtoLib.Enumerados.EnumResult.isError;
+                            return result;
+                        }
                         cnn.SaveChanges();
+
 
                         ts.Complete();
                         result.Auto = autoEmpresaSucursal;
                     }
                 }
             }
-            catch (DbEntityValidationException e)
+            catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                var msg = "";
-                foreach (var eve in e.EntityValidationErrors)
-                {
-                    foreach (var ve in eve.ValidationErrors)
-                    {
-                        msg += ve.ErrorMessage;
-                    }
-                }
-                result.Mensaje = msg;
+                result.Mensaje = Helpers.MYSQL_VerificaError(ex);
                 result.Result = DtoLib.Enumerados.EnumResult.isError;
             }
-            catch (System.Data.Entity.Infrastructure.DbUpdateException e)
+            catch (DbUpdateException ex)
             {
-                var msg = "";
-                foreach (var eve in e.Entries)
-                {
-                    //msg += eve.m;
-                    foreach (var ve in eve.CurrentValues.PropertyNames)
-                    {
-                        msg += ve.ToString();
-                    }
-                }
-                result.Mensaje = msg;
+                result.Mensaje = Helpers.ENTITY_VerificaError(ex);
                 result.Result = DtoLib.Enumerados.EnumResult.isError;
             }
             catch (Exception e)
@@ -218,8 +170,8 @@ namespace ProvLibSistema
 
             return result;
         }
-
-        public DtoLib.Resultado Sucursal_Editar(DtoLibSistema.Sucursal.Editar ficha)
+        public DtoLib.Resultado 
+            Sucursal_Editar(DtoLibSistema.Sucursal.Editar.Ficha ficha)
         {
             var result = new DtoLib.ResultadoAuto();
 
@@ -232,54 +184,27 @@ namespace ProvLibSistema
                         var ent = cnn.empresa_sucursal.Find(ficha.auto);
                         if (ent == null) 
                         {
-                            result.Mensaje = "[ ID ] ENTIDAD SUCURSAL NO ENCONTRADO";
+                            result.Mensaje = "[ ID ] SUCURSAL NO ENCONTRADO";
                             result.Result = DtoLib.Enumerados.EnumResult.isError;
                             return result;
                         }
-
                         ent.autoEmpresaGrupo=ficha.autoGrupo;
-                        ent.codigo=ficha.codigo;
                         ent.nombre = ficha.nombre;
                         ent.estatus_facturar_mayor = ficha.estatusFactMayor;
                         cnn.SaveChanges();
-
-                        var cnt = cnn.empresa_sucursal.Where(f => f.codigo == ficha.codigo).Count();
-                        if (cnt > 1) 
-                        {
-                            result.Mensaje = "CODIGO SUCURSAL YA REGISTRADO";
-                            result.Result = DtoLib.Enumerados.EnumResult.isError;
-                            return result;
-                        }
 
                         ts.Complete();
                     }
                 }
             }
-            catch (DbEntityValidationException e)
+            catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                var msg = "";
-                foreach (var eve in e.EntityValidationErrors)
-                {
-                    foreach (var ve in eve.ValidationErrors)
-                    {
-                        msg += ve.ErrorMessage;
-                    }
-                }
-                result.Mensaje = msg;
+                result.Mensaje = Helpers.MYSQL_VerificaError(ex);
                 result.Result = DtoLib.Enumerados.EnumResult.isError;
             }
-            catch (System.Data.Entity.Infrastructure.DbUpdateException e)
+            catch (DbUpdateException ex)
             {
-                var msg = "";
-                foreach (var eve in e.Entries)
-                {
-                    //msg += eve.m;
-                    foreach (var ve in eve.CurrentValues.PropertyNames)
-                    {
-                        msg += ve.ToString();
-                    }
-                }
-                result.Mensaje = msg;
+                result.Mensaje = Helpers.ENTITY_VerificaError(ex);
                 result.Result = DtoLib.Enumerados.EnumResult.isError;
             }
             catch (Exception e)
@@ -290,8 +215,8 @@ namespace ProvLibSistema
 
             return result;
         }
-
-        public DtoLib.Resultado Sucursal_AsignarDepositoPrincipal(DtoLibSistema.Sucursal.AsignarDepositoPrincipal ficha)
+        public DtoLib.Resultado 
+            Sucursal_AsignarDepositoPrincipal(DtoLibSistema.Sucursal.AsignarDepositoPrincipal.Ficha ficha)
         {
             var result = new DtoLib.Resultado();
 
@@ -304,7 +229,7 @@ namespace ProvLibSistema
                         var ent = cnn.empresa_sucursal.Find(ficha.auto);
                         if (ent == null)
                         {
-                            result.Mensaje = "[ ID ] ENTIDAD SUCURSAL NO ENCONTRADO";
+                            result.Mensaje = "[ ID ] SUCURSAL NO ENCONTRADO";
                             result.Result = DtoLib.Enumerados.EnumResult.isError;
                             return result;
                         }
@@ -315,31 +240,14 @@ namespace ProvLibSistema
                     }
                 }
             }
-            catch (DbEntityValidationException e)
+            catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                var msg = "";
-                foreach (var eve in e.EntityValidationErrors)
-                {
-                    foreach (var ve in eve.ValidationErrors)
-                    {
-                        msg += ve.ErrorMessage;
-                    }
-                }
-                result.Mensaje = msg;
+                result.Mensaje = Helpers.MYSQL_VerificaError(ex);
                 result.Result = DtoLib.Enumerados.EnumResult.isError;
             }
-            catch (System.Data.Entity.Infrastructure.DbUpdateException e)
+            catch (DbUpdateException ex)
             {
-                var msg = "";
-                foreach (var eve in e.Entries)
-                {
-                    //msg += eve.m;
-                    foreach (var ve in eve.CurrentValues.PropertyNames)
-                    {
-                        msg += ve.ToString();
-                    }
-                }
-                result.Mensaje = msg;
+                result.Mensaje = Helpers.ENTITY_VerificaError(ex);
                 result.Result = DtoLib.Enumerados.EnumResult.isError;
             }
             catch (Exception e)
@@ -350,8 +258,8 @@ namespace ProvLibSistema
 
             return result;
         }
-
-        public DtoLib.Resultado Sucursal_QuitarDepositoPrincipal(string autoSuc)
+        public DtoLib.Resultado 
+            Sucursal_QuitarDepositoPrincipal(string autoSuc)
         {
             var result = new DtoLib.Resultado();
 
@@ -364,7 +272,7 @@ namespace ProvLibSistema
                         var ent = cnn.empresa_sucursal.Find(autoSuc);
                         if (ent == null)
                         {
-                            result.Mensaje = "[ ID ] ENTIDAD SUCURSAL NO ENCONTRADO";
+                            result.Mensaje = "[ ID ] SUCURSAL NO ENCONTRADO";
                             result.Result = DtoLib.Enumerados.EnumResult.isError;
                             return result;
                         }
@@ -375,59 +283,15 @@ namespace ProvLibSistema
                     }
                 }
             }
-            catch (DbEntityValidationException e)
+            catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                var msg = "";
-                foreach (var eve in e.EntityValidationErrors)
-                {
-                    foreach (var ve in eve.ValidationErrors)
-                    {
-                        msg += ve.ErrorMessage;
-                    }
-                }
-                result.Mensaje = msg;
+                result.Mensaje = Helpers.MYSQL_VerificaError(ex);
                 result.Result = DtoLib.Enumerados.EnumResult.isError;
             }
-            catch (System.Data.Entity.Infrastructure.DbUpdateException e)
+            catch (DbUpdateException ex)
             {
-                var msg = "";
-                foreach (var eve in e.Entries)
-                {
-                    //msg += eve.m;
-                    foreach (var ve in eve.CurrentValues.PropertyNames)
-                    {
-                        msg += ve.ToString();
-                    }
-                }
-                result.Mensaje = msg;
+                result.Mensaje = Helpers.ENTITY_VerificaError(ex);
                 result.Result = DtoLib.Enumerados.EnumResult.isError;
-            }
-            catch (Exception e)
-            {
-                result.Mensaje = e.Message;
-                result.Result = DtoLib.Enumerados.EnumResult.isError;
-            }
-
-            return result;
-        }
-
-        public DtoLib.ResultadoEntidad<int> Sucursal_GeneraCodigoAutomatico()
-        {
-            var result = new DtoLib.ResultadoEntidad<int>();
-
-            try
-            {
-                using (var cnn = new sistemaEntities(_cnSist.ConnectionString))
-                {
-                    int? aEmpresaSucursal = cnn.Database.SqlQuery<int?>("select a_empresa_sucursal from sistema_contadores").FirstOrDefault();
-                    if (!aEmpresaSucursal.HasValue)
-                    {
-                        result.Mensaje = "[ AUTOMATICO EMPRESA SUCURSAL ] PROBLEMA AL CONSULTAR CAMPO";
-                        result.Result = DtoLib.Enumerados.EnumResult.isError;
-                        return result;
-                    }
-                    result.Entidad = ((int)aEmpresaSucursal.Value)+1;
-                }
             }
             catch (Exception e)
             {

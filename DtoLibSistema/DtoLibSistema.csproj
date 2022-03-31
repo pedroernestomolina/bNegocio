@@ -98,12 +98,12 @@
     <Compile Include="SerieFiscal\Entidad\Ficha.cs" />
     <Compile Include="SerieFiscal\Lista\Ficha.cs" />
     <Compile Include="SerieFiscal\Lista\Filtro.cs" />
-    <Compile Include="Sucursal\Agregar.cs" />
-    <Compile Include="Sucursal\AsignarDepositoPrincipal.cs" />
-    <Compile Include="Sucursal\Editar.cs" />
-    <Compile Include="Sucursal\Ficha.cs" />
+    <Compile Include="Sucursal\Agregar\Ficha.cs" />
+    <Compile Include="Sucursal\AsignarDepositoPrincipal\Ficha.cs" />
+    <Compile Include="Sucursal\Editar\Ficha.cs" />
+    <Compile Include="Sucursal\Entidad\Ficha.cs" />
     <Compile Include="Sucursal\Lista\Filtro.cs" />
-    <Compile Include="Sucursal\Resumen.cs" />
+    <Compile Include="Sucursal\Lista\Ficha.cs" />
     <Compile Include="TablaPrecio\Agregar\Ficha.cs" />
     <Compile Include="TablaPrecio\Editar\Ficha.cs" />
     <Compile Include="TablaPrecio\Entidad\Ficha.cs" />
