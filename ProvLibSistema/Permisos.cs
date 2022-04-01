@@ -291,6 +291,7 @@ namespace ProvLibSistema
         {
             return Helpers.Permiso_Modulo(autoGrupoUsuario, "1226020000");
         }
+
         
         public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
             Permiso_ControlSucursalGrupo(string autoGrupoUsuario)
@@ -313,6 +314,7 @@ namespace ProvLibSistema
             return Helpers.Permiso_Modulo(autoGrupoUsuario, "1227030000");
         }
 
+
         public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
             Permiso_ControlSucursal(string autoGrupoUsuario)
         {
@@ -334,6 +336,7 @@ namespace ProvLibSistema
             return Helpers.Permiso_Modulo(autoGrupoUsuario, "1228030000");
         }
 
+
         public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
             Permiso_ControlDeposito(string autoGrupoUsuario)
         {
@@ -354,6 +357,7 @@ namespace ProvLibSistema
         {
             return Helpers.Permiso_Modulo(autoGrupoUsuario, "1229030000");
         }
+
 
         public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha>
             Permiso_ControlSucursal_TablaPrecio(string autoGrupoUsuario)
