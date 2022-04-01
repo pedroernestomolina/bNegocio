@@ -15,6 +15,11 @@ namespace ProvLibSistema
 
         
         public static EntityConnectionStringBuilder _cnSist ;
+
+        public static int MaxPrecioSucursalPermitidas = 5;
+        public static int MaxSucursalesPermitidas = 90;
+        public static int MaxDepositoPermitidas = 90;
+
         private string _Instancia;
         private string _BaseDatos;
         private string _Usuario;

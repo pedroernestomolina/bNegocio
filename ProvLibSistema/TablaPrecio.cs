@@ -30,7 +30,7 @@ namespace ProvLibSistema
 
                         var _codigo = "";
                         var cnt=cnn.empresa_hnd_precios.Count()+1;
-                        if (cnt > 5)
+                        if (cnt > MaxPrecioSucursalPermitidas)
                         {
                             result.Mensaje = "MAXIMO TIPO DE PRECIOS PERMITIDO ALCANZADO";
                             result.Result = DtoLib.Enumerados.EnumResult.isError;

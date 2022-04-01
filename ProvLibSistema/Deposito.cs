@@ -122,6 +122,14 @@ namespace ProvLibSistema
                         var aEmpresaDeposito = cnn.Database.SqlQuery<int>("select a_empresa_depositos from sistema_contadores").FirstOrDefault();
                         var autoEmpresaDeposito = aEmpresaDeposito.ToString().Trim().PadLeft(10, '0');
 
+                        var xCnt = cnn.empresa_depositos.Count() + 1;
+                        if (xCnt > MaxDepositoPermitidas)
+                        {
+                            result.Mensaje = "MAXIMO DEPOSITOS PERMITIDO ALCANZADO";
+                            result.Result = DtoLib.Enumerados.EnumResult.isError;
+                            return result;
+                        }
+
                         var cnt = aEmpresaDeposito;
                         var sCnt = cnt.ToString().Trim().PadLeft(2, '0');
                         var p1 = new MySql.Data.MySqlClient.MySqlParameter("@p1", autoEmpresaDeposito);

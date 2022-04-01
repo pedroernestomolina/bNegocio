@@ -115,6 +115,13 @@ namespace ProvLibSistema
 
 
                         var cnt = cnn.empresa_sucursal.Count()+1;
+                        if (cnt > MaxSucursalesPermitidas)
+                        {
+                            result.Mensaje = "MAXIMO SUCURSALES PERMITIDO ALCANZADO";
+                            result.Result = DtoLib.Enumerados.EnumResult.isError;
+                            return result;
+                        }
+
                         var sCnt = cnt.ToString("X").Trim().PadLeft(2, '0');
                         var p1 = new MySql.Data.MySqlClient.MySqlParameter("@p1", autoEmpresaSucursal);
                         var p2 = new MySql.Data.MySqlClient.MySqlParameter("@p2", "");

@@ -355,6 +355,22 @@ namespace ProvLibSistema
             return Helpers.Permiso_Modulo(autoGrupoUsuario, "1229030000");
         }
 
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha>
+            Permiso_ControlSucursal_TablaPrecio(string autoGrupoUsuario)
+        {
+            return Helpers.Permiso_Modulo(autoGrupoUsuario, "1231000000");
+        }
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha>
+            Permiso_ControlSucursal_TablaPrecio_Agregar(string autoGrupoUsuario)
+        {
+            return Helpers.Permiso_Modulo(autoGrupoUsuario, "1231010000");
+        }
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha>
+            Permiso_ControlSucursal_TablaPrecio_Editar(string autoGrupoUsuario)
+        {
+            return Helpers.Permiso_Modulo(autoGrupoUsuario, "1231020000");
+        }
+
 
         public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_ControlUsuarioGrupo(string autoGrupoUsuario)
         {

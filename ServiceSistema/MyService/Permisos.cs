@@ -50,15 +50,19 @@ namespace ServiceSistema.MyService
             return ServiceProv.Permiso_EtiquetaParaPrecios(autoGrupoUsuario);
         }
 
-        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_AsignarDepositoSucursal(string autoGrupoUsuario)
+
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha>
+            Permiso_AsignarDepositoSucursal(string autoGrupoUsuario)
         {
             return ServiceProv.Permiso_AsignarDepositoSucursal(autoGrupoUsuario);
         }
-        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_AsignarDepositoSucursal_EliminarAsignacion(string autoGrupoUsuario)
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_AsignarDepositoSucursal_EliminarAsignacion(string autoGrupoUsuario)
         {
             return ServiceProv.Permiso_AsignarDepositoSucursal_EliminarAsignacion(autoGrupoUsuario);
         }
-        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_AsignarDepositoSucursal_EditarAsignacion(string autoGrupoUsuario)
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_AsignarDepositoSucursal_EditarAsignacion(string autoGrupoUsuario)
         {
             return ServiceProv.Permiso_AsignarDepositoSucursal_EditarAsignacion(autoGrupoUsuario);
         }
@@ -85,6 +89,7 @@ namespace ServiceSistema.MyService
             return ServiceProv.Permiso_ControlSucursalGrupo_Eliminar(autoGrupoUsuario);
         }
 
+
         public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
             Permiso_ControlSucursal(string autoGrupoUsuario)
         {
@@ -107,22 +112,44 @@ namespace ServiceSistema.MyService
         }
 
 
-        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_ControlDeposito(string autoGrupoUsuario)
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_ControlDeposito(string autoGrupoUsuario)
         {
             return ServiceProv.Permiso_ControlDeposito(autoGrupoUsuario);
         }
-        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_ControlDeposito_Agregar(string autoGrupoUsuario)
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_ControlDeposito_Agregar(string autoGrupoUsuario)
         {
             return ServiceProv.Permiso_ControlDeposito_Agregar(autoGrupoUsuario);
         }
-        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_ControlDeposito_Editar(string autoGrupoUsuario)
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_ControlDeposito_Editar(string autoGrupoUsuario)
         {
             return ServiceProv.Permiso_ControlDeposito_Editar(autoGrupoUsuario);
         }
-        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_ControlDeposito_ActivarInactivar(string autoGrupoUsuario)
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_ControlDeposito_ActivarInactivar(string autoGrupoUsuario)
         {
             return ServiceProv.Permiso_ControlDeposito_ActivarInactivar(autoGrupoUsuario);
         }
+
+
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha>
+            Permiso_ControlSucursal_TablaPrecio(string autoGrupoUsuario)
+        {
+            return ServiceProv.Permiso_ControlSucursal_TablaPrecio(autoGrupoUsuario);
+        }
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha>
+            Permiso_ControlSucursal_TablaPrecio_Agregar(string autoGrupoUsuario)
+        {
+            return ServiceProv.Permiso_ControlSucursal_TablaPrecio_Agregar(autoGrupoUsuario);
+        }
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha>
+            Permiso_ControlSucursal_TablaPrecio_Editar(string autoGrupoUsuario)
+        {
+            return ServiceProv.Permiso_ControlSucursal_TablaPrecio_Editar(autoGrupoUsuario);
+        }
+
 
         public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_ControlUsuarioGrupo(string autoGrupoUsuario)
         {

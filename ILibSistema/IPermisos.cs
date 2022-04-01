@@ -22,10 +22,13 @@ namespace ILibSistema
         DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_AjustarTasaDivisaRecepcionPos(string autoGrupoUsuario);
         DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_EtiquetaParaPrecios(string autoGrupoUsuario);
 
-        DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_AsignarDepositoSucursal(string autoGrupoUsuario);
-        DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_AsignarDepositoSucursal_EliminarAsignacion(string autoGrupoUsuario);
-        DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_AsignarDepositoSucursal_EditarAsignacion(string autoGrupoUsuario);
 
+        DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_AsignarDepositoSucursal(string autoGrupoUsuario);
+        DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_AsignarDepositoSucursal_EliminarAsignacion(string autoGrupoUsuario);
+        DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_AsignarDepositoSucursal_EditarAsignacion(string autoGrupoUsuario);
 
         DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
             Permiso_ControlSucursalGrupo(string autoGrupoUsuario);
@@ -45,11 +48,22 @@ namespace ILibSistema
         DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
             Permiso_ControlSucursal_ActivarInactivar(string autoGrupoUsuario);
 
+        DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha>
+            Permiso_ControlSucursal_TablaPrecio(string autoGrupoUsuario);
+        DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha>
+            Permiso_ControlSucursal_TablaPrecio_Agregar(string autoGrupoUsuario);
+        DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha>
+            Permiso_ControlSucursal_TablaPrecio_Editar(string autoGrupoUsuario);
 
-        DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_ControlDeposito(string autoGrupoUsuario);
-        DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_ControlDeposito_Agregar(string autoGrupoUsuario);
-        DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_ControlDeposito_Editar(string autoGrupoUsuario);
-        DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_ControlDeposito_ActivarInactivar (string autoGrupoUsuario);
+        DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_ControlDeposito(string autoGrupoUsuario);
+        DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_ControlDeposito_Agregar(string autoGrupoUsuario);
+        DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_ControlDeposito_Editar(string autoGrupoUsuario);
+        DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_ControlDeposito_ActivarInactivar (string autoGrupoUsuario);
+
 
         DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_ControlUsuarioGrupo(string autoGrupoUsuario);
         DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_ControlUsuarioGrupo_Agregar(string autoGrupoUsuario);
