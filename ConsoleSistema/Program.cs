@@ -169,7 +169,7 @@ namespace ConsoleSistema
             //    nombre = "PRUEBA 1",
             //};
             //var r01 = sistPrv.Sucursal_Agregar(fichaDTO);
-            //var r01 = sistPrv.Sucursal_GetFicha("0000000029");
+            //var r01 = sistPrv.Sucursal_GetFicha("0000000030");
             //var fichaDTO = new DtoLibSistema.Sucursal.Editar.Ficha()
             //{
             //    auto="0000000025",

@@ -88,6 +88,9 @@
     <Compile Include="empresa_sucursal.cs">
       <DependentUpon>ModelLibSistema.tt</DependentUpon>
     </Compile>
+    <Compile Include="empresa_sucursal_ext.cs">
+      <DependentUpon>ModelLibSistema.tt</DependentUpon>
+    </Compile>
     <Compile Include="ModelLibSistema.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

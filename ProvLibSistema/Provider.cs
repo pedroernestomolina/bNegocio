@@ -13,7 +13,8 @@ namespace ProvLibSistema
     public partial class Provider : ILibSistema.IProvider 
     {
 
-        static EntityConnectionStringBuilder _cnSist ;
+        
+        public static EntityConnectionStringBuilder _cnSist ;
         private string _Instancia;
         private string _BaseDatos;
         private string _Usuario;

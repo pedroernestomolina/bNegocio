@@ -65,10 +65,11 @@ namespace ProvLibSistema
                     var sql_1 = @"SELECT eSuc.auto, eSuc.codigo, eSuc.nombre, eSuc.autoEmpresaGrupo as autoGrupo, 
                                     eSuc.autoDepositoPrincipal as autoDepositoPrincipal,
                                     eSucExt.es_activo as estatus, eSuc.estatus_facturar_mayor as estatusFactMayor,
-                                    eGrupo.nombre as nombreGrupo
+                                    eGrupo.nombre as nombreGrupo, eDep.nombre as nombreDepositoAsignado
                                     from empresa_sucursal as eSuc
                                     join empresa_sucursal_ext as eSucExt on eSucExt.auto_sucursal=eSuc.auto
-                                    join empresa_grupo as eGrupo on eGrupo.auto=eSuc.autoEmpresaGrupo ";
+                                    join empresa_grupo as eGrupo on eGrupo.auto=eSuc.autoEmpresaGrupo 
+                                    left join empresa_depositos as eDep on eDep.auto=eSuc.autodepositoPrincipal ";
                     var sql_2 = " where eSuc.auto=@p1 ";
                     var sql = sql_1 + sql_2;
                     var ent = cnn.Database.SqlQuery<DtoLibSistema.Sucursal.Entidad.Ficha>(sql, p1).FirstOrDefault();
@@ -233,6 +234,26 @@ namespace ProvLibSistema
                             result.Result = DtoLib.Enumerados.EnumResult.isError;
                             return result;
                         }
+                        var entExt = cnn.empresa_sucursal_ext.Find(ficha.auto);
+                        if (entExt == null)
+                        {
+                            result.Mensaje = "[ ID ] SUCURSAL_EXT NO ENCONTRADO";
+                            result.Result = DtoLib.Enumerados.EnumResult.isError;
+                            return result;
+                        }
+                        if (entExt.es_activo == "0") 
+                        {
+                            result.Mensaje = "ESTATUS SUCURSAL: INACTIVA";
+                            result.Result = DtoLib.Enumerados.EnumResult.isError;
+                            return result;
+                        }
+                        var entDepExt = cnn.empresa_depositos_ext.Find(ficha.autoDepositoPrincipal);
+                        if (entDepExt.es_activo == "0")
+                        {
+                            result.Mensaje = "ESTATUS DEPOSITO : INACTIVA";
+                            result.Result = DtoLib.Enumerados.EnumResult.isError;
+                            return result;
+                        }
                         ent.autoDepositoPrincipal = ficha.autoDepositoPrincipal;
                         cnn.SaveChanges();
 
@@ -277,6 +298,117 @@ namespace ProvLibSistema
                             return result;
                         }
                         ent.autoDepositoPrincipal = "";
+                        cnn.SaveChanges();
+
+                        ts.Complete();
+                    }
+                }
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                result.Mensaje = Helpers.MYSQL_VerificaError(ex);
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+            catch (DbUpdateException ex)
+            {
+                result.Mensaje = Helpers.ENTITY_VerificaError(ex);
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+            catch (Exception e)
+            {
+                result.Mensaje = e.Message;
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+
+            return result;
+        }
+        public DtoLib.Resultado 
+            Sucursal_Activar(string autoSuc)
+        {
+            var result = new DtoLib.Resultado();
+
+            try
+            {
+                using (var cnn = new sistemaEntities(_cnSist.ConnectionString))
+                {
+                    using (var ts = new TransactionScope())
+                    {
+                        var entExt = cnn.empresa_sucursal_ext.Find(autoSuc);
+                        if (entExt == null)
+                        {
+                            result.Mensaje = "[ ID ] SUCURSAL_EXT NO ENCONTRADO";
+                            result.Result = DtoLib.Enumerados.EnumResult.isError;
+                            return result;
+                        }
+                        if (entExt.es_activo == "1")
+                        {
+                            result.Mensaje = "SUCURSAL ESTATUS: ACTIVA";
+                            result.Result = DtoLib.Enumerados.EnumResult.isError;
+                            return result;
+                        }
+                        entExt.es_activo="1";
+                        cnn.SaveChanges();
+
+                        ts.Complete();
+                    }
+                }
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                result.Mensaje = Helpers.MYSQL_VerificaError(ex);
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+            catch (DbUpdateException ex)
+            {
+                result.Mensaje = Helpers.ENTITY_VerificaError(ex);
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+            catch (Exception e)
+            {
+                result.Mensaje = e.Message;
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+
+            return result;
+        }
+        public DtoLib.Resultado 
+            Sucursal_Inactivar(string autoSuc)
+        {
+            var result = new DtoLib.Resultado();
+
+            try
+            {
+                using (var cnn = new sistemaEntities(_cnSist.ConnectionString))
+                {
+                    using (var ts = new TransactionScope())
+                    {
+                        var entExt = cnn.empresa_sucursal_ext.Find(autoSuc);
+                        if (entExt == null)
+                        {
+                            result.Mensaje = "[ ID ] SUCURSAL_EXT NO ENCONTRADO";
+                            result.Result = DtoLib.Enumerados.EnumResult.isError;
+                            return result;
+                        }
+                        if (entExt.es_activo == "0")
+                        {
+                            result.Mensaje = "SUCURSAL ESTATUS: INACTIVA";
+                            result.Result = DtoLib.Enumerados.EnumResult.isError;
+                            return result;
+                        }
+                        if (entExt.empresa_sucursal.autoDepositoPrincipal != "")
+                        {
+                            result.Mensaje = "DEPOSITO PRINCIPAL ASIGNADO A SUCURSAL";
+                            result.Result = DtoLib.Enumerados.EnumResult.isError;
+                            return result;
+                        }
+                        var cnt = cnn.empresa_depositos.Where(w => w.codigo_sucursal == entExt.empresa_sucursal.codigo).Count();
+                        if (cnt > 0) 
+                        {
+                            result.Mensaje = "DEPOSITOS ASIGNADO A SUCURSAL";
+                            result.Result = DtoLib.Enumerados.EnumResult.isError;
+                            return result;
+                        }
+                        entExt.es_activo = "0";
                         cnn.SaveChanges();
 
                         ts.Complete();

@@ -12,12 +12,11 @@ namespace LibEntitySistema
     using System;
     using System.Collections.Generic;
     
-    public partial class empresa_depositos_ext
+    public partial class empresa_sucursal_ext
     {
-        public string auto_deposito { get; set; }
-        public string es_predeterminado { get; set; }
+        public string auto_sucursal { get; set; }
         public string es_activo { get; set; }
     
-        public virtual empresa_depositos empresa_depositos { get; set; }
+        public virtual empresa_sucursal empresa_sucursal { get; set; }
     }
 }

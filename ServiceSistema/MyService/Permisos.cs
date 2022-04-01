@@ -62,32 +62,50 @@ namespace ServiceSistema.MyService
         {
             return ServiceProv.Permiso_AsignarDepositoSucursal_EditarAsignacion(autoGrupoUsuario);
         }
-        
-        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_ControlSucursalGrupo(string autoGrupoUsuario)
+
+
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_ControlSucursalGrupo(string autoGrupoUsuario)
         {
             return ServiceProv.Permiso_ControlSucursalGrupo(autoGrupoUsuario);
         }
-        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_ControlSucursalGrupo_Agregar(string autoGrupoUsuario)
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_ControlSucursalGrupo_Agregar(string autoGrupoUsuario)
         {
             return ServiceProv.Permiso_ControlSucursalGrupo_Agregar(autoGrupoUsuario);
         }
-        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_ControlSucursalGrupo_Editar(string autoGrupoUsuario)
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_ControlSucursalGrupo_Editar(string autoGrupoUsuario)
         {
             return ServiceProv.Permiso_ControlSucursalGrupo_Editar(autoGrupoUsuario);
         }
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_ControlSucursalGrupo_Eliminar(string autoGrupoUsuario)
+        {
+            return ServiceProv.Permiso_ControlSucursalGrupo_Eliminar(autoGrupoUsuario);
+        }
 
-        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_ControlSucursal(string autoGrupoUsuario)
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_ControlSucursal(string autoGrupoUsuario)
         {
             return ServiceProv.Permiso_ControlSucursal(autoGrupoUsuario);
         }
-        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_ControlSucursal_Agregar(string autoGrupoUsuario)
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_ControlSucursal_Agregar(string autoGrupoUsuario)
         {
             return ServiceProv.Permiso_ControlSucursal_Agregar(autoGrupoUsuario);
         }
-        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_ControlSucursal_Editar(string autoGrupoUsuario)
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_ControlSucursal_Editar(string autoGrupoUsuario)
         {
             return ServiceProv.Permiso_ControlSucursal_Editar(autoGrupoUsuario);
         }
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_ControlSucursal_ActivarInactivar(string autoGrupoUsuario)
+        {
+            return ServiceProv.Permiso_ControlSucursal_ActivarInactivar(autoGrupoUsuario);
+        }
+
 
         public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_ControlDeposito(string autoGrupoUsuario)
         {

@@ -20,6 +20,7 @@ namespace DtoLibSistema.Sucursal.Entidad
         public string estatus { get; set; }
         public string estatusFactMayor { get; set; }
         public string nombreGrupo { get; set; }
+        public string nombreDepositoAsignado { get; set; }
 
 
         public Ficha() 
@@ -32,6 +33,7 @@ namespace DtoLibSistema.Sucursal.Entidad
             estatus = "";
             estatusFactMayor = "";
             nombreGrupo = "";
+            nombreDepositoAsignado = "";
         }
 
     }

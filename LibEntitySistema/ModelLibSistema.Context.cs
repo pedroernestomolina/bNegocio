@@ -47,5 +47,6 @@ namespace LibEntitySistema
         public virtual DbSet<sistema_contadores> sistema_contadores { get; set; }
         public virtual DbSet<empresa_grupo> empresa_grupo { get; set; }
         public virtual DbSet<empresa_grupo_ext> empresa_grupo_ext { get; set; }
+        public virtual DbSet<empresa_sucursal_ext> empresa_sucursal_ext { get; set; }
     }
 }

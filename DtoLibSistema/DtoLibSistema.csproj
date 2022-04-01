@@ -57,10 +57,11 @@
     <Compile Include="ControlAcceso\Actualizar\Ficha.cs" />
     <Compile Include="ControlAcceso\Actualizar\ItemAcceso.cs" />
     <Compile Include="ControlAcceso\Data\Ficha.cs" />
-    <Compile Include="Deposito\Agregar.cs" />
-    <Compile Include="Deposito\Editar.cs" />
-    <Compile Include="Deposito\Ficha.cs" />
-    <Compile Include="Deposito\Resumen.cs" />
+    <Compile Include="Deposito\Agregar\Ficha.cs" />
+    <Compile Include="Deposito\Editar\Ficha.cs" />
+    <Compile Include="Deposito\Entidad\Ficha.cs" />
+    <Compile Include="Deposito\Lista\Ficha.cs" />
+    <Compile Include="Deposito\Lista\Filtro.cs" />
     <Compile Include="Empresa\Data\Ficha.cs" />
     <Compile Include="Funciones\Resumen.cs" />
     <Compile Include="GrupoSucursal\Agregar\Ficha.cs" />

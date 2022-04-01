@@ -20,5 +20,8 @@ namespace LibEntitySistema
         public string codigo { get; set; }
         public string nombre { get; set; }
         public string estatus_facturar_mayor { get; set; }
+    
+        public virtual empresa_grupo empresa_grupo { get; set; }
+        public virtual empresa_sucursal_ext empresa_sucursal_ext { get; set; }
     }
 }

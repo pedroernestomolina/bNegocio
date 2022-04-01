@@ -275,400 +275,86 @@ namespace ProvLibSistema
             return result;
         }
 
-        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_AsignarDepositoSucursal(string autoGrupoUsuario)
+
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_AsignarDepositoSucursal(string autoGrupoUsuario)
         {
-            var result = new DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha>();
-
-            try
-            {
-                using (var cnn = new sistemaEntities(_cnSist.ConnectionString))
-                {
-                    var p1 = new MySql.Data.MySqlClient.MySqlParameter();
-                    p1.ParameterName = "@p1";
-                    p1.Value = autoGrupoUsuario;
-                    var permiso = cnn.Database.SqlQuery<DtoLibSistema.Permiso.Ficha>("select estatus, seguridad from usuarios_grupo_permisos where codigo_grupo=@p1 and codigo_funcion='1226000000'", p1).FirstOrDefault();
-                    if (permiso == null)
-                    {
-                        result.Mensaje = "PERMISO NO ENCONTRADO";
-                        result.Result = DtoLib.Enumerados.EnumResult.isError;
-                        result.Entidad = null;
-                        return result;
-                    }
-                    result.Entidad = permiso;
-                }
-            }
-            catch (Exception e)
-            {
-                result.Mensaje = e.Message;
-                result.Result = DtoLib.Enumerados.EnumResult.isError;
-            }
-
-            return result;
+            return Helpers.Permiso_Modulo(autoGrupoUsuario, "1226000000");
         }
-        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_AsignarDepositoSucursal_EliminarAsignacion(string autoGrupoUsuario)
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_AsignarDepositoSucursal_EliminarAsignacion(string autoGrupoUsuario)
         {
-            var result = new DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha>();
-
-            try
-            {
-                using (var cnn = new sistemaEntities(_cnSist.ConnectionString))
-                {
-                    var p1 = new MySql.Data.MySqlClient.MySqlParameter();
-                    p1.ParameterName = "@p1";
-                    p1.Value = autoGrupoUsuario;
-                    var permiso = cnn.Database.SqlQuery<DtoLibSistema.Permiso.Ficha>("select estatus, seguridad from usuarios_grupo_permisos where codigo_grupo=@p1 and codigo_funcion='1226010000'", p1).FirstOrDefault();
-                    if (permiso == null)
-                    {
-                        result.Mensaje = "PERMISO NO ENCONTRADO";
-                        result.Result = DtoLib.Enumerados.EnumResult.isError;
-                        result.Entidad = null;
-                        return result;
-                    }
-                    result.Entidad = permiso;
-                }
-            }
-            catch (Exception e)
-            {
-                result.Mensaje = e.Message;
-                result.Result = DtoLib.Enumerados.EnumResult.isError;
-            }
-
-            return result;
+            return Helpers.Permiso_Modulo(autoGrupoUsuario, "1226010000");
         }
-        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_AsignarDepositoSucursal_EditarAsignacion(string autoGrupoUsuario)
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_AsignarDepositoSucursal_EditarAsignacion(string autoGrupoUsuario)
         {
-            var result = new DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha>();
-
-            try
-            {
-                using (var cnn = new sistemaEntities(_cnSist.ConnectionString))
-                {
-                    var p1 = new MySql.Data.MySqlClient.MySqlParameter();
-                    p1.ParameterName = "@p1";
-                    p1.Value = autoGrupoUsuario;
-                    var permiso = cnn.Database.SqlQuery<DtoLibSistema.Permiso.Ficha>("select estatus, seguridad from usuarios_grupo_permisos where codigo_grupo=@p1 and codigo_funcion='1226020000'", p1).FirstOrDefault();
-                    if (permiso == null)
-                    {
-                        result.Mensaje = "PERMISO NO ENCONTRADO";
-                        result.Result = DtoLib.Enumerados.EnumResult.isError;
-                        result.Entidad = null;
-                        return result;
-                    }
-                    result.Entidad = permiso;
-                }
-            }
-            catch (Exception e)
-            {
-                result.Mensaje = e.Message;
-                result.Result = DtoLib.Enumerados.EnumResult.isError;
-            }
-
-            return result;
+            return Helpers.Permiso_Modulo(autoGrupoUsuario, "1226020000");
+        }
+        
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_ControlSucursalGrupo(string autoGrupoUsuario)
+        {
+            return Helpers.Permiso_Modulo(autoGrupoUsuario, "1227000000");
+        }
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_ControlSucursalGrupo_Agregar(string autoGrupoUsuario)
+        {
+            return Helpers.Permiso_Modulo(autoGrupoUsuario, "1227010000");
+        }
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_ControlSucursalGrupo_Editar(string autoGrupoUsuario)
+        {
+            return Helpers.Permiso_Modulo(autoGrupoUsuario, "1227020000");
+        }
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha>
+            Permiso_ControlSucursalGrupo_Eliminar(string autoGrupoUsuario)
+        {
+            return Helpers.Permiso_Modulo(autoGrupoUsuario, "1227030000");
         }
 
-        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_ControlSucursalGrupo(string autoGrupoUsuario)
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_ControlSucursal(string autoGrupoUsuario)
         {
-            var result = new DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha>();
-
-            try
-            {
-                using (var cnn = new sistemaEntities(_cnSist.ConnectionString))
-                {
-                    var p1 = new MySql.Data.MySqlClient.MySqlParameter();
-                    p1.ParameterName = "@p1";
-                    p1.Value = autoGrupoUsuario;
-                    var permiso = cnn.Database.SqlQuery<DtoLibSistema.Permiso.Ficha>("select estatus, seguridad from usuarios_grupo_permisos where codigo_grupo=@p1 and codigo_funcion='1227000000'", p1).FirstOrDefault();
-                    if (permiso == null)
-                    {
-                        result.Mensaje = "PERMISO NO ENCONTRADO";
-                        result.Result = DtoLib.Enumerados.EnumResult.isError;
-                        result.Entidad = null;
-                        return result;
-                    }
-                    result.Entidad = permiso;
-                }
-            }
-            catch (Exception e)
-            {
-                result.Mensaje = e.Message;
-                result.Result = DtoLib.Enumerados.EnumResult.isError;
-            }
-
-            return result;
+            return Helpers.Permiso_Modulo(autoGrupoUsuario, "1228000000");
         }
-        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_ControlSucursalGrupo_Agregar(string autoGrupoUsuario)
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_ControlSucursal_Agregar(string autoGrupoUsuario)
         {
-            var result = new DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha>();
-
-            try
-            {
-                using (var cnn = new sistemaEntities(_cnSist.ConnectionString))
-                {
-                    var p1 = new MySql.Data.MySqlClient.MySqlParameter();
-                    p1.ParameterName = "@p1";
-                    p1.Value = autoGrupoUsuario;
-                    var permiso = cnn.Database.SqlQuery<DtoLibSistema.Permiso.Ficha>("select estatus, seguridad from usuarios_grupo_permisos where codigo_grupo=@p1 and codigo_funcion='1227010000'", p1).FirstOrDefault();
-                    if (permiso == null)
-                    {
-                        result.Mensaje = "PERMISO NO ENCONTRADO";
-                        result.Result = DtoLib.Enumerados.EnumResult.isError;
-                        result.Entidad = null;
-                        return result;
-                    }
-                    result.Entidad = permiso;
-                }
-            }
-            catch (Exception e)
-            {
-                result.Mensaje = e.Message;
-                result.Result = DtoLib.Enumerados.EnumResult.isError;
-            }
-
-            return result;
+            return Helpers.Permiso_Modulo(autoGrupoUsuario, "1228010000");
         }
-        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_ControlSucursalGrupo_Editar(string autoGrupoUsuario)
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_ControlSucursal_Editar(string autoGrupoUsuario)
         {
-            var result = new DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha>();
-
-            try
-            {
-                using (var cnn = new sistemaEntities(_cnSist.ConnectionString))
-                {
-                    var p1 = new MySql.Data.MySqlClient.MySqlParameter();
-                    p1.ParameterName = "@p1";
-                    p1.Value = autoGrupoUsuario;
-                    var permiso = cnn.Database.SqlQuery<DtoLibSistema.Permiso.Ficha>("select estatus, seguridad from usuarios_grupo_permisos where codigo_grupo=@p1 and codigo_funcion='1227020000'", p1).FirstOrDefault();
-                    if (permiso == null)
-                    {
-                        result.Mensaje = "PERMISO NO ENCONTRADO";
-                        result.Result = DtoLib.Enumerados.EnumResult.isError;
-                        result.Entidad = null;
-                        return result;
-                    }
-                    result.Entidad = permiso;
-                }
-            }
-            catch (Exception e)
-            {
-                result.Mensaje = e.Message;
-                result.Result = DtoLib.Enumerados.EnumResult.isError;
-            }
-
-            return result;
+            return Helpers.Permiso_Modulo(autoGrupoUsuario, "1228020000");
+        }
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_ControlSucursal_ActivarInactivar(string autoGrupoUsuario)
+        {
+            return Helpers.Permiso_Modulo(autoGrupoUsuario, "1228030000");
         }
 
-        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_ControlSucursal(string autoGrupoUsuario)
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_ControlDeposito(string autoGrupoUsuario)
         {
-            var result = new DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha>();
-
-            try
-            {
-                using (var cnn = new sistemaEntities(_cnSist.ConnectionString))
-                {
-                    var p1 = new MySql.Data.MySqlClient.MySqlParameter();
-                    p1.ParameterName = "@p1";
-                    p1.Value = autoGrupoUsuario;
-                    var permiso = cnn.Database.SqlQuery<DtoLibSistema.Permiso.Ficha>("select estatus, seguridad from usuarios_grupo_permisos where codigo_grupo=@p1 and codigo_funcion='1228000000'", p1).FirstOrDefault();
-                    if (permiso == null)
-                    {
-                        result.Mensaje = "PERMISO NO ENCONTRADO";
-                        result.Result = DtoLib.Enumerados.EnumResult.isError;
-                        result.Entidad = null;
-                        return result;
-                    }
-                    result.Entidad = permiso;
-                }
-            }
-            catch (Exception e)
-            {
-                result.Mensaje = e.Message;
-                result.Result = DtoLib.Enumerados.EnumResult.isError;
-            }
-
-            return result;
+            return Helpers.Permiso_Modulo(autoGrupoUsuario, "1229000000");
         }
-        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_ControlSucursal_Agregar(string autoGrupoUsuario)
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_ControlDeposito_Agregar(string autoGrupoUsuario)
         {
-            var result = new DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha>();
-
-            try
-            {
-                using (var cnn = new sistemaEntities(_cnSist.ConnectionString))
-                {
-                    var p1 = new MySql.Data.MySqlClient.MySqlParameter();
-                    p1.ParameterName = "@p1";
-                    p1.Value = autoGrupoUsuario;
-                    var permiso = cnn.Database.SqlQuery<DtoLibSistema.Permiso.Ficha>("select estatus, seguridad from usuarios_grupo_permisos where codigo_grupo=@p1 and codigo_funcion='1228010000'", p1).FirstOrDefault();
-                    if (permiso == null)
-                    {
-                        result.Mensaje = "PERMISO NO ENCONTRADO";
-                        result.Result = DtoLib.Enumerados.EnumResult.isError;
-                        result.Entidad = null;
-                        return result;
-                    }
-                    result.Entidad = permiso;
-                }
-            }
-            catch (Exception e)
-            {
-                result.Mensaje = e.Message;
-                result.Result = DtoLib.Enumerados.EnumResult.isError;
-            }
-
-            return result;
+            return Helpers.Permiso_Modulo(autoGrupoUsuario, "1229010000");
         }
-        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_ControlSucursal_Editar(string autoGrupoUsuario)
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_ControlDeposito_Editar(string autoGrupoUsuario)
         {
-            var result = new DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha>();
-
-            try
-            {
-                using (var cnn = new sistemaEntities(_cnSist.ConnectionString))
-                {
-                    var p1 = new MySql.Data.MySqlClient.MySqlParameter();
-                    p1.ParameterName = "@p1";
-                    p1.Value = autoGrupoUsuario;
-                    var permiso = cnn.Database.SqlQuery<DtoLibSistema.Permiso.Ficha>("select estatus, seguridad from usuarios_grupo_permisos where codigo_grupo=@p1 and codigo_funcion='1228020000'", p1).FirstOrDefault();
-                    if (permiso == null)
-                    {
-                        result.Mensaje = "PERMISO NO ENCONTRADO";
-                        result.Result = DtoLib.Enumerados.EnumResult.isError;
-                        result.Entidad = null;
-                        return result;
-                    }
-                    result.Entidad = permiso;
-                }
-            }
-            catch (Exception e)
-            {
-                result.Mensaje = e.Message;
-                result.Result = DtoLib.Enumerados.EnumResult.isError;
-            }
-
-            return result;
+            return Helpers.Permiso_Modulo(autoGrupoUsuario, "1229020000");
+        }
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_ControlDeposito_ActivarInactivar(string autoGrupoUsuario)
+        {
+            return Helpers.Permiso_Modulo(autoGrupoUsuario, "1229030000");
         }
 
-        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_ControlDeposito(string autoGrupoUsuario)
-        {
-            var result = new DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha>();
-
-            try
-            {
-                using (var cnn = new sistemaEntities(_cnSist.ConnectionString))
-                {
-                    var p1 = new MySql.Data.MySqlClient.MySqlParameter();
-                    p1.ParameterName = "@p1";
-                    p1.Value = autoGrupoUsuario;
-                    var permiso = cnn.Database.SqlQuery<DtoLibSistema.Permiso.Ficha>("select estatus, seguridad from usuarios_grupo_permisos where codigo_grupo=@p1 and codigo_funcion='1229000000'", p1).FirstOrDefault();
-                    if (permiso == null)
-                    {
-                        result.Mensaje = "PERMISO NO ENCONTRADO";
-                        result.Result = DtoLib.Enumerados.EnumResult.isError;
-                        result.Entidad = null;
-                        return result;
-                    }
-                    result.Entidad = permiso;
-                }
-            }
-            catch (Exception e)
-            {
-                result.Mensaje = e.Message;
-                result.Result = DtoLib.Enumerados.EnumResult.isError;
-            }
-
-            return result;
-        }
-        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_ControlDeposito_Agregar(string autoGrupoUsuario)
-        {
-            var result = new DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha>();
-
-            try
-            {
-                using (var cnn = new sistemaEntities(_cnSist.ConnectionString))
-                {
-                    var p1 = new MySql.Data.MySqlClient.MySqlParameter();
-                    p1.ParameterName = "@p1";
-                    p1.Value = autoGrupoUsuario;
-                    var permiso = cnn.Database.SqlQuery<DtoLibSistema.Permiso.Ficha>("select estatus, seguridad from usuarios_grupo_permisos where codigo_grupo=@p1 and codigo_funcion='1229010000'", p1).FirstOrDefault();
-                    if (permiso == null)
-                    {
-                        result.Mensaje = "PERMISO NO ENCONTRADO";
-                        result.Result = DtoLib.Enumerados.EnumResult.isError;
-                        result.Entidad = null;
-                        return result;
-                    }
-                    result.Entidad = permiso;
-                }
-            }
-            catch (Exception e)
-            {
-                result.Mensaje = e.Message;
-                result.Result = DtoLib.Enumerados.EnumResult.isError;
-            }
-
-            return result;
-        }
-        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_ControlDeposito_Editar(string autoGrupoUsuario)
-        {
-            var result = new DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha>();
-
-            try
-            {
-                using (var cnn = new sistemaEntities(_cnSist.ConnectionString))
-                {
-                    var p1 = new MySql.Data.MySqlClient.MySqlParameter();
-                    p1.ParameterName = "@p1";
-                    p1.Value = autoGrupoUsuario;
-                    var permiso = cnn.Database.SqlQuery<DtoLibSistema.Permiso.Ficha>("select estatus, seguridad from usuarios_grupo_permisos where codigo_grupo=@p1 and codigo_funcion='1229020000'", p1).FirstOrDefault();
-                    if (permiso == null)
-                    {
-                        result.Mensaje = "PERMISO NO ENCONTRADO";
-                        result.Result = DtoLib.Enumerados.EnumResult.isError;
-                        result.Entidad = null;
-                        return result;
-                    }
-                    result.Entidad = permiso;
-                }
-            }
-            catch (Exception e)
-            {
-                result.Mensaje = e.Message;
-                result.Result = DtoLib.Enumerados.EnumResult.isError;
-            }
-
-            return result;
-        }
-        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_ControlDeposito_ActivarInactivar(string autoGrupoUsuario)
-        {
-            var result = new DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha>();
-
-            try
-            {
-                using (var cnn = new sistemaEntities(_cnSist.ConnectionString))
-                {
-                    var p1 = new MySql.Data.MySqlClient.MySqlParameter();
-                    p1.ParameterName = "@p1";
-                    p1.Value = autoGrupoUsuario;
-                    var sql = @"select estatus, seguridad from usuarios_grupo_permisos where codigo_grupo=@p1 and codigo_funcion='1229030000'";
-                    var permiso = cnn.Database.SqlQuery<DtoLibSistema.Permiso.Ficha>(sql, p1).FirstOrDefault();
-                    if (permiso == null)
-                    {
-                        result.Mensaje = "PERMISO NO ENCONTRADO";
-                        result.Result = DtoLib.Enumerados.EnumResult.isError;
-                        result.Entidad = null;
-                        return result;
-                    }
-                    result.Entidad = permiso;
-                }
-            }
-            catch (Exception e)
-            {
-                result.Mensaje = e.Message;
-                result.Result = DtoLib.Enumerados.EnumResult.isError;
-            }
-
-            return result;
-        }
 
         public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_ControlUsuarioGrupo(string autoGrupoUsuario)
         {

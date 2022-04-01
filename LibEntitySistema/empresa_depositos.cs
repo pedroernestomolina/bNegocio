@@ -18,5 +18,7 @@ namespace LibEntitySistema
         public string nombre { get; set; }
         public string codigo { get; set; }
         public string codigo_sucursal { get; set; }
+    
+        public virtual empresa_depositos_ext empresa_depositos_ext { get; set; }
     }
 }

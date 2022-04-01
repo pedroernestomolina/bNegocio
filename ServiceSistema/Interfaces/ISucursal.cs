@@ -23,6 +23,10 @@ namespace ServiceSistema.Interfaces
             Sucursal_AsignarDepositoPrincipal(DtoLibSistema.Sucursal.AsignarDepositoPrincipal.Ficha ficha);
         DtoLib.Resultado
             Sucursal_QuitarDepositoPrincipal(string autoSuc);
+        DtoLib.Resultado
+            Sucursal_Activar(string autoSuc);
+        DtoLib.Resultado
+            Sucursal_Inactivar(string autoSuc);
 
     }
 

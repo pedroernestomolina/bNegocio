@@ -1,6 +1,7 @@
 ﻿using LibEntitySistema;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
@@ -14,56 +15,25 @@ namespace ProvLibSistema
     public partial class Provider : ILibSistema.IProvider
     {
 
-        public DtoLib.ResultadoLista<DtoLibSistema.Deposito.Resumen> Deposito_GetLista()
+        public DtoLib.ResultadoLista<DtoLibSistema.Deposito.Lista.Ficha> 
+            Deposito_GetLista(DtoLibSistema.Deposito.Lista.Filtro filtro)
         {
-            var result = new DtoLib.ResultadoLista<DtoLibSistema.Deposito.Resumen>();
+            var result = new DtoLib.ResultadoLista<DtoLibSistema.Deposito.Lista.Ficha>();
 
             try
             {
                 using (var cnn = new sistemaEntities(_cnSist.ConnectionString))
                 {
                     var sql_1 = @"SELECT ed.auto, ed.codigo, ed.nombre, 
-                                edExt.es_activo as estatusDep,
-                                eSuc.codigo as codigoSucursal, eSuc.nombre as sucursal  
+                                edExt.es_activo as estatus,
+                                eSuc.nombre as nombreSucursal  
                                 FROM empresa_depositos as ed 
                                 join empresa_depositos_ext as edExt on ed.auto=edExt.auto_deposito 
                                 join empresa_sucursal as eSuc on eSuc.codigo= ed.codigo_sucursal
                                 where 1=1";
                     var sql = sql_1;
-                    var lst = cnn.Database.SqlQuery<DtoLibSistema.Deposito.Resumen>(sql).ToList();
+                    var lst = cnn.Database.SqlQuery<DtoLibSistema.Deposito.Lista.Ficha>(sql).ToList();
                     result.Lista = lst;
-
-                    //var q = cnn.empresa_depositos.ToList();
-                    //var list = new List<DtoLibSistema.Deposito.Resumen>();
-                    //if (q != null)
-                    //{
-                    //    if (q.Count() > 0)
-                    //    {
-                    //        list = q.Select(s =>
-                    //        {
-                    //            var _autoSuc="";
-                    //            var _codSuc="";
-                    //            var _suc="";
-                    //            var entSuc = cnn.empresa_sucursal.FirstOrDefault(f=>f.codigo==s.codigo_sucursal);
-                    //            if (entSuc != null) 
-                    //            {
-                    //                _autoSuc=entSuc.auto;
-                    //                _codSuc=entSuc.codigo;
-                    //                _suc = entSuc.nombre;
-                    //            }
-                    //            var r = new DtoLibSistema.Deposito.Resumen()
-                    //            {
-                    //                auto = s.auto,
-                    //                codigo = s.codigo,
-                    //                nombre = s.nombre,
-                    //                codigoSucursal = _codSuc,
-                    //                sucursal = _suc,
-                    //            };
-                    //            return r;
-                    //        }).ToList();
-                    //    }
-                    //}
-                    //result.Lista = list;
                 }
             }
             catch (Exception e)
@@ -74,42 +44,32 @@ namespace ProvLibSistema
 
             return result;
         }
-        public DtoLib.ResultadoEntidad<DtoLibSistema.Deposito.Ficha> Deposito_GetFicha(string auto)
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Deposito.Entidad.Ficha> 
+            Deposito_GetFicha(string auto)
         {
-            var result = new DtoLib.ResultadoEntidad<DtoLibSistema.Deposito.Ficha>();
+            var result = new DtoLib.ResultadoEntidad<DtoLibSistema.Deposito.Entidad.Ficha>();
 
             try
             {
                 using (var cnn = new sistemaEntities(_cnSist.ConnectionString))
                 {
-                    var ent = cnn.empresa_depositos.Find(auto);
+                    var p1 = new MySql.Data.MySqlClient.MySqlParameter("@p1",auto);
+                    var sql_1 = @"SELECT ed.auto, ed.codigo, ed.nombre, 
+                                edExt.es_activo as estatus,
+                                eSuc.nombre as nombreSucursal, eSuc.codigo as codigoSucursal, eSuc.auto as autoSucursal  
+                                FROM empresa_depositos as ed 
+                                join empresa_depositos_ext as edExt on ed.auto=edExt.auto_deposito 
+                                join empresa_sucursal as eSuc on eSuc.codigo= ed.codigo_sucursal
+                                where ed.auto=@p1";
+                    var sql = sql_1;
+                    var ent = cnn.Database.SqlQuery<DtoLibSistema.Deposito.Entidad.Ficha>(sql, p1).FirstOrDefault();
                     if (ent == null)
                     {
-                        result.Mensaje = "[ ID ] ENTIDAD DEPOSITO NO ENCONTRADO";
+                        result.Mensaje = "[ ID ] DEPOSITO NO ENCONTRADO";
                         result.Result = DtoLib.Enumerados.EnumResult.isError;
                         return result;
                     }
-
-                    var _autoSuc = "";
-                    var _codSuc = "";
-                    var _suc = "";
-                    var entSuc = cnn.empresa_sucursal.FirstOrDefault(f => f.codigo == ent.codigo_sucursal);
-                    if (entSuc != null)
-                    {
-                        _autoSuc = entSuc.auto;
-                        _codSuc = entSuc.codigo;
-                        _suc = entSuc.nombre;
-                    }
-                    var nr = new DtoLibSistema.Deposito.Ficha()
-                    {
-                        auto = ent.auto,
-                        codigo = ent.codigo,
-                        nombre = ent.nombre,
-                        autoSucursal = _autoSuc,
-                        codigoSucursal = _codSuc,
-                        sucursal = _suc,
-                    };
-                    result.Entidad = nr;
+                    result.Entidad = ent;
                 }
             }
             catch (Exception e)
@@ -120,7 +80,8 @@ namespace ProvLibSistema
 
             return result;
         }
-        public DtoLib.ResultadoAuto Deposito_Agregar(DtoLibSistema.Deposito.Agregar ficha)
+        public DtoLib.ResultadoAuto 
+            Deposito_Agregar(DtoLibSistema.Deposito.Agregar.Ficha ficha)
         {
             var result = new DtoLib.ResultadoAuto();
 
@@ -130,6 +91,26 @@ namespace ProvLibSistema
                 {
                     using (var ts = new TransactionScope())
                     {
+                        var entSuc = cnn.empresa_sucursal_ext.Find(ficha.autoSucursal);
+                        if (entSuc == null) 
+                        {
+                            result.Mensaje = "SUCURSAL NO ENCONTRADA";
+                            result.Result = DtoLib.Enumerados.EnumResult.isError;
+                            return result;
+                        }
+                        if (entSuc.es_activo  == "0")
+                        {
+                            result.Mensaje = "ESTATUS SUCURSAL INACTIVA";
+                            result.Result = DtoLib.Enumerados.EnumResult.isError;
+                            return result;
+                        }
+                        if (entSuc.empresa_sucursal.codigo!= ficha.codigoSucursal)
+                        {
+                            result.Mensaje = "ESTATUS SUCURSAL CODIGO INCORRECTO";
+                            result.Result = DtoLib.Enumerados.EnumResult.isError;
+                            return result;
+                        }
+
                         var sql = "update sistema_contadores set a_empresa_depositos=a_empresa_depositos+1";
                         var r1 = cnn.Database.ExecuteSqlCommand(sql);
                         if (r1 == 0)
@@ -141,55 +122,49 @@ namespace ProvLibSistema
                         var aEmpresaDeposito = cnn.Database.SqlQuery<int>("select a_empresa_depositos from sistema_contadores").FirstOrDefault();
                         var autoEmpresaDeposito = aEmpresaDeposito.ToString().Trim().PadLeft(10, '0');
 
-                        var ent = new empresa_depositos()
+                        var cnt = aEmpresaDeposito;
+                        var sCnt = cnt.ToString().Trim().PadLeft(2, '0');
+                        var p1 = new MySql.Data.MySqlClient.MySqlParameter("@p1", autoEmpresaDeposito);
+                        var p2 = new MySql.Data.MySqlClient.MySqlParameter("@p2", ficha.nombre);
+                        var p3 = new MySql.Data.MySqlClient.MySqlParameter("@p3", sCnt);
+                        var p4 = new MySql.Data.MySqlClient.MySqlParameter("@p4", ficha.codigoSucursal);
+                        var sql_1 = @"INSERT INTO empresa_depositos 
+                                    (auto, nombre, codigo, codigo_sucursal)
+                                    VALUES (@p1, @p2, @p3, @p4)";
+                        var r2 = cnn.Database.ExecuteSqlCommand(sql_1, p1, p2, p3, p4);
+                        if (r2 == 0)
                         {
-                            auto = autoEmpresaDeposito,
-                            codigo = ficha.codigo,
-                            nombre = ficha.nombre,
-                            codigo_sucursal = ficha.codigoSucursal,
-                        };
-                        cnn.empresa_depositos.Add(ent);
+                            result.Mensaje = "PROBLEMA AL REGISTRAR DEPOSITO";
+                            result.Result = DtoLib.Enumerados.EnumResult.isError;
+                            return result;
+                        }
                         cnn.SaveChanges();
 
-                        var entExt = new empresa_depositos_ext()
+                        var xp1 = new MySql.Data.MySqlClient.MySqlParameter("@xp1", autoEmpresaDeposito);
+                        var sql_2 = @"INSERT INTO empresa_depositos_ext 
+                                    (auto_deposito, es_predeterminado, es_activo)
+                                    VALUES (@xp1, '', '1')";
+                        var r3 = cnn.Database.ExecuteSqlCommand(sql_2, xp1);
+                        if (r3 == 0)
                         {
-                            auto_deposito = autoEmpresaDeposito,
-                            es_activo = "1",
-                            es_predeterminado = "",
-                        };
-                        cnn.empresa_depositos_ext.Add(entExt);
+                            result.Mensaje = "PROBLEMA AL REGISTRAR DEPOSITO_EXT";
+                            result.Result = DtoLib.Enumerados.EnumResult.isError;
+                            return result;
+                        }
                         cnn.SaveChanges();
-
                         ts.Complete();
                         result.Auto = autoEmpresaDeposito;
                     }
                 }
             }
-            catch (DbEntityValidationException e)
+            catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                var msg = "";
-                foreach (var eve in e.EntityValidationErrors)
-                {
-                    foreach (var ve in eve.ValidationErrors)
-                    {
-                        msg += ve.ErrorMessage;
-                    }
-                }
-                result.Mensaje = msg;
+                result.Mensaje = Helpers.MYSQL_VerificaError(ex);
                 result.Result = DtoLib.Enumerados.EnumResult.isError;
             }
-            catch (System.Data.Entity.Infrastructure.DbUpdateException e)
+            catch (DbUpdateException ex)
             {
-                var msg = "";
-                foreach (var eve in e.Entries)
-                {
-                    //msg += eve.m;
-                    foreach (var ve in eve.CurrentValues.PropertyNames)
-                    {
-                        msg += ve.ToString();
-                    }
-                }
-                result.Mensaje = msg;
+                result.Mensaje = Helpers.ENTITY_VerificaError(ex);
                 result.Result = DtoLib.Enumerados.EnumResult.isError;
             }
             catch (Exception e)
@@ -200,7 +175,8 @@ namespace ProvLibSistema
 
             return result;
         }
-        public DtoLib.Resultado Deposito_Editar(DtoLibSistema.Deposito.Editar ficha)
+        public DtoLib.Resultado 
+            Deposito_Editar(DtoLibSistema.Deposito.Editar.Ficha ficha)
         {
             var result = new DtoLib.Resultado();
 
@@ -210,48 +186,47 @@ namespace ProvLibSistema
                 {
                     using (var ts = new TransactionScope())
                     {
-                        var ent = cnn.empresa_depositos.Find(ficha.auto);
-                        if (ent == null)
+                        var entSuc = cnn.empresa_sucursal_ext.Find(ficha.autoSucursal);
+                        if (entSuc == null)
                         {
-                            result.Mensaje = "[ ID ] ENTIDAD DEPOSITO NO ENCONTRADO";
+                            result.Mensaje = "SUCURSAL NO ENCONTRADA";
                             result.Result = DtoLib.Enumerados.EnumResult.isError;
                             return result;
                         }
-
-                        ent.codigo = ficha.codigo;
+                        if (entSuc.es_activo == "0")
+                        {
+                            result.Mensaje = "ESTATUS SUCURSAL INACTIVA";
+                            result.Result = DtoLib.Enumerados.EnumResult.isError;
+                            return result;
+                        }
+                        if (entSuc.empresa_sucursal.codigo != ficha.codigoSucursal)
+                        {
+                            result.Mensaje = "ESTATUS SUCURSAL CODIGO INCORRECTO";
+                            result.Result = DtoLib.Enumerados.EnumResult.isError;
+                            return result;
+                        }
+                        var ent = cnn.empresa_depositos.Find(ficha.auto);
+                        if (ent == null)
+                        {
+                            result.Mensaje = "[ ID ] DEPOSITO NO ENCONTRADO";
+                            result.Result = DtoLib.Enumerados.EnumResult.isError;
+                            return result;
+                        }
                         ent.nombre = ficha.nombre;
                         ent.codigo_sucursal = ficha.codigoSucursal;
                         cnn.SaveChanges();
-
                         ts.Complete();
                     }
                 }
             }
-            catch (DbEntityValidationException e)
+            catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                var msg = "";
-                foreach (var eve in e.EntityValidationErrors)
-                {
-                    foreach (var ve in eve.ValidationErrors)
-                    {
-                        msg += ve.ErrorMessage;
-                    }
-                }
-                result.Mensaje = msg;
+                result.Mensaje = Helpers.MYSQL_VerificaError(ex);
                 result.Result = DtoLib.Enumerados.EnumResult.isError;
             }
-            catch (System.Data.Entity.Infrastructure.DbUpdateException e)
+            catch (DbUpdateException ex)
             {
-                var msg = "";
-                foreach (var eve in e.Entries)
-                {
-                    //msg += eve.m;
-                    foreach (var ve in eve.CurrentValues.PropertyNames)
-                    {
-                        msg += ve.ToString();
-                    }
-                }
-                result.Mensaje = msg;
+                result.Mensaje = Helpers.ENTITY_VerificaError(ex);
                 result.Result = DtoLib.Enumerados.EnumResult.isError;
             }
             catch (Exception e)
@@ -262,33 +237,8 @@ namespace ProvLibSistema
 
             return result;
         }
-        public DtoLib.ResultadoEntidad<int> Deposito_GeneraCodigoAutomatico()
-        {
-            var result = new DtoLib.ResultadoEntidad<int>();
-
-            try
-            {
-                using (var cnn = new sistemaEntities(_cnSist.ConnectionString))
-                {
-                    int? aEmpresaDeposito = cnn.Database.SqlQuery<int?>("select a_empresa_depositos from sistema_contadores").FirstOrDefault();
-                    if (!aEmpresaDeposito.HasValue)
-                    {
-                        result.Mensaje = "[ AUTOMATICO EMPRESA DEPOSITO ] PROBLEMA AL CONSULTAR CAMPO";
-                        result.Result = DtoLib.Enumerados.EnumResult.isError;
-                        return result;
-                    }
-                    result.Entidad = ((int)aEmpresaDeposito.Value)+1;
-                }
-            }
-            catch (Exception e)
-            {
-                result.Mensaje = e.Message;
-                result.Result = DtoLib.Enumerados.EnumResult.isError;
-            }
-
-            return result;
-        }
-        public DtoLib.Resultado Deposito_Activar(string idDep)
+        public DtoLib.Resultado 
+            Deposito_Activar(string idDep)
         {
             var result = new DtoLib.Resultado();
 
@@ -318,31 +268,14 @@ namespace ProvLibSistema
                     }
                 }
             }
-            catch (DbEntityValidationException e)
+            catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                var msg = "";
-                foreach (var eve in e.EntityValidationErrors)
-                {
-                    foreach (var ve in eve.ValidationErrors)
-                    {
-                        msg += ve.ErrorMessage;
-                    }
-                }
-                result.Mensaje = msg;
+                result.Mensaje = Helpers.MYSQL_VerificaError(ex);
                 result.Result = DtoLib.Enumerados.EnumResult.isError;
             }
-            catch (System.Data.Entity.Infrastructure.DbUpdateException e)
+            catch (DbUpdateException ex)
             {
-                var msg = "";
-                foreach (var eve in e.Entries)
-                {
-                    //msg += eve.m;
-                    foreach (var ve in eve.CurrentValues.PropertyNames)
-                    {
-                        msg += ve.ToString();
-                    }
-                }
-                result.Mensaje = msg;
+                result.Mensaje = Helpers.ENTITY_VerificaError(ex);
                 result.Result = DtoLib.Enumerados.EnumResult.isError;
             }
             catch (Exception e)
@@ -353,7 +286,8 @@ namespace ProvLibSistema
 
             return result;
         }
-        public DtoLib.Resultado Deposito_Inactivar(string idDep)
+        public DtoLib.Resultado 
+            Deposito_Inactivar(string idDep)
         {
             var result = new DtoLib.Resultado();
 
@@ -366,7 +300,7 @@ namespace ProvLibSistema
                         var ent = cnn.empresa_depositos_ext.Find(idDep);
                         if (ent==null)
                         {
-                            result.Mensaje = "DEPOSITO NO ENCONTRADO";
+                            result.Mensaje = "[ ID ] DEPOSITO NO ENCONTRADO";
                             result.Result = DtoLib.Enumerados.EnumResult.isError;
                             return result;
                         };
@@ -385,7 +319,7 @@ namespace ProvLibSistema
                         {
                             if (cnt.Value > 0)
                             {
-                                result.Mensaje = "[ DEPOSITO A INACTIVAR ] MERCANCIA EXISTENTE EN DEPOSITO";
+                                result.Mensaje = "MERCANCIA EXISTENTE EN DEPOSITO";
                                 result.Result = DtoLib.Enumerados.EnumResult.isError;
                                 return result;
                             }
@@ -397,31 +331,14 @@ namespace ProvLibSistema
                     }
                 }
             }
-            catch (DbEntityValidationException e)
+            catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                var msg = "";
-                foreach (var eve in e.EntityValidationErrors)
-                {
-                    foreach (var ve in eve.ValidationErrors)
-                    {
-                        msg += ve.ErrorMessage;
-                    }
-                }
-                result.Mensaje = msg;
+                result.Mensaje = Helpers.MYSQL_VerificaError(ex);
                 result.Result = DtoLib.Enumerados.EnumResult.isError;
             }
-            catch (System.Data.Entity.Infrastructure.DbUpdateException e)
+            catch (DbUpdateException ex)
             {
-                var msg = "";
-                foreach (var eve in e.Entries)
-                {
-                    //msg += eve.m;
-                    foreach (var ve in eve.CurrentValues.PropertyNames)
-                    {
-                        msg += ve.ToString();
-                    }
-                }
-                result.Mensaje = msg;
+                result.Mensaje = Helpers.ENTITY_VerificaError(ex);
                 result.Result = DtoLib.Enumerados.EnumResult.isError;
             }
             catch (Exception e)
