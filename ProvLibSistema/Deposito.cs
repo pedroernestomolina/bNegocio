@@ -24,15 +24,23 @@ namespace ProvLibSistema
             {
                 using (var cnn = new sistemaEntities(_cnSist.ConnectionString))
                 {
+                    var p1 = new MySql.Data.MySqlClient.MySqlParameter();
                     var sql_1 = @"SELECT ed.auto, ed.codigo, ed.nombre, 
                                 edExt.es_activo as estatus,
                                 eSuc.nombre as nombreSucursal  
                                 FROM empresa_depositos as ed 
                                 join empresa_depositos_ext as edExt on ed.auto=edExt.auto_deposito 
-                                join empresa_sucursal as eSuc on eSuc.codigo= ed.codigo_sucursal
-                                where 1=1";
-                    var sql = sql_1;
-                    var lst = cnn.Database.SqlQuery<DtoLibSistema.Deposito.Lista.Ficha>(sql).ToList();
+                                join empresa_sucursal as eSuc on eSuc.codigo= ed.codigo_sucursal ";
+                    var sql_2 = " where 1=1 ";
+                    if (filtro.sucCodigo != "")
+                    {
+                        p1.ParameterName = "@p1";
+                        p1.Value = filtro.sucCodigo;
+                        sql_2 += " and ed.codigo_sucursal=@p1 ";
+                    }
+
+                    var sql = sql_1+sql_2;
+                    var lst = cnn.Database.SqlQuery<DtoLibSistema.Deposito.Lista.Ficha>(sql, p1).ToList();
                     result.Lista = lst;
                 }
             }

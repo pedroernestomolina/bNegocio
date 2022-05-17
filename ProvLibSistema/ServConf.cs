@@ -1,6 +1,7 @@
 ﻿using LibEntitySistema;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +13,8 @@ namespace ProvLibSistema
     public partial class Provider : ILibSistema.IProvider
     {
 
-        public DtoLib.Resultado Inicializar_BD(DtoLibSistema.Configuracion.InicializarBD.Ficha ficha)
+        public DtoLib.Resultado
+            Inicializar_BD(DtoLibSistema.Configuracion.InicializarBD.Ficha ficha)
         {
             var result = new DtoLib.Resultado();
 
@@ -110,17 +112,37 @@ namespace ProvLibSistema
                             select auto,'','1' from empresa_depositos";
                     cnn.Database.ExecuteSqlCommand(cmd);
 
+
+                    cmd = "truncate table empresa_hnd_precios";
+                    cnn.Database.ExecuteSqlCommand(cmd);
+                    cmd = @"INSERT INTO `empresa_hnd_precios` (`id`, `codigo`, `descrpcion`, `estatus`) 
+                            VALUES  (NULL, '1', 'PRRECIO 1', '1'),
+                                    (NULL, '2', 'PRRECIO 2', '1'),
+                                    (NULL, '3', 'PRRECIO 3', '1'),
+                                    (NULL, '4', 'PRRECIO 4', '1'),
+                                    (NULL, '5', 'PRRECIO 5', '1')";
+                    cnn.Database.ExecuteSqlCommand(cmd);
+
+
+                    cmd = "truncate table empresa_grupo_ext";
+                    cnn.Database.ExecuteSqlCommand(cmd);
                     cmd = "truncate table empresa_grupo";
                     cnn.Database.ExecuteSqlCommand(cmd);
-
                     cmd = "INSERT INTO `empresa_grupo` (`auto`, `nombre`, `idPrecio`) VALUES ('0000000001', 'PRINCIPAL', '1')";
                     cnn.Database.ExecuteSqlCommand(cmd);
+                    cmd = "INSERT INTO `empresa_grupo_ext` (`auto_empresaGrupo`, `idEmpresaHndPrecio`, `estatus`) VALUES ('0000000001', '1', '1')";
+                    cnn.Database.ExecuteSqlCommand(cmd);
 
+
+                    cmd = "truncate table empresa_sucursal_ext";
+                    cnn.Database.ExecuteSqlCommand(cmd);
                     cmd = "truncate table empresa_sucursal";
                     cnn.Database.ExecuteSqlCommand(cmd);
-
                     cmd = "INSERT INTO `empresa_sucursal` (`auto`, `autoDepositoPrincipal`, `autoEmpresaGrupo`, `codigo`, `nombre`) VALUES ('0000000001', '0000000001', '0000000001', '01', 'PRINCIPAL')";
                     cnn.Database.ExecuteSqlCommand(cmd);
+                    cmd = "INSERT INTO `empresa_sucursal_ext` (`auto_sucursal`, `es_activo` ) VALUES ('0000000001', '1')";
+                    cnn.Database.ExecuteSqlCommand(cmd);
+
 
                     cmd = "truncate table empresa_transporte";
                     cnn.Database.ExecuteSqlCommand(cmd);
@@ -618,10 +640,41 @@ namespace ProvLibSistema
                     cmd = "truncate table p_configuracion";
                     cnn.Database.ExecuteSqlCommand(cmd);
 
+
+                    //NUEVO
+                    cmd = "truncate table productos_hnd_precio";
+                    cnn.Database.ExecuteSqlCommand(cmd);
+
+                    cmd = "truncate table productos_movimientos_transito_detalle";
+                    cnn.Database.ExecuteSqlCommand(cmd);
+
+                    cmd = "truncate table productos_movimientos_transito";
+                    cnn.Database.ExecuteSqlCommand(cmd);
+
+                    cmd = @"INSERT INTO p_configuracion 
+                            (id, idSucursal, idDeposito, idVendedor, idCobrador, idTransporte, idMedioPagoEfectivo, idMedioPagoDivisa, 
+                            idMedioPagoOtros, idClaveUsar, idPrecioManejar, idConceptoVenta, idConceptoDevVenta, idConceptoSalida,
+                            idMedioPagoElectronico, validarExistencia, idTipoDocVenta, idTipoDocDevVenta, idTipoDocNotaEntrega, 
+                            idSerieFactura, idSerieNotaCredito, idSerieNotaEntrega, idSerieNotaDebito, activar_busqueda_descripcion, 
+                            activar_repesaje, limite_inferior_repesaje, limite_superior_repesaje, modoPrecio, estatus) 
+                            VALUES (NULL, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 
+                                    '', '', '0', '0', '', '')";
+                    cnn.Database.ExecuteSqlCommand(cmd);
+
                     //
                     cmd = "SET foreign_key_checks = 1";
                     cnn.Database.ExecuteSqlCommand(cmd);
                 }
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                result.Mensaje = Helpers.MYSQL_VerificaError(ex);
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+            catch (DbUpdateException ex)
+            {
+                result.Mensaje = Helpers.ENTITY_VerificaError(ex);
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
             }
             catch (Exception e)
             {

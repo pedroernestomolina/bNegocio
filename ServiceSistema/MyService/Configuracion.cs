@@ -21,18 +21,28 @@ namespace ServiceSistema.MyService
             return ServiceProv.Configuracion_TasaRecepcionPos();
         }
 
-        public DtoLib.Resultado Configuracion_Actualizar_TasaRecepcionPos(DtoLibSistema.Configuracion.ActualizarTasaRecepcionPos.Ficha ficha)
+
+        public DtoLib.Resultado
+            Configuracion_Actualizar_TasaRecepcionPos(DtoLibSistema.Configuracion.ActualizarTasaRecepcionPos.Ficha ficha)
         {
             return ServiceProv.Configuracion_Actualizar_TasaRecepcionPos(ficha);
         }
-        public DtoLib.ResultadoLista<DtoLibSistema.Configuracion.ActualizarTasaDivisa.CapturarData.Ficha> Configuracion_Actualizar_TasaDivisa_CapturarData()
+        public DtoLib.ResultadoLista<DtoLibSistema.Configuracion.ActualizarTasaDivisa.CapturarData.Ficha> 
+            Configuracion_Actualizar_TasaDivisa_CapturarData()
         {
             return ServiceProv.Configuracion_Actualizar_TasaDivisa_CapturarData();
         }
-        public DtoLib.Resultado Configuracion_Actualizar_TasaDivisa_ActualizarData(DtoLibSistema.Configuracion.ActualizarTasaDivisa.ActualizarData.Ficha ficha)
+        public DtoLib.ResultadoLista<DtoLibSistema.Configuracion.ActualizarTasaDivisa.CapturarData.dataHndPrecio>
+            Configuracion_Actualizar_TasaDivisa_CapturarData_HndPrecio()
+        {
+            return ServiceProv.Configuracion_Actualizar_TasaDivisa_CapturarData_HndPrecio();
+        }
+        public DtoLib.Resultado 
+            Configuracion_Actualizar_TasaDivisa_ActualizarData(DtoLibSistema.Configuracion.ActualizarTasaDivisa.ActualizarData.Ficha ficha)
         {
             return ServiceProv.Configuracion_Actualizar_TasaDivisa_ActualizarData(ficha);
         }
+
 
         public DtoLib.ResultadoEntidad<DtoLibSistema.Configuracion.Enumerados.EnumForzarRedondeoPrecioVenta> Configuracion_ForzarRedondeoPrecioVenta()
         {

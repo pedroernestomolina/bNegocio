@@ -66,22 +66,19 @@ namespace ProvLibSistema
                             return result;
                         }
 
-                        var sql_3 = @"INSERT INTO productos_hnd_precios (
-                                    id,
-                                    idEmpresaPrecio,
-                                    idProducto,
-                                    idMedida_1,
-                                    idMedida_2,
-                                    contenido_1,
-                                    neto_1,
-                                    netoDivisa_1,
-                                    utilidad_1,
-                                    contenido_2,
-                                    neto_2,
-                                    netoDivisa_2,
-                                    utilidad_2) 
-                                    select NULL, @idPrecio, auto, '0000000001', '0000000001', 1, 0, 0, 0, 1, 0, 0, 0 
-                                        from productos";
+                        var sql_3 = @"INSERT INTO productos_hnd_precio (
+                                        autoProducto, autoMedida_1, autoMedida_2, autoMedida_3, 
+                                        contenido_1, contenido_2, contenido_3, 
+                                        neto_1, neto_2, neto_3,
+                                        utilidad_1, utilidad_2, utilidad_3,
+                                        fullDivisa_1, fullDivisa_2, fullDivisa_3, idEmpresaPrecio)
+                                    select 
+                                        auto, '0000000001', '0000000001', '0000000001',
+                                        1, 1, 1,
+                                        0, 0, 0,
+                                        0, 0, 0,
+                                        0, 0, 0, @idPrecio
+                                    from productos";
                         var xp1 = new MySql.Data.MySqlClient.MySqlParameter("@idPrecio", id.Value);
                         var r3 = cnn.Database.ExecuteSqlCommand(sql_3, xp1);
                         if (r3 == 0)

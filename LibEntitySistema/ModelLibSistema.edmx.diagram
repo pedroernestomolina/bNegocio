@@ -4,18 +4,17 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="d356fdafb1ab44fbbfff6a935aff029e" Name="Diagram1" ZoomLevel="31">
+      <Diagram DiagramId="d356fdafb1ab44fbbfff6a935aff029e" Name="Diagram1" ZoomLevel="40">
         <EntityTypeShape EntityType="ModelLibSistema.cxp" Width="1.5" PointX="8" PointY="2.25" IsExpanded="true" />
         <EntityTypeShape EntityType="ModelLibSistema.empresa" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ModelLibSistema.empresa_cobradores" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ModelLibSistema.empresa_depositos" Width="1.5" PointX="24.625" PointY="1.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ModelLibSistema.empresa_depositos_ext" Width="1.5" PointX="29.25" PointY="3" IsExpanded="true" />
-        <EntityTypeShape EntityType="ModelLibSistema.empresa_hnd_precios" Width="1.5" PointX="19.875" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModelLibSistema.empresa_hnd_precios" Width="1.5" PointX="27.25" PointY="7.875" IsExpanded="true" />
         <EntityTypeShape EntityType="ModelLibSistema.empresa_series_fiscales" Width="1.5" PointX="12.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ModelLibSistema.empresa_sucursal" Width="1.5" PointX="5.75" PointY="12.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ModelLibSistema.productos" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ModelLibSistema.productos_costos" Width="1.5" PointX="3" PointY="7.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ModelLibSistema.productos_ext" Width="1.5" PointX="12.75" PointY="7.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ModelLibSistema.productos_precios" Width="1.5" PointX="3" PointY="11.875" IsExpanded="true" />
         <EntityTypeShape EntityType="ModelLibSistema.proveedores" Width="1.5" PointX="5.75" PointY="1.25" IsExpanded="true" />
         <EntityTypeShape EntityType="ModelLibSistema.reconversion_monetaria" Width="1.5" PointX="7.75" PointY="12.75" IsExpanded="true" />
@@ -36,6 +35,11 @@
         <AssociationConnector Association="ModelLibSistema.empresa_sucursal_ibfk_1" />
         <AssociationConnector Association="ModelLibSistema.empresa_sucursal_ext_ibfk_1" />
         <AssociationConnector Association="ModelLibSistema.empresa_depositos_ext_ibfk_1" />
+        <EntityTypeShape EntityType="ModelLibSistema.productos_hnd_precio" Width="1.5" PointX="37.5" PointY="6.25" />
+        <AssociationConnector Association="ModelLibSistema.productos_hnd_precio_ibfk_5" />
+        <AssociationConnector Association="ModelLibSistema.productos_hnd_precio_ibfk_1" />
+        <EntityTypeShape EntityType="ModelLibSistema.productos_ext" Width="1.5" PointX="15.625" PointY="32.125" />
+        <AssociationConnector Association="ModelLibSistema.productos_ext_ibfk_1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

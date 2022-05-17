@@ -18,6 +18,7 @@ namespace LibEntitySistema
         public empresa_hnd_precios()
         {
             this.empresa_grupo_ext = new HashSet<empresa_grupo_ext>();
+            this.productos_hnd_precio = new HashSet<productos_hnd_precio>();
         }
     
         public int id { get; set; }
@@ -27,5 +28,7 @@ namespace LibEntitySistema
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<empresa_grupo_ext> empresa_grupo_ext { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<productos_hnd_precio> productos_hnd_precio { get; set; }
     }
 }

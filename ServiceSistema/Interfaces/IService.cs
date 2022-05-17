@@ -8,9 +8,10 @@ using System.Threading.Tasks;
 namespace ServiceSistema.Interfaces
 {
 
-    public interface IService: ISucursal, IDeposito, ISucursalGrupo, IUsuario, IPrecio, IUsuarioGrupo,
-        IFuncion, IServConf, IPermisos, IConfiguracion, IVendedor, ICobrador, ISerieFiscal, IReconversionMonetaria,
-        INegocio, IControlAcceso, ITablaPrecio
+    public interface IService: ISucursal, IDeposito, ISucursalGrupo, IUsuario, IUsuarioGrupo,
+        IFuncion, IServConf, IPermisos, IConfiguracion, IVendedor, ICobrador, ISerieFiscal, 
+        IReconversionMonetaria,
+        INegocio, IControlAcceso, ITablaPrecio, IPrecioEtiqueta 
     {
 
         DtoLib.ResultadoEntidad<DateTime> FechaServidor();

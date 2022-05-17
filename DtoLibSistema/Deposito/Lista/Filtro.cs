@@ -12,8 +12,12 @@ namespace DtoLibSistema.Deposito.Lista
     public class Filtro
     {
 
+        public string sucCodigo { get; set; }
+
+
         public Filtro() 
         {
+            sucCodigo = "";
         }
 
     }

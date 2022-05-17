@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProvLibSistema;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ namespace ConsoleSistema
 
         static void Main(string[] args)
         {
-            ILibSistema.IProvider sistPrv = new ProvLibSistema.Provider("localhost", "pita");
+            ILibSistema.IProvider sistPrv = new ProvLibSistema.Provider("localhost", "prod_0001");
             //var r01 = sistPrv.SucursalGrupo_GetLista();
             //var ficha = new DtoLibSistema.GrupoSucursal.Editar()
             //{
@@ -177,7 +178,132 @@ namespace ConsoleSistema
             //    estatusFactMayor = "0",
             //    nombre = "DISTRIB / VIVERES",
             //};
-            //var r01 = sistPrv.Sucursal_Editar(fichaDTO);
+
+            //var filtroDTO = new DtoLibSistema.Deposito.Lista.Filtro() { sucCodigo = "01" };
+            //var r01 = sistPrv.Deposito_GetLista(filtroDTO);
+
+
+            //var r01 = Helpers.PasarPrecios_Capturar();
+            //if (r01.Result == DtoLib.Enumerados.EnumResult.isOk)
+            //{
+            //    var lst = new List<DtoLibSistema.Helper.PasarPrecios.Insertar.Ficha>();
+            //    foreach (var rg in r01.Lista)
+            //    {
+            //        var n1 = new DtoLibSistema.Helper.PasarPrecios.Insertar.Ficha()
+            //        {
+            //            autoProducto = rg.auto,
+            //            autoMedida1 = rg.autoMedidaNeto1,
+            //            autoMedida2 = rg.autoMay1,
+            //            autoMedida3 = "0000000001",
+            //            cont1 = rg.contNeto1,
+            //            cont2 = rg.contMay1,
+            //            cont3 = 1,
+            //            neto1 = rg.neto1,
+            //            neto2 = rg.precioMay1,
+            //            neto3 = 0,
+            //            utilidad1 = rg.utilidadNeto1,
+            //            utilidad2 = rg.utilMay1,
+            //            utilidad3 = 0.0m,
+            //            fullDivisa1 = rg.fullDivisa1,
+            //            fullDivisa2 = rg.fullDivisaMay1,
+            //            fullDivisa3 = 0.0m,
+            //            idPrecio = 1,
+            //        };
+            //        lst.Add(n1);
+
+            //        var n2 = new DtoLibSistema.Helper.PasarPrecios.Insertar.Ficha()
+            //        {
+            //            autoProducto = rg.auto,
+            //            autoMedida1 = rg.autoMedidaNeto2,
+            //            autoMedida2 = "0000000001",
+            //            autoMedida3 = "0000000001",
+            //            cont1 = rg.contNeto2,
+            //            cont2 = 1,
+            //            cont3 = 1,
+            //            neto1 = rg.neto2,
+            //            neto2 = 0,
+            //            neto3 = 0,
+            //            utilidad1 = rg.utilidadNeto2,
+            //            utilidad2 = 0.0m,
+            //            utilidad3 = 0.0m,
+            //            fullDivisa1 = rg.fullDivisa2,
+            //            fullDivisa2 = 0.0m,
+            //            fullDivisa3 = 0.0m,
+            //            idPrecio = 2,
+            //        };
+            //        lst.Add(n2);
+
+            //        var n3 = new DtoLibSistema.Helper.PasarPrecios.Insertar.Ficha()
+            //        {
+            //            autoProducto = rg.auto,
+            //            autoMedida1 = rg.autoMedidaNeto3,
+            //            autoMedida2 = "0000000001",
+            //            autoMedida3 = "0000000001",
+            //            cont1 = rg.contNeto3,
+            //            cont2 = 1,
+            //            cont3 = 1,
+            //            neto1 = rg.neto3,
+            //            neto2 = 0,
+            //            neto3 = 0,
+            //            utilidad1 = rg.utilidadNeto3,
+            //            utilidad2 = 0.0m,
+            //            utilidad3 = 0.0m,
+            //            fullDivisa1 = rg.fullDivisa3,
+            //            fullDivisa2 = 0.0m,
+            //            fullDivisa3 = 0.0m,
+            //            idPrecio = 3,
+            //        };
+            //        lst.Add(n3);
+
+            //        var n4 = new DtoLibSistema.Helper.PasarPrecios.Insertar.Ficha()
+            //        {
+            //            autoProducto = rg.auto,
+            //            autoMedida1 = rg.autoMedidaNeto4,
+            //            autoMedida2 = "0000000001",
+            //            autoMedida3 = "0000000001",
+            //            cont1 = rg.contNeto4,
+            //            cont2 = 1,
+            //            cont3 = 1,
+            //            neto1 = rg.neto4,
+            //            neto2 = 0,
+            //            neto3 = 0,
+            //            utilidad1 = rg.utilidadNeto4,
+            //            utilidad2 = 0.0m,
+            //            utilidad3 = 0.0m,
+            //            fullDivisa1 = rg.fullDivisa4,
+            //            fullDivisa2 = 0.0m,
+            //            fullDivisa3 = 0.0m,
+            //            idPrecio = 4,
+            //        };
+            //        lst.Add(n4);
+
+            //        var n5 = new DtoLibSistema.Helper.PasarPrecios.Insertar.Ficha()
+            //        {
+            //            autoProducto = rg.auto,
+            //            autoMedida1 = rg.autoMedidaNeto5,
+            //            autoMedida2 = "0000000001",
+            //            autoMedida3 = "0000000001",
+            //            cont1 = rg.contNeto5,
+            //            cont2 = 1,
+            //            cont3 = 1,
+            //            neto1 = rg.neto5,
+            //            neto2 = 0,
+            //            neto3 = 0,
+            //            utilidad1 = rg.utilidadNeto5,
+            //            utilidad2 = 0.0m,
+            //            utilidad3 = 0.0m,
+            //            fullDivisa1 = rg.fullDivisa5,
+            //            fullDivisa2 = 0.0m,
+            //            fullDivisa3 = 0.0m,
+            //            idPrecio = 5,
+            //        };
+            //        lst.Add(n5);
+            //    }
+            //    var r02 = ProvLibSistema.Helpers.PasarPrecios_Insertar(lst);
+            //}
+
+            //var r01 = sistPrv.Configuracion_Actualizar_TasaDivisa_CapturarData();
+            //var r02 = sistPrv.Configuracion_Actualizar_TasaDivisa_CapturarData_HndPrecio();
 
         }
 

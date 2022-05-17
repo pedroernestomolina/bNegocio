@@ -16,7 +16,8 @@ namespace ProvLibSistema
     public partial class Provider : ILibSistema.IProvider
     {
 
-        public DtoLib.ResultadoEntidad<string> Configuracion_TasaCambioActual()
+        public DtoLib.ResultadoEntidad<string> 
+            Configuracion_TasaCambioActual()
         {
             var result = new DtoLib.ResultadoEntidad<string>();
 
@@ -42,7 +43,8 @@ namespace ProvLibSistema
 
             return result;
         }
-        public DtoLib.ResultadoEntidad<string> Configuracion_TasaRecepcionPos()
+        public DtoLib.ResultadoEntidad<string> 
+            Configuracion_TasaRecepcionPos()
         {
             var result = new DtoLib.ResultadoEntidad<string>();
 
@@ -69,7 +71,8 @@ namespace ProvLibSistema
             return result;
         }
 
-        public DtoLib.Resultado Configuracion_Actualizar_TasaRecepcionPos(DtoLibSistema.Configuracion.ActualizarTasaRecepcionPos.Ficha ficha)
+        public DtoLib.Resultado 
+            Configuracion_Actualizar_TasaRecepcionPos(DtoLibSistema.Configuracion.ActualizarTasaRecepcionPos.Ficha ficha)
         {
             var result = new DtoLib.Resultado();
 
@@ -97,7 +100,8 @@ namespace ProvLibSistema
 
             return result;
         }
-        public DtoLib.ResultadoLista<DtoLibSistema.Configuracion.ActualizarTasaDivisa.CapturarData.Ficha> Configuracion_Actualizar_TasaDivisa_CapturarData()
+        public DtoLib.ResultadoLista<DtoLibSistema.Configuracion.ActualizarTasaDivisa.CapturarData.Ficha> 
+            Configuracion_Actualizar_TasaDivisa_CapturarData()
         {
             var result = new DtoLib.ResultadoLista<DtoLibSistema.Configuracion.ActualizarTasaDivisa.CapturarData.Ficha>();
 
@@ -108,10 +112,12 @@ namespace ProvLibSistema
                     var sql = @"SELECT p.auto, p.estatus_Divisa, p.divisa, p.costo, p.contenido_compras, 
                                     p.pdf_1, p.pdf_2, p.pdf_3, p.pdf_4, p.pdf_pto, p.tasa, 
                                     p.precio_1, p.precio_2, p.precio_3, p.precio_4, p.precio_pto,
-                                    pext.pdmf_1, pext.pdmf_2, pext.precio_may_1, pext.precio_may_2
+                                    pext.pdmf_1, pext.pdmf_2, pext.precio_may_1, pext.precio_may_2,
+                                    pext.pdmf_3, pext.pdmf_4, pext.precio_may_3, pext.precio_may_4
                                     FROM productos as p 
                                     join productos_ext as pext on p.auto=pext.auto_producto
                                     where p.estatus='Activo'";
+                    //sql += " and p.auto='0000000866' "; 
                     var list = cnn.Database.SqlQuery<DtoLibSistema.Configuracion.ActualizarTasaDivisa.CapturarData.Ficha>(sql).ToList();
                     result.Lista = list;
                 }
@@ -124,7 +130,48 @@ namespace ProvLibSistema
 
             return result;
         }
-        public DtoLib.Resultado Configuracion_Actualizar_TasaDivisa_ActualizarData(DtoLibSistema.Configuracion.ActualizarTasaDivisa.ActualizarData.Ficha ficha)
+        public DtoLib.ResultadoLista<DtoLibSistema.Configuracion.ActualizarTasaDivisa.CapturarData.dataHndPrecio> 
+            Configuracion_Actualizar_TasaDivisa_CapturarData_HndPrecio()
+        {
+            var result = new DtoLib.ResultadoLista<DtoLibSistema.Configuracion.ActualizarTasaDivisa.CapturarData.dataHndPrecio>();
+
+            try
+            {
+                using (var cnn = new sistemaEntities(_cnSist.ConnectionString))
+                {
+                    var sql = @"SELECT 
+                                autoProducto, 
+                                idEmpresaPrecio as idPrecio, 
+                                neto_1, 
+                                neto_2, 
+                                neto_3,
+                                fullDivisa_1, 
+                                fullDivisa_2, 
+                                fullDivisa_3,
+                                pHndPrecio.contenido_1 as cont_1,
+                                pHndPrecio.contenido_2 as cont_2,
+                                pHndPrecio.contenido_3 as cont_3,
+                                p.estatus_divisa as estatusDivisa, 
+                                eTasa.tasa as tasaIva
+                                FROM productos_hnd_precio pHndPrecio
+                                join productos as p on p.auto=pHndPrecio.autoProducto
+                                join empresa_tasas as eTasa on eTasa.auto=p.auto_tasa
+                                WHERE p.estatus='Activo' ";
+                    //sql += " and autoProducto>='0000001402'";
+                    var list = cnn.Database.SqlQuery<DtoLibSistema.Configuracion.ActualizarTasaDivisa.CapturarData.dataHndPrecio>(sql).ToList();
+                    result.Lista = list;
+                }
+            }
+            catch (Exception e)
+            {
+                result.Mensaje = e.Message;
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+
+            return result;
+        }
+        public DtoLib.Resultado 
+            Configuracion_Actualizar_TasaDivisa_ActualizarData(DtoLibSistema.Configuracion.ActualizarTasaDivisa.ActualizarData.Ficha ficha)
         {
             var rt = new DtoLib.Resultado();
 
@@ -175,6 +222,8 @@ namespace ProvLibSistema
                                 }
                                 entPrdExt.pdmf_1 = rg.precioMonedaEnDivisaFull_May_1;
                                 entPrdExt.pdmf_2 = rg.precioMonedaEnDivisaFull_May_2;
+                                entPrdExt.pdmf_3 = rg.precioMonedaEnDivisaFull_May_3;
+                                entPrdExt.pdmf_4 = rg.precioMonedaEnDivisaFull_May_4;
                                 cnn.SaveChanges();
                             }
 
@@ -222,12 +271,16 @@ namespace ProvLibSistema
 
                                 var p11 = new MySql.Data.MySqlClient.MySqlParameter("@precio_may_1", rg.precioMay_1);
                                 var p22 = new MySql.Data.MySqlClient.MySqlParameter("@precio_may_2", rg.precioMay_2);
+                                var p44 = new MySql.Data.MySqlClient.MySqlParameter("@precio_may_3", rg.precioMay_3);
+                                var p55 = new MySql.Data.MySqlClient.MySqlParameter("@precio_may_4", rg.precioMay_4);
                                 var p33 = new MySql.Data.MySqlClient.MySqlParameter("@auto", rg.autoPrd);
                                 var sql2 = @"update productos_ext set 
                                             precio_may_1 = @precio_may_1,
-                                            precio_may_2 = @precio_may_2
+                                            precio_may_2 = @precio_may_2,
+                                            precio_may_3 = @precio_may_3,
+                                            precio_may_4 = @precio_may_4
                                             where auto_producto=@auto";
-                                var i2 = cnn.Database.ExecuteSqlCommand(sql2, p11, p22, p33);
+                                var i2 = cnn.Database.ExecuteSqlCommand(sql2, p11, p22, p44, p55, p33);
                                 if (i2 == 0)
                                 {
                                     rt.Mensaje = "PROBLEMA AL ACTUALIZAR ITEM [" + rg.autoPrd + "]";
@@ -306,37 +359,112 @@ namespace ProvLibSistema
                             cnn.productos_precios.AddRange(lentHist_2);
                             cnn.SaveChanges();
 
+                            foreach (var rg in ficha.productosHndPrecio)
+                            {
+                                if (rg.esAdmDivisa)
+                                {
+                                    var p1 = new MySql.Data.MySqlClient.MySqlParameter();
+                                    var p2 = new MySql.Data.MySqlClient.MySqlParameter();
+                                    var p3 = new MySql.Data.MySqlClient.MySqlParameter();
+                                    var p4 = new MySql.Data.MySqlClient.MySqlParameter();
+                                    var p5 = new MySql.Data.MySqlClient.MySqlParameter();
+
+                                    p1.ParameterName = "@neto1";
+                                    p1.Value = rg.neto_1;
+                                    p2.ParameterName = "@neto2";
+                                    p2.Value = rg.neto_2;
+                                    p3.ParameterName = "@neto3";
+                                    p3.Value = rg.neto_3;
+                                    p4.ParameterName = "@autoPrd";
+                                    p4.Value = rg.autoProducto;
+                                    p5.ParameterName = "@idPrecio";
+                                    p5.Value = rg.idPrecio;
+                                    var xsql = @"update productos_hnd_precio set neto_1=@neto1, neto_2=@neto2, neto_3=@neto3
+                                                where autoProducto=@autoPrd and idEmpresaPrecio=@idPrecio";
+                                    var xrg = cnn.Database.ExecuteSqlCommand(xsql, p1, p2, p3, p4, p5);
+                                    if (xrg == -1)
+                                    {
+                                        rt.Mensaje = "PROBLEMA AL ACTUALIZAR PRODUCTO_HND_PRECIO";
+                                        rt.Result = DtoLib.Enumerados.EnumResult.isError;
+                                        return rt;
+                                    }
+                                    cnn.SaveChanges();
+                                }
+                                else
+                                {
+                                    var p1 = new MySql.Data.MySqlClient.MySqlParameter();
+                                    var p2 = new MySql.Data.MySqlClient.MySqlParameter();
+                                    var p3 = new MySql.Data.MySqlClient.MySqlParameter();
+                                    var p4 = new MySql.Data.MySqlClient.MySqlParameter();
+                                    var p5 = new MySql.Data.MySqlClient.MySqlParameter();
+
+                                    p1.ParameterName = "@fulldivisa1";
+                                    p1.Value = rg.fullDivisa_1;
+                                    p2.ParameterName = "@fulldivisa2";
+                                    p2.Value = rg.fullDivisa_2;
+                                    p3.ParameterName = "@fulldivisa3";
+                                    p3.Value = rg.fullDivisa_3;
+                                    p4.ParameterName = "@autoPrd";
+                                    p4.Value = rg.autoProducto;
+                                    p5.ParameterName = "@idPrecio";
+                                    p5.Value = rg.idPrecio;
+                                    var xsql = @"update productos_hnd_precio set 
+                                                    fullDivisa_1=@fulldivisa1, 
+                                                    fullDivisa_2=@fulldivisa2, 
+                                                    fullDivisa_3=@fulldivisa3
+                                                where autoProducto=@autoPrd and idEmpresaPrecio=@idPrecio";
+                                    var xrg = cnn.Database.ExecuteSqlCommand(xsql, p1, p2, p3, p4, p5);
+                                    if (xrg == -1)
+                                    {
+                                        rt.Mensaje = "PROBLEMA AL ACTUALIZAR PRODUCTO_HND_PRECIO";
+                                        rt.Result = DtoLib.Enumerados.EnumResult.isError;
+                                        return rt;
+                                    }
+                                    cnn.SaveChanges();
+                                }
+                            }
+
                             ts.Commit();
+                        }
+                        catch (MySql.Data.MySqlClient.MySqlException ex)
+                        {
+                            rt.Mensaje = Helpers.MYSQL_VerificaError(ex);
+                            rt.Result = DtoLib.Enumerados.EnumResult.isError;
                         }
                         catch (DbUpdateException ex)
                         {
-                            var dbUpdateEx = ex as DbUpdateException;
-                            var sqlEx = dbUpdateEx.InnerException;
-                            if (sqlEx != null)
-                            {
-                                var exx = (MySql.Data.MySqlClient.MySqlException)sqlEx.InnerException;
-                                if (exx != null)
-                                {
-                                    if (exx.Number == 1451)
-                                    {
-                                        rt.Mensaje = "REGISTRO CONTIENE DATA RELACIONADA";
-                                        rt.Result = DtoLib.Enumerados.EnumResult.isError;
-                                        return rt;
-                                    }
-                                    if (exx.Number == 1062)
-                                    {
-                                        rt.Mensaje = exx.Message;
-                                        rt.Result = DtoLib.Enumerados.EnumResult.isError;
-                                        return rt;
-                                    }
-                                    rt.Mensaje = exx.Message;
-                                    rt.Result = DtoLib.Enumerados.EnumResult.isError;
-                                    return rt;
-                                }
-                            }
-                            rt.Mensaje = ex.Message;
+                            rt.Mensaje = Helpers.ENTITY_VerificaError(ex);
                             rt.Result = DtoLib.Enumerados.EnumResult.isError;
                         }
+                        //catch (DbUpdateException ex)
+                        //{
+                        //    var dbUpdateEx = ex as DbUpdateException;
+                        //    var sqlEx = dbUpdateEx.InnerException;
+                        //    if (sqlEx != null)
+                        //    {
+                        //        var exx = (MySql.Data.MySqlClient.MySqlException)sqlEx.InnerException;
+                        //        if (exx != null)
+                        //        {
+                        //            if (exx.Number == 1451)
+                        //            {
+                        //                rt.Mensaje = "REGISTRO CONTIENE DATA RELACIONADA";
+                        //                rt.Result = DtoLib.Enumerados.EnumResult.isError;
+                        //                return rt;
+                        //            }
+                        //            if (exx.Number == 1062)
+                        //            {
+                        //                rt.Mensaje = exx.Message;
+                        //                rt.Result = DtoLib.Enumerados.EnumResult.isError;
+                        //                return rt;
+                        //            }
+                        //            rt.Mensaje = exx.Message;
+                        //            rt.Result = DtoLib.Enumerados.EnumResult.isError;
+                        //            return rt;
+                        //        }
+                        //    }
+                        //    rt.Mensaje = ex.Message;
+                        //    rt.Result = DtoLib.Enumerados.EnumResult.isError;
+                        //}
                         finally
                         {
                             cnn.Configuration.AutoDetectChangesEnabled = false;
@@ -352,8 +480,9 @@ namespace ProvLibSistema
 
             return rt;
         }
-
-        public DtoLib.ResultadoEntidad<DtoLibSistema.Configuracion.Enumerados.EnumForzarRedondeoPrecioVenta> Configuracion_ForzarRedondeoPrecioVenta()
+        
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Configuracion.Enumerados.EnumForzarRedondeoPrecioVenta> 
+            Configuracion_ForzarRedondeoPrecioVenta()
         {
             var result = new DtoLib.ResultadoEntidad<DtoLibSistema.Configuracion.Enumerados.EnumForzarRedondeoPrecioVenta>();
 
@@ -394,7 +523,8 @@ namespace ProvLibSistema
 
             return result;
         }
-        public DtoLib.ResultadoEntidad<DtoLibSistema.Configuracion.Enumerados.EnumPreferenciaRegistroPrecio> Configuracion_PreferenciaRegistroPrecio()
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Configuracion.Enumerados.EnumPreferenciaRegistroPrecio> 
+            Configuracion_PreferenciaRegistroPrecio()
         {
             var result = new DtoLib.ResultadoEntidad<DtoLibSistema.Configuracion.Enumerados.EnumPreferenciaRegistroPrecio>();
 
@@ -433,7 +563,8 @@ namespace ProvLibSistema
             return result;
         }
 
-        public DtoLib.ResultadoEntidad<DtoLibSistema.Configuracion.Modulo.Capturar.Ficha> Configuracion_Modulo_Capturar()
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Configuracion.Modulo.Capturar.Ficha> 
+            Configuracion_Modulo_Capturar()
         {
             var result = new DtoLib.ResultadoEntidad<DtoLibSistema.Configuracion.Modulo.Capturar.Ficha>();
 
@@ -496,7 +627,8 @@ namespace ProvLibSistema
 
             return result;
         }
-        public DtoLib.Resultado Configuracion_Modulo_Actualizar(DtoLibSistema.Configuracion.Modulo.Actualizar.Ficha ficha)
+        public DtoLib.Resultado 
+            Configuracion_Modulo_Actualizar(DtoLibSistema.Configuracion.Modulo.Actualizar.Ficha ficha)
         {
             var rt= new DtoLib.Resultado();
 

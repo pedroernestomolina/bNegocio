@@ -46,7 +46,7 @@
     <Compile Include="Interfaces\IFuncion.cs" />
     <Compile Include="Interfaces\INegocio.cs" />
     <Compile Include="Interfaces\IPermisos.cs" />
-    <Compile Include="Interfaces\IPrecio.cs" />
+    <Compile Include="Interfaces\IPrecioEtiqueta.cs" />
     <Compile Include="Interfaces\IReconversionMonetaria.cs" />
     <Compile Include="Interfaces\ISerieFiscal.cs" />
     <Compile Include="Interfaces\IServConf.cs" />
@@ -64,7 +64,7 @@
     <Compile Include="MyService\Funcion.cs" />
     <Compile Include="MyService\Negocio.cs" />
     <Compile Include="MyService\Permisos.cs" />
-    <Compile Include="MyService\Precio.cs" />
+    <Compile Include="MyService\PrecioEtiqueta.cs" />
     <Compile Include="MyService\ReconversionMonetaria.cs" />
     <Compile Include="MyService\SerieFiscal.cs" />
     <Compile Include="MyService\ServConf.cs" />

@@ -35,7 +35,6 @@ namespace LibEntitySistema
         public virtual DbSet<empresa_sucursal> empresa_sucursal { get; set; }
         public virtual DbSet<productos> productos { get; set; }
         public virtual DbSet<productos_costos> productos_costos { get; set; }
-        public virtual DbSet<productos_ext> productos_ext { get; set; }
         public virtual DbSet<productos_precios> productos_precios { get; set; }
         public virtual DbSet<proveedores> proveedores { get; set; }
         public virtual DbSet<reconversion_monetaria> reconversion_monetaria { get; set; }
@@ -48,5 +47,7 @@ namespace LibEntitySistema
         public virtual DbSet<empresa_grupo> empresa_grupo { get; set; }
         public virtual DbSet<empresa_grupo_ext> empresa_grupo_ext { get; set; }
         public virtual DbSet<empresa_sucursal_ext> empresa_sucursal_ext { get; set; }
+        public virtual DbSet<productos_hnd_precio> productos_hnd_precio { get; set; }
+        public virtual DbSet<productos_ext> productos_ext { get; set; }
     }
 }

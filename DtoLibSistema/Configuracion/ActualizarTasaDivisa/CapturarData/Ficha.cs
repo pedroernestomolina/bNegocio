@@ -29,9 +29,12 @@ namespace DtoLibSistema.Configuracion.ActualizarTasaDivisa.CapturarData
         private decimal precio_pto { get; set; }
         private decimal precio_may_1 { get; set; }
         private decimal precio_may_2 { get; set; }
+        private decimal precio_may_3 { get; set; }
+        private decimal precio_may_4 { get; set; }
         private decimal pdmf_1 { get; set; }
         private decimal pdmf_2 { get; set; }
-
+        private decimal pdmf_3 { get; set; }
+        private decimal pdmf_4 { get; set; }
 
         public string autoPrd { get { return auto; } }
         public bool isAdmDivisa { get { return estatus_divisa == "1" ? true : false; } }
@@ -45,6 +48,8 @@ namespace DtoLibSistema.Configuracion.ActualizarTasaDivisa.CapturarData
         public decimal precioFullDivisa_5 { get { return pdf_pto; } }
         public decimal precioFullDivisaMay_1 { get { return pdmf_1; } }
         public decimal precioFullDivisaMay_2 { get { return pdmf_2 ; } }
+        public decimal precioFullDivisaMay_3 { get { return pdmf_3; } }
+        public decimal precioFullDivisaMay_4 { get { return pdmf_4; } }
         public decimal precioNetoMoneda_1 { get { return precio_1; } }
         public decimal precioNetoMoneda_2 { get { return precio_2; } }
         public decimal precioNetoMoneda_3 { get { return precio_3; } }
@@ -52,6 +57,8 @@ namespace DtoLibSistema.Configuracion.ActualizarTasaDivisa.CapturarData
         public decimal precioNetoMoneda_5 { get { return precio_pto; } }
         public decimal precioNetoMonedaMay_1 { get { return precio_may_1; } }
         public decimal precioNetoMonedaMay_2 { get { return precio_may_2; } }
+        public decimal precioNetoMonedaMay_3 { get { return precio_may_3; } }
+        public decimal precioNetoMonedaMay_4 { get { return precio_may_4; } }
         public decimal tasaIva { get { return tasa; } }
 
     }

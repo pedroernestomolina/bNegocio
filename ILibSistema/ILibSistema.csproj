@@ -47,7 +47,7 @@
     <Compile Include="IGrupoUsuario.cs" />
     <Compile Include="INegocio.cs" />
     <Compile Include="IPermisos.cs" />
-    <Compile Include="IPrecio.cs" />
+    <Compile Include="IPrecioEtiqueta.cs" />
     <Compile Include="IProvider.cs" />
     <Compile Include="IReconversionMonetaria.cs" />
     <Compile Include="ISerieFiscal.cs" />

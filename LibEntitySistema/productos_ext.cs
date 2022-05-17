@@ -30,5 +30,12 @@ namespace LibEntitySistema
         public decimal pdmf_1 { get; set; }
         public decimal pdmf_2 { get; set; }
         public decimal pdmf_3 { get; set; }
+        public string auto_precio_may_4 { get; set; }
+        public Nullable<int> cont_may_4 { get; set; }
+        public Nullable<decimal> utilidad_may_4 { get; set; }
+        public Nullable<decimal> precio_may_4 { get; set; }
+        public Nullable<decimal> pdmf_4 { get; set; }
+    
+        public virtual productos productos { get; set; }
     }
 }
