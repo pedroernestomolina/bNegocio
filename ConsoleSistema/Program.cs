@@ -15,7 +15,7 @@ namespace ConsoleSistema
 
         static void Main(string[] args)
         {
-            ILibSistema.IProvider sistPrv = new ProvLibSistema.Provider("localhost", "prod_0001");
+            ILibSistema.IProvider sistPrv = new ProvLibSistema.Provider("localhost", "pita");
             //var r01 = sistPrv.SucursalGrupo_GetLista();
             //var ficha = new DtoLibSistema.GrupoSucursal.Editar()
             //{
@@ -302,8 +302,8 @@ namespace ConsoleSistema
             //    var r02 = ProvLibSistema.Helpers.PasarPrecios_Insertar(lst);
             //}
 
-            //var r01 = sistPrv.Configuracion_Actualizar_TasaDivisa_CapturarData();
             //var r02 = sistPrv.Configuracion_Actualizar_TasaDivisa_CapturarData_HndPrecio();
+            //var r01 = sistPrv.Configuracion_Actualizar_TasaDivisa_CapturarData();
 
         }
 

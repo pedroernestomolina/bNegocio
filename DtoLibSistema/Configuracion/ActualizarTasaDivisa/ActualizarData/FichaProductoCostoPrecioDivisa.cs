@@ -30,6 +30,10 @@ namespace DtoLibSistema.Configuracion.ActualizarTasaDivisa.ActualizarData
         public decimal precioMay_2 { get; set; }
         public decimal precioMay_3 { get; set; }
         public decimal precioMay_4 { get; set; }
+        public decimal precioDsp_1 { get; set; }
+        public decimal precioDsp_2 { get; set; }
+        public decimal precioDsp_3 { get; set; }
+        public decimal precioDsp_4 { get; set; }
         public string serie { get; set; }
         public string documento { get; set; }
         public string nota { get; set; }
@@ -55,6 +59,10 @@ namespace DtoLibSistema.Configuracion.ActualizarTasaDivisa.ActualizarData
             precioMay_2 = 0.0m;
             precioMay_3 = 0.0m;
             precioMay_4 = 0.0m;
+            precioDsp_1 = 0.0m;
+            precioDsp_2 = 0.0m;
+            precioDsp_3 = 0.0m;
+            precioDsp_4 = 0.0m;
             serie = "";
             documento = "";
             nota = "";

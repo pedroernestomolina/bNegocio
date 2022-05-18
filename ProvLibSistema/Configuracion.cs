@@ -113,11 +113,19 @@ namespace ProvLibSistema
                                     p.pdf_1, p.pdf_2, p.pdf_3, p.pdf_4, p.pdf_pto, p.tasa, 
                                     p.precio_1, p.precio_2, p.precio_3, p.precio_4, p.precio_pto,
                                     pext.pdmf_1, pext.pdmf_2, pext.precio_may_1, pext.precio_may_2,
-                                    pext.pdmf_3, pext.pdmf_4, pext.precio_may_3, pext.precio_may_4
+                                    pext.pdmf_3, pext.pdmf_4, pext.precio_may_3, pext.precio_may_4,
+                                    pext.pdivisafull_dsp_1 as precioFullDivisaDsp_1, 
+                                    pext.pdivisafull_dsp_2 as precioFullDivisaDsp_2, 
+                                    pext.pdivisafull_dsp_3 as precioFullDivisaDsp_3, 
+                                    pext.pdivisafull_dsp_4 as precioFullDivisaDsp_4, 
+                                    pext.precio_dsp_1 as precioNetoMonedaDsp_1, 
+                                    pext.precio_dsp_2 as precioNetoMonedaDsp_2, 
+                                    pext.precio_dsp_3 as precioNetoMonedaDsp_3, 
+                                    pext.precio_dsp_4 as precioNetoMonedaDsp_4
                                     FROM productos as p 
                                     join productos_ext as pext on p.auto=pext.auto_producto
-                                    where p.estatus='Activo'";
-                    //sql += " and p.auto='0000000866' "; 
+                                    where p.estatus='Activo' ";
+                    //sql += " and p.auto='0000000612' "; 
                     var list = cnn.Database.SqlQuery<DtoLibSistema.Configuracion.ActualizarTasaDivisa.CapturarData.Ficha>(sql).ToList();
                     result.Lista = list;
                 }
@@ -224,6 +232,11 @@ namespace ProvLibSistema
                                 entPrdExt.pdmf_2 = rg.precioMonedaEnDivisaFull_May_2;
                                 entPrdExt.pdmf_3 = rg.precioMonedaEnDivisaFull_May_3;
                                 entPrdExt.pdmf_4 = rg.precioMonedaEnDivisaFull_May_4;
+
+                                entPrdExt.pdivisafull_dsp_1 = rg.precioMonedaEnDivisaFull_Dsp_1;
+                                entPrdExt.pdivisafull_dsp_2 = rg.precioMonedaEnDivisaFull_Dsp_2;
+                                entPrdExt.pdivisafull_dsp_3 = rg.precioMonedaEnDivisaFull_Dsp_3;
+                                entPrdExt.pdivisafull_dsp_4 = rg.precioMonedaEnDivisaFull_Dsp_4;
                                 cnn.SaveChanges();
                             }
 
@@ -274,13 +287,21 @@ namespace ProvLibSistema
                                 var p44 = new MySql.Data.MySqlClient.MySqlParameter("@precio_may_3", rg.precioMay_3);
                                 var p55 = new MySql.Data.MySqlClient.MySqlParameter("@precio_may_4", rg.precioMay_4);
                                 var p33 = new MySql.Data.MySqlClient.MySqlParameter("@auto", rg.autoPrd);
+                                var pd1 = new MySql.Data.MySqlClient.MySqlParameter("@precio_dsp_1", rg.precioDsp_1);
+                                var pd2 = new MySql.Data.MySqlClient.MySqlParameter("@precio_dsp_2", rg.precioDsp_2);
+                                var pd3 = new MySql.Data.MySqlClient.MySqlParameter("@precio_dsp_3", rg.precioDsp_3);
+                                var pd4 = new MySql.Data.MySqlClient.MySqlParameter("@precio_dsp_4", rg.precioDsp_4);
                                 var sql2 = @"update productos_ext set 
                                             precio_may_1 = @precio_may_1,
                                             precio_may_2 = @precio_may_2,
                                             precio_may_3 = @precio_may_3,
-                                            precio_may_4 = @precio_may_4
+                                            precio_may_4 = @precio_may_4,
+                                            precio_dsp_1 = @precio_dsp_1,
+                                            precio_dsp_2 = @precio_dsp_2,
+                                            precio_dsp_3 = @precio_dsp_3,
+                                            precio_dsp_4 = @precio_dsp_4
                                             where auto_producto=@auto";
-                                var i2 = cnn.Database.ExecuteSqlCommand(sql2, p11, p22, p44, p55, p33);
+                                var i2 = cnn.Database.ExecuteSqlCommand(sql2, p11, p22, p44, p55, p33, pd1, pd2, pd3, pd4);
                                 if (i2 == 0)
                                 {
                                     rt.Mensaje = "PROBLEMA AL ACTUALIZAR ITEM [" + rg.autoPrd + "]";

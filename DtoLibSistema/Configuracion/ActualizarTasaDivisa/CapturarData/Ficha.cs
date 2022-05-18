@@ -60,6 +60,15 @@ namespace DtoLibSistema.Configuracion.ActualizarTasaDivisa.CapturarData
         public decimal precioNetoMonedaMay_3 { get { return precio_may_3; } }
         public decimal precioNetoMonedaMay_4 { get { return precio_may_4; } }
         public decimal tasaIva { get { return tasa; } }
+        //
+        public decimal precioNetoMonedaDsp_1 { get; set; }
+        public decimal precioNetoMonedaDsp_2 { get; set; }
+        public decimal precioNetoMonedaDsp_3 { get; set; }
+        public decimal precioNetoMonedaDsp_4 { get; set; }
+        public decimal precioFullDivisaDsp_1 { get; set; }
+        public decimal precioFullDivisaDsp_2 { get; set; }
+        public decimal precioFullDivisaDsp_3 { get; set; }
+        public decimal precioFullDivisaDsp_4 { get; set; }
 
     }
 
