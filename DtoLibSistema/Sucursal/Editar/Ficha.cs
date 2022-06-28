@@ -16,6 +16,7 @@ namespace DtoLibSistema.Sucursal.Editar
         public string autoGrupo { get; set; }
         public string nombre { get; set; }
         public string estatusFactMayor { get; set; }
+        public string estatusVentaCredito { get; set; }
 
 
         public Ficha() 
@@ -24,6 +25,7 @@ namespace DtoLibSistema.Sucursal.Editar
             autoGrupo = "";
             nombre = "";
             estatusFactMayor = "";
+            estatusVentaCredito = "";
         }
 
     }

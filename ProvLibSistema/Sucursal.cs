@@ -25,8 +25,9 @@ namespace ProvLibSistema
                 using (var cnn = new sistemaEntities(_cnSist.ConnectionString))
                 {
                     var p1= new MySql.Data.MySqlClient.MySqlParameter();
-                    var sql_1 =@"SELECT eSuc.auto, eSuc.codigo, eSuc.nombre, 
+                    var sql_1 = @"SELECT eSuc.auto, eSuc.codigo, eSuc.nombre, 
                                     eSucExt.es_activo as estatus, eSuc.estatus_facturar_mayor as estatusFactMayor, 
+                                    eSucExt.estatus_fact_credito as estatusVentaCredito,
                                     eDep.nombre as nombreDeposito, eGrupo.nombre as nombreGrupo
                                     from empresa_sucursal as eSuc
                                     join empresa_sucursal_ext as eSucExt on eSucExt.auto_sucursal=eSuc.auto
@@ -65,6 +66,7 @@ namespace ProvLibSistema
                     var sql_1 = @"SELECT eSuc.auto, eSuc.codigo, eSuc.nombre, eSuc.autoEmpresaGrupo as autoGrupo, 
                                     eSuc.autoDepositoPrincipal as autoDepositoPrincipal,
                                     eSucExt.es_activo as estatus, eSuc.estatus_facturar_mayor as estatusFactMayor,
+                                    eSucExt.estatus_fact_credito as estatusVentaCredito,
                                     eGrupo.nombre as nombreGrupo, eDep.nombre as nombreDepositoAsignado
                                     from empresa_sucursal as eSuc
                                     join empresa_sucursal_ext as eSucExt on eSucExt.auto_sucursal=eSuc.auto
@@ -142,10 +144,11 @@ namespace ProvLibSistema
 
 
                         var xp1 = new MySql.Data.MySqlClient.MySqlParameter("@xp1", autoEmpresaSucursal);
+                        var xp2 = new MySql.Data.MySqlClient.MySqlParameter("@xp2", ficha.estatusVentaCredito);
                         var sql_2 = @"INSERT INTO empresa_sucursal_ext (
-                                        auto_sucursal, es_activo)
-                                        VALUES (@xp1, '1')";
-                        var r3 = cnn.Database.ExecuteSqlCommand(sql_2, xp1);
+                                        auto_sucursal, es_activo, estatus_fact_credito)
+                                        VALUES (@xp1, '1', @xp2)";
+                        var r3 = cnn.Database.ExecuteSqlCommand(sql_2, xp1, xp2);
                         if (r3 == 0)
                         {
                             result.Mensaje = "PROBLEMA AL REGISTRAR SUCURSAL_EXT";
@@ -199,6 +202,10 @@ namespace ProvLibSistema
                         ent.autoEmpresaGrupo=ficha.autoGrupo;
                         ent.nombre = ficha.nombre;
                         ent.estatus_facturar_mayor = ficha.estatusFactMayor;
+                        cnn.SaveChanges();
+
+                        var entExt = cnn.empresa_sucursal_ext.Find(ficha.auto);
+                        entExt.estatus_fact_credito = ficha.estatusVentaCredito;
                         cnn.SaveChanges();
 
                         ts.Complete();

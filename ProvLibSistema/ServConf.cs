@@ -660,6 +660,13 @@ namespace ProvLibSistema
                             VALUES (NULL, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 
                                     '', '', '0', '0', '', '')";
                     cnn.Database.ExecuteSqlCommand(cmd);
+                    //
+
+                    cmd = "truncate table p_verificador";
+                    cnn.Database.ExecuteSqlCommand(cmd);
+
+                    cmd = "truncate table v_pagomovil";
+                    cnn.Database.ExecuteSqlCommand(cmd);
 
                     //
                     cmd = "SET foreign_key_checks = 1";

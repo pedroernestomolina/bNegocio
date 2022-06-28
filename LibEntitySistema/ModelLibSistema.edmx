@@ -159,6 +159,7 @@ warning 6002: The table/view 'pita.empresa_grupo_ext' does not have a primary ke
           </Key>
           <Property Name="auto_sucursal" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="es_activo" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="estatus_fact_credito" Type="varchar" MaxLength="1" Nullable="false" />
         </EntityType>
         <EntityType Name="productos">
           <Key>
@@ -1659,14 +1660,9 @@ FROM `sistema_contadores` AS `sistema_contadores`</DefiningQuery>
             <End Role="empresa_hnd_precios" EntitySet="empresa_hnd_precios" />
             <End Role="empresa_grupo_ext" EntitySet="empresa_grupo_ext" />
           </AssociationSet>
-          <EntitySet Name="empresa_sucursal_ext" EntityType="ModelLibSistema.empresa_sucursal_ext" />
           <AssociationSet Name="empresa_sucursal_ibfk_1" Association="ModelLibSistema.empresa_sucursal_ibfk_1">
             <End Role="empresa_grupo" EntitySet="empresa_grupo" />
             <End Role="empresa_sucursal" EntitySet="empresa_sucursal" />
-          </AssociationSet>
-          <AssociationSet Name="empresa_sucursal_ext_ibfk_1" Association="ModelLibSistema.empresa_sucursal_ext_ibfk_1">
-            <End Role="empresa_sucursal" EntitySet="empresa_sucursal" />
-            <End Role="empresa_sucursal_ext" EntitySet="empresa_sucursal_ext" />
           </AssociationSet>
           <AssociationSet Name="empresa_depositos_ext_ibfk_1" Association="ModelLibSistema.empresa_depositos_ext_ibfk_1">
             <End Role="empresa_depositos" EntitySet="empresa_depositos" />
@@ -1685,6 +1681,11 @@ FROM `sistema_contadores` AS `sistema_contadores`</DefiningQuery>
           <AssociationSet Name="productos_ext_ibfk_1" Association="ModelLibSistema.productos_ext_ibfk_1">
             <End Role="productos" EntitySet="productos" />
             <End Role="productos_ext" EntitySet="productos_ext" />
+          </AssociationSet>
+          <EntitySet Name="empresa_sucursal_ext" EntityType="ModelLibSistema.empresa_sucursal_ext" />
+          <AssociationSet Name="empresa_sucursal_ext_ibfk_1" Association="ModelLibSistema.empresa_sucursal_ext_ibfk_1">
+            <End Role="empresa_sucursal" EntitySet="empresa_sucursal" />
+            <End Role="empresa_sucursal_ext" EntitySet="empresa_sucursal_ext" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="empresa_grupo">
@@ -1733,14 +1734,6 @@ FROM `sistema_contadores` AS `sistema_contadores`</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="empresa_sucursal_ext">
-          <Key>
-            <PropertyRef Name="auto_sucursal" />
-          </Key>
-          <Property Name="auto_sucursal" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="es_activo" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="empresa_sucursal" Relationship="ModelLibSistema.empresa_sucursal_ext_ibfk_1" FromRole="empresa_sucursal_ext" ToRole="empresa_sucursal" />
-        </EntityType>
         <Association Name="empresa_sucursal_ibfk_1">
           <End Type="ModelLibSistema.empresa_grupo" Role="empresa_grupo" Multiplicity="1" />
           <End Type="ModelLibSistema.empresa_sucursal" Role="empresa_sucursal" Multiplicity="*" />
@@ -1750,18 +1743,6 @@ FROM `sistema_contadores` AS `sistema_contadores`</DefiningQuery>
             </Principal>
             <Dependent Role="empresa_sucursal">
               <PropertyRef Name="autoEmpresaGrupo" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="empresa_sucursal_ext_ibfk_1">
-          <End Type="ModelLibSistema.empresa_sucursal" Role="empresa_sucursal" Multiplicity="1" />
-          <End Type="ModelLibSistema.empresa_sucursal_ext" Role="empresa_sucursal_ext" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="empresa_sucursal">
-              <PropertyRef Name="auto" />
-            </Principal>
-            <Dependent Role="empresa_sucursal_ext">
-              <PropertyRef Name="auto_sucursal" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1899,6 +1880,27 @@ FROM `sistema_contadores` AS `sistema_contadores`</DefiningQuery>
             </Principal>
             <Dependent Role="productos_ext">
               <PropertyRef Name="auto_producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="empresa_sucursal_ext">
+          <Key>
+            <PropertyRef Name="auto_sucursal" />
+          </Key>
+          <Property Name="auto_sucursal" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="es_activo" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="estatus_fact_credito" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="empresa_sucursal" Relationship="ModelLibSistema.empresa_sucursal_ext_ibfk_1" FromRole="empresa_sucursal_ext" ToRole="empresa_sucursal" />
+        </EntityType>
+        <Association Name="empresa_sucursal_ext_ibfk_1">
+          <End Type="ModelLibSistema.empresa_sucursal" Role="empresa_sucursal" Multiplicity="1" />
+          <End Type="ModelLibSistema.empresa_sucursal_ext" Role="empresa_sucursal_ext" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="empresa_sucursal">
+              <PropertyRef Name="auto" />
+            </Principal>
+            <Dependent Role="empresa_sucursal_ext">
+              <PropertyRef Name="auto_sucursal" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2427,14 +2429,6 @@ FROM `sistema_contadores` AS `sistema_contadores`</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="empresa_sucursal_ext">
-            <EntityTypeMapping TypeName="ModelLibSistema.empresa_sucursal_ext">
-              <MappingFragment StoreEntitySet="empresa_sucursal_ext">
-                <ScalarProperty Name="es_activo" ColumnName="es_activo" />
-                <ScalarProperty Name="auto_sucursal" ColumnName="auto_sucursal" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="productos_hnd_precio">
             <EntityTypeMapping TypeName="ModelLibSistema.productos_hnd_precio">
               <MappingFragment StoreEntitySet="productos_hnd_precio">
@@ -2504,6 +2498,15 @@ FROM `sistema_contadores` AS `sistema_contadores`</DefiningQuery>
                 <ScalarProperty Name="auto_precio_may_2" ColumnName="auto_precio_may_2" />
                 <ScalarProperty Name="auto_precio_may_1" ColumnName="auto_precio_may_1" />
                 <ScalarProperty Name="auto_producto" ColumnName="auto_producto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="empresa_sucursal_ext">
+            <EntityTypeMapping TypeName="ModelLibSistema.empresa_sucursal_ext">
+              <MappingFragment StoreEntitySet="empresa_sucursal_ext">
+                <ScalarProperty Name="estatus_fact_credito" ColumnName="estatus_fact_credito" />
+                <ScalarProperty Name="es_activo" ColumnName="es_activo" />
+                <ScalarProperty Name="auto_sucursal" ColumnName="auto_sucursal" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

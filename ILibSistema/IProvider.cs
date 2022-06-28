@@ -12,7 +12,7 @@ namespace ILibSistema
         IFuncion, IGrupoUsuario, IServConf, IPermisos, IConfiguracion,
         IVendedor, ICobrador, ISerieFiscal, IReconversionMonetaria,
         INegocio, IControlAcceso, ITablaPrecio, ISucursalGrupo, 
-        IPrecioEtiqueta
+        IPrecioEtiqueta, IMediosCobroPago
     {
 
         DtoLib.ResultadoEntidad<DateTime> FechaServidor();

@@ -31,15 +31,15 @@
         <EntityTypeShape EntityType="ModelLibSistema.empresa_grupo_ext" Width="1.5" PointX="25.875" PointY="12.75" />
         <AssociationConnector Association="ModelLibSistema.empresa_grupo_ext_ibfk_1" />
         <AssociationConnector Association="ModelLibSistema.empresa_grupo_ext_ibfk_2" />
-        <EntityTypeShape EntityType="ModelLibSistema.empresa_sucursal_ext" Width="1.5" PointX="22.75" PointY="4.875" />
         <AssociationConnector Association="ModelLibSistema.empresa_sucursal_ibfk_1" />
-        <AssociationConnector Association="ModelLibSistema.empresa_sucursal_ext_ibfk_1" />
         <AssociationConnector Association="ModelLibSistema.empresa_depositos_ext_ibfk_1" />
         <EntityTypeShape EntityType="ModelLibSistema.productos_hnd_precio" Width="1.5" PointX="37.5" PointY="6.25" />
         <AssociationConnector Association="ModelLibSistema.productos_hnd_precio_ibfk_5" />
         <AssociationConnector Association="ModelLibSistema.productos_hnd_precio_ibfk_1" />
         <EntityTypeShape EntityType="ModelLibSistema.productos_ext" Width="1.5" PointX="3" PointY="33.625" />
         <AssociationConnector Association="ModelLibSistema.productos_ext_ibfk_1" />
+        <EntityTypeShape EntityType="ModelLibSistema.empresa_sucursal_ext" Width="1.5" PointX="8" PointY="10.125" />
+        <AssociationConnector Association="ModelLibSistema.empresa_sucursal_ext_ibfk_1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

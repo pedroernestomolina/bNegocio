@@ -44,6 +44,7 @@
     <Compile Include="Interfaces\IControlAcceso.cs" />
     <Compile Include="Interfaces\IDeposito.cs" />
     <Compile Include="Interfaces\IFuncion.cs" />
+    <Compile Include="Interfaces\IMediosCobroPago.cs" />
     <Compile Include="Interfaces\INegocio.cs" />
     <Compile Include="Interfaces\IPermisos.cs" />
     <Compile Include="Interfaces\IPrecioEtiqueta.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="MyService\ControlAcceso.cs" />
     <Compile Include="MyService\Deposito.cs" />
     <Compile Include="MyService\Funcion.cs" />
+    <Compile Include="MyService\MediosCobroPago.cs" />
     <Compile Include="MyService\Negocio.cs" />
     <Compile Include="MyService\Permisos.cs" />
     <Compile Include="MyService\PrecioEtiqueta.cs" />

@@ -78,6 +78,12 @@
     <Compile Include="GrupoUsuario\Usuario.cs" />
     <Compile Include="Helper\PasarPrecios\Capturar\Ficha.cs" />
     <Compile Include="Helper\PasarPrecios\Insertar\Ficha.cs" />
+    <Compile Include="MediosCobroPago\Agregar\Ficha.cs" />
+    <Compile Include="MediosCobroPago\baseAgregarEditar.cs" />
+    <Compile Include="MediosCobroPago\Editar\Ficha.cs" />
+    <Compile Include="MediosCobroPago\Entidad\Ficha.cs" />
+    <Compile Include="MediosCobroPago\Lista\Ficha.cs" />
+    <Compile Include="MediosCobroPago\Lista\Filtro.cs" />
     <Compile Include="Negocio\Editar\Ficha.cs" />
     <Compile Include="Negocio\Entidad\Ficha.cs" />
     <Compile Include="Permiso\Enumerados.cs" />

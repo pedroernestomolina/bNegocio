@@ -17,6 +17,7 @@ namespace DtoLibSistema.Sucursal.Lista
         public string nombre { get; set; }
         public string estatus { get; set; }
         public string estatusFactMayor { get; set; }
+        public string estatusVentaCredito { get; set; }
         public string nombreGrupo { get; set; }
         public string nombreDeposito { get; set; }
 
@@ -28,6 +29,7 @@ namespace DtoLibSistema.Sucursal.Lista
             nombre = "";
             estatus = "";
             estatusFactMayor = "";
+            estatusVentaCredito = "";
             nombreGrupo = "";
             nombreDeposito = "";
         }

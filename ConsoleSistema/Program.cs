@@ -305,6 +305,18 @@ namespace ConsoleSistema
             //var r02 = sistPrv.Configuracion_Actualizar_TasaDivisa_CapturarData_HndPrecio();
             //var r01 = sistPrv.Configuracion_Actualizar_TasaDivisa_CapturarData();
 
+            //var filtro = new DtoLibSistema.MediosCobroPago.Lista.Filtro();
+            //var r01 = sistPrv.MediosCobroPago_GetLista(filtro);
+            //var r02 = sistPrv.MediosCobroPago_GetFicha_ById("0000000004");
+            //var ficha = new DtoLibSistema.MediosCobroPago.Editar.Ficha()
+            //{
+            //    auto="0000000010",
+            //    codigo = "10",
+            //    descripcion = "Zellec",
+            //    estatusCobro = "1",
+            //    estatusPago = "0",
+            //};
+            //var r03 = sistPrv.MediosCobroPago_EditarFicha(ficha);
         }
 
     }
