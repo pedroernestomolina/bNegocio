@@ -12,18 +12,22 @@ namespace ServiceSistema.MyService
     public partial class Service : IService
     {
 
-        public DtoLib.ResultadoEntidad<string> Permiso_PedirClaveAcceso_NivelMaximo()
+        public DtoLib.ResultadoEntidad<string> 
+            Permiso_PedirClaveAcceso_NivelMaximo()
         {
             return ServiceProv.Permiso_PedirClaveAcceso_NivelMaximo();
         }
-        public DtoLib.ResultadoEntidad<string> Permiso_PedirClaveAcceso_NivelMedio()
+        public DtoLib.ResultadoEntidad<string> 
+            Permiso_PedirClaveAcceso_NivelMedio()
         {
             return ServiceProv.Permiso_PedirClaveAcceso_NivelMedio();
         }
-        public DtoLib.ResultadoEntidad<string> Permiso_PedirClaveAcceso_NivelMinimo()
+        public DtoLib.ResultadoEntidad<string> 
+            Permiso_PedirClaveAcceso_NivelMinimo()
         {
             return ServiceProv.Permiso_PedirClaveAcceso_NivelMinimo();
         }
+
 
         public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_ToolSistema(string autoGrupoUsuario)
         {
@@ -219,26 +223,50 @@ namespace ServiceSistema.MyService
             return ServiceProv.Permiso_ControlCobrador_Editar(autoGrupoUsuario);
         }
 
-        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_ControlSerieFiscal(string autoGrupoUsuario)
+
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_ControlSerieFiscal(string autoGrupoUsuario)
         {
             return ServiceProv.Permiso_ControlSerieFiscal(autoGrupoUsuario);
         }
-        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_ControlSerieFiscal_Agregar(string autoGrupoUsuario)
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_ControlSerieFiscal_Agregar(string autoGrupoUsuario)
         {
             return ServiceProv.Permiso_ControlSerieFiscal_Agregar(autoGrupoUsuario);
         }
-        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_ControlSerieFiscal_Editar(string autoGrupoUsuario)
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_ControlSerieFiscal_Editar(string autoGrupoUsuario)
         {
             return ServiceProv.Permiso_ControlSerieFiscal_Editar(autoGrupoUsuario);
         }
-        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_ControlSerieFiscal_ActivarInactivar(string autoGrupoUsuario)
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_ControlSerieFiscal_ActivarInactivar(string autoGrupoUsuario)
         {
             return ServiceProv.Permiso_ControlSerieFiscal_ActivarInactivar(autoGrupoUsuario);
         }
 
-        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_Configuracion_Sistema(string autoGrupoUsuario)
+
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_Configuracion_Sistema(string autoGrupoUsuario)
         {
             return ServiceProv.Permiso_Configuracion_Sistema(autoGrupoUsuario);
+        }
+
+
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_MedioPagoCobro(string autoGrupoUsuario)
+        {
+            return ServiceProv.Permiso_MedioPagoCobro(autoGrupoUsuario);
+        }
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_MedioPagoCobro_Agregar(string autoGrupoUsuario)
+        {
+            return ServiceProv.Permiso_MedioPagoCobro_Agregar(autoGrupoUsuario);
+        }
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_MedioPagoCobro_Editar(string autoGrupoUsuario)
+        {
+            return ServiceProv.Permiso_MedioPagoCobro_Editar(autoGrupoUsuario);
         }
 
     }

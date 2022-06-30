@@ -12,7 +12,8 @@ namespace ProvLibSistema
     public partial class Provider : ILibSistema.IProvider
     {
 
-        public DtoLib.ResultadoEntidad<string> Permiso_PedirClaveAcceso_NivelMaximo()
+        public DtoLib.ResultadoEntidad<string> 
+            Permiso_PedirClaveAcceso_NivelMaximo()
         {
             var result = new DtoLib.ResultadoEntidad<string>();
 
@@ -39,7 +40,8 @@ namespace ProvLibSistema
 
             return result;
         }
-        public DtoLib.ResultadoEntidad<string> Permiso_PedirClaveAcceso_NivelMedio()
+        public DtoLib.ResultadoEntidad<string> 
+            Permiso_PedirClaveAcceso_NivelMedio()
         {
             var result = new DtoLib.ResultadoEntidad<string>();
 
@@ -66,7 +68,8 @@ namespace ProvLibSistema
 
             return result;
         }
-        public DtoLib.ResultadoEntidad<string> Permiso_PedirClaveAcceso_NivelMinimo()
+        public DtoLib.ResultadoEntidad<string>
+            Permiso_PedirClaveAcceso_NivelMinimo()
         {
             var result = new DtoLib.ResultadoEntidad<string>();
 
@@ -93,6 +96,7 @@ namespace ProvLibSistema
 
             return result;
         }
+
 
         public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_ToolSistema(string autoGrupoUsuario)
         {
@@ -861,7 +865,9 @@ namespace ProvLibSistema
             return result;
         }
 
-        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_ControlSerieFiscal(string autoGrupoUsuario)
+
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_ControlSerieFiscal(string autoGrupoUsuario)
         {
             var result = new DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha>();
 
@@ -891,7 +897,8 @@ namespace ProvLibSistema
 
             return result;
         }
-        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_ControlSerieFiscal_Agregar(string autoGrupoUsuario)
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_ControlSerieFiscal_Agregar(string autoGrupoUsuario)
         {
             var result = new DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha>();
 
@@ -921,7 +928,8 @@ namespace ProvLibSistema
 
             return result;
         }
-        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_ControlSerieFiscal_Editar(string autoGrupoUsuario)
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_ControlSerieFiscal_Editar(string autoGrupoUsuario)
         {
             var result = new DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha>();
 
@@ -951,7 +959,8 @@ namespace ProvLibSistema
 
             return result;
         }
-        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_ControlSerieFiscal_ActivarInactivar(string autoGrupoUsuario)
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_ControlSerieFiscal_ActivarInactivar(string autoGrupoUsuario)
         {
             var result = new DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha>();
 
@@ -982,7 +991,9 @@ namespace ProvLibSistema
             return result;
         }
 
-        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_Configuracion_Sistema(string autoGrupoUsuario)
+
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_Configuracion_Sistema(string autoGrupoUsuario)
         {
             var result = new DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha>();
 
@@ -994,6 +1005,101 @@ namespace ProvLibSistema
                     p1.ParameterName = "@p1";
                     p1.Value = autoGrupoUsuario;
                     var permiso = cnn.Database.SqlQuery<DtoLibSistema.Permiso.Ficha>("select estatus, seguridad from usuarios_grupo_permisos where codigo_grupo=@p1 and codigo_funcion='1202000000'", p1).FirstOrDefault();
+                    if (permiso == null)
+                    {
+                        result.Mensaje = "PERMISO NO ENCONTRADO";
+                        result.Result = DtoLib.Enumerados.EnumResult.isError;
+                        result.Entidad = null;
+                        return result;
+                    }
+                    result.Entidad = permiso;
+                }
+            }
+            catch (Exception e)
+            {
+                result.Mensaje = e.Message;
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+
+            return result;
+        }
+
+
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_MedioPagoCobro(string autoGrupoUsuario)
+        {
+            var result = new DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha>();
+
+            try
+            {
+                using (var cnn = new sistemaEntities(_cnSist.ConnectionString))
+                {
+                    var p1 = new MySql.Data.MySqlClient.MySqlParameter();
+                    p1.ParameterName = "@p1";
+                    p1.Value = autoGrupoUsuario;
+                    var permiso = cnn.Database.SqlQuery<DtoLibSistema.Permiso.Ficha>("select estatus, seguridad from usuarios_grupo_permisos where codigo_grupo=@p1 and codigo_funcion='1270000000'", p1).FirstOrDefault();
+                    if (permiso == null)
+                    {
+                        result.Mensaje = "PERMISO NO ENCONTRADO";
+                        result.Result = DtoLib.Enumerados.EnumResult.isError;
+                        result.Entidad = null;
+                        return result;
+                    }
+                    result.Entidad = permiso;
+                }
+            }
+            catch (Exception e)
+            {
+                result.Mensaje = e.Message;
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+
+            return result;
+        }
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_MedioPagoCobro_Agregar(string autoGrupoUsuario)
+        {
+            var result = new DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha>();
+
+            try
+            {
+                using (var cnn = new sistemaEntities(_cnSist.ConnectionString))
+                {
+                    var p1 = new MySql.Data.MySqlClient.MySqlParameter();
+                    p1.ParameterName = "@p1";
+                    p1.Value = autoGrupoUsuario;
+                    var permiso = cnn.Database.SqlQuery<DtoLibSistema.Permiso.Ficha>("select estatus, seguridad from usuarios_grupo_permisos where codigo_grupo=@p1 and codigo_funcion='1270010000'", p1).FirstOrDefault();
+                    if (permiso == null)
+                    {
+                        result.Mensaje = "PERMISO NO ENCONTRADO";
+                        result.Result = DtoLib.Enumerados.EnumResult.isError;
+                        result.Entidad = null;
+                        return result;
+                    }
+                    result.Entidad = permiso;
+                }
+            }
+            catch (Exception e)
+            {
+                result.Mensaje = e.Message;
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+
+            return result;
+        }
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_MedioPagoCobro_Editar(string autoGrupoUsuario)
+        {
+            var result = new DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha>();
+
+            try
+            {
+                using (var cnn = new sistemaEntities(_cnSist.ConnectionString))
+                {
+                    var p1 = new MySql.Data.MySqlClient.MySqlParameter();
+                    p1.ParameterName = "@p1";
+                    p1.Value = autoGrupoUsuario;
+                    var permiso = cnn.Database.SqlQuery<DtoLibSistema.Permiso.Ficha>("select estatus, seguridad from usuarios_grupo_permisos where codigo_grupo=@p1 and codigo_funcion='1270020000'", p1).FirstOrDefault();
                     if (permiso == null)
                     {
                         result.Mensaje = "PERMISO NO ENCONTRADO";

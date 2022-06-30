@@ -11,9 +11,13 @@ namespace ILibSistema
     public interface IPermisos
     {
 
-        DtoLib.ResultadoEntidad<string> Permiso_PedirClaveAcceso_NivelMaximo();
-        DtoLib.ResultadoEntidad<string> Permiso_PedirClaveAcceso_NivelMedio();
-        DtoLib.ResultadoEntidad<string> Permiso_PedirClaveAcceso_NivelMinimo();
+        DtoLib.ResultadoEntidad<string> 
+            Permiso_PedirClaveAcceso_NivelMaximo();
+        DtoLib.ResultadoEntidad<string> 
+            Permiso_PedirClaveAcceso_NivelMedio();
+        DtoLib.ResultadoEntidad<string> 
+            Permiso_PedirClaveAcceso_NivelMinimo();
+
 
         DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_ToolSistema (string autoGrupoUsuario);
         DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_InicializarBD(string autoGrupoUsuario);
@@ -85,12 +89,27 @@ namespace ILibSistema
         DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_ControlCobrador_Agregar(string autoGrupoUsuario);
         DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_ControlCobrador_Editar(string autoGrupoUsuario);
 
-        DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_ControlSerieFiscal(string autoGrupoUsuario);
-        DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_ControlSerieFiscal_Agregar(string autoGrupoUsuario);
-        DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_ControlSerieFiscal_Editar(string autoGrupoUsuario);
-        DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_ControlSerieFiscal_ActivarInactivar(string autoGrupoUsuario);
 
-        DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> Permiso_Configuracion_Sistema(string autoGrupoUsuario);
+        DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_ControlSerieFiscal(string autoGrupoUsuario);
+        DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_ControlSerieFiscal_Agregar(string autoGrupoUsuario);
+        DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_ControlSerieFiscal_Editar(string autoGrupoUsuario);
+        DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_ControlSerieFiscal_ActivarInactivar(string autoGrupoUsuario);
+
+
+        DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_Configuracion_Sistema(string autoGrupoUsuario);
+
+
+        DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_MedioPagoCobro(string autoGrupoUsuario);
+        DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_MedioPagoCobro_Agregar(string autoGrupoUsuario);
+        DtoLib.ResultadoEntidad<DtoLibSistema.Permiso.Ficha> 
+            Permiso_MedioPagoCobro_Editar(string autoGrupoUsuario);
 
     }
 
