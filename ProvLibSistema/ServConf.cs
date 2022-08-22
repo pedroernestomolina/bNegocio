@@ -668,6 +668,9 @@ namespace ProvLibSistema
                     cmd = "truncate table v_pagomovil";
                     cnn.Database.ExecuteSqlCommand(cmd);
 
+                    cmd = "truncate table monitor_cambios_bd";
+                    cnn.Database.ExecuteSqlCommand(cmd);
+                    
                     //
                     cmd = "SET foreign_key_checks = 1";
                     cnn.Database.ExecuteSqlCommand(cmd);
