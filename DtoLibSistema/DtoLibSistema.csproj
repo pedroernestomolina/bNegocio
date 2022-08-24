@@ -56,6 +56,8 @@
     <Compile Include="Configuracion\InicializarBD\Ficha.cs" />
     <Compile Include="Configuracion\Modulo\Actualizar\Ficha.cs" />
     <Compile Include="Configuracion\Modulo\Capturar\Ficha.cs" />
+    <Compile Include="Configuracion\Pos\Actualizar\Ficha.cs" />
+    <Compile Include="Configuracion\Pos\Capturar\Ficha.cs" />
     <Compile Include="ControlAcceso\Actualizar\Ficha.cs" />
     <Compile Include="ControlAcceso\Actualizar\ItemAcceso.cs" />
     <Compile Include="ControlAcceso\Data\Ficha.cs" />

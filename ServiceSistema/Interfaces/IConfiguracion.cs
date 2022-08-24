@@ -11,12 +11,15 @@ namespace ServiceSistema.Interfaces
     public interface IConfiguracion
     {
 
-        DtoLib.ResultadoEntidad<DtoLibSistema.Configuracion.Enumerados.EnumForzarRedondeoPrecioVenta> Configuracion_ForzarRedondeoPrecioVenta();
-        DtoLib.ResultadoEntidad<DtoLibSistema.Configuracion.Enumerados.EnumPreferenciaRegistroPrecio> Configuracion_PreferenciaRegistroPrecio();
+        DtoLib.ResultadoEntidad<DtoLibSistema.Configuracion.Enumerados.EnumForzarRedondeoPrecioVenta> 
+            Configuracion_ForzarRedondeoPrecioVenta();
+        DtoLib.ResultadoEntidad<DtoLibSistema.Configuracion.Enumerados.EnumPreferenciaRegistroPrecio>
+            Configuracion_PreferenciaRegistroPrecio();
 
-        DtoLib.ResultadoEntidad<string> Configuracion_TasaCambioActual();
-        DtoLib.ResultadoEntidad<string> Configuracion_TasaRecepcionPos();
-
+        DtoLib.ResultadoEntidad<string> 
+            Configuracion_TasaCambioActual();
+        DtoLib.ResultadoEntidad<string> 
+            Configuracion_TasaRecepcionPos();
 
         DtoLib.Resultado 
             Configuracion_Actualizar_TasaRecepcionPos(DtoLibSistema.Configuracion.ActualizarTasaRecepcionPos.Ficha ficha);
@@ -26,10 +29,16 @@ namespace ServiceSistema.Interfaces
             Configuracion_Actualizar_TasaDivisa_CapturarData_HndPrecio();
         DtoLib.Resultado
             Configuracion_Actualizar_TasaDivisa_ActualizarData(DtoLibSistema.Configuracion.ActualizarTasaDivisa.ActualizarData.Ficha ficha);
+        
+        DtoLib.ResultadoEntidad<DtoLibSistema.Configuracion.Modulo.Capturar.Ficha> 
+            Configuracion_Modulo_Capturar();
+        DtoLib.Resultado 
+            Configuracion_Modulo_Actualizar(DtoLibSistema.Configuracion.Modulo.Actualizar.Ficha ficha);
 
-
-        DtoLib.ResultadoEntidad<DtoLibSistema.Configuracion.Modulo.Capturar.Ficha> Configuracion_Modulo_Capturar();
-        DtoLib.Resultado Configuracion_Modulo_Actualizar(DtoLibSistema.Configuracion.Modulo.Actualizar.Ficha ficha);
+        DtoLib.ResultadoEntidad<DtoLibSistema.Configuracion.Pos.Capturar.Ficha>
+            Configuracion_Pos_Capturar();
+        DtoLib.Resultado
+            Configuracion_Pos_Actualizar(DtoLibSistema.Configuracion.Pos.Actualizar.Ficha ficha);
 
     }
 

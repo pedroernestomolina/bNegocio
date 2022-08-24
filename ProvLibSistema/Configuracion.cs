@@ -714,33 +714,109 @@ namespace ProvLibSistema
 
                             ts.Commit();
                         }
+                        catch (MySql.Data.MySqlClient.MySqlException ex)
+                        {
+                            rt.Mensaje = Helpers.MYSQL_VerificaError(ex);
+                            rt.Result = DtoLib.Enumerados.EnumResult.isError;
+                        }
                         catch (DbUpdateException ex)
                         {
-                            var dbUpdateEx = ex as DbUpdateException;
-                            var sqlEx = dbUpdateEx.InnerException;
-                            if (sqlEx != null)
+                            rt.Mensaje = Helpers.ENTITY_VerificaError(ex);
+                            rt.Result = DtoLib.Enumerados.EnumResult.isError;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                rt.Mensaje = e.Message;
+                rt.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+
+            return rt;
+        }
+
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Configuracion.Pos.Capturar.Ficha> 
+            Configuracion_Pos_Capturar()
+        {
+            var result = new DtoLib.ResultadoEntidad<DtoLibSistema.Configuracion.Pos.Capturar.Ficha>();
+
+            try
+            {
+                using (var cnn = new sistemaEntities(_cnSist.ConnectionString))
+                {
+                    var ent1 = cnn.sistema_configuracion.FirstOrDefault(f => f.codigo == "GLOBAL58");
+                    if (ent1 == null)
+                    {
+                        result.Mensaje = "[ GLOBAL58 ] CONFIGURACION NO ENCONTRADO";
+                        result.Result = DtoLib.Enumerados.EnumResult.isError;
+                        return result;
+                    }
+                    var ent2 = cnn.sistema_configuracion.FirstOrDefault(f => f.codigo == "GLOBAL59");
+                    if (ent2 == null)
+                    {
+                        result.Mensaje = "[ GLOBAL59 ] CONFIGURACION NO ENCONTRADO";
+                        result.Result = DtoLib.Enumerados.EnumResult.isError;
+                        return result;
+                    }
+                    var rg = new DtoLibSistema.Configuracion.Pos.Capturar.Ficha()
+                    {
+                        valorMaximoDescuentoPermitido = ent1.usuario,
+                        permitirDarDescuentoEnPosUnicamenteSiPagoEnDivisa = ent2.usuario,
+                    };
+                    result.Entidad = rg;
+                }
+            }
+            catch (Exception e)
+            {
+                result.Mensaje = e.Message;
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+
+            return result;
+        }
+        public DtoLib.Resultado 
+            Configuracion_Pos_Actualizar(DtoLibSistema.Configuracion.Pos.Actualizar.Ficha ficha)
+        {
+            var rt = new DtoLib.Resultado();
+
+            try
+            {
+                using (var cnn = new sistemaEntities(_cnSist.ConnectionString))
+                {
+                    using (var ts = cnn.Database.BeginTransaction())
+                    {
+                        try
+                        {
+                            var ent1 = cnn.sistema_configuracion.FirstOrDefault(f => f.codigo == "GLOBAL58");
+                            if (ent1 == null)
                             {
-                                var exx = (MySql.Data.MySqlClient.MySqlException)sqlEx.InnerException;
-                                if (exx != null)
-                                {
-                                    if (exx.Number == 1451)
-                                    {
-                                        rt.Mensaje = "REGISTRO CONTIENE DATA RELACIONADA";
-                                        rt.Result = DtoLib.Enumerados.EnumResult.isError;
-                                        return rt;
-                                    }
-                                    if (exx.Number == 1062)
-                                    {
-                                        rt.Mensaje = exx.Message;
-                                        rt.Result = DtoLib.Enumerados.EnumResult.isError;
-                                        return rt;
-                                    }
-                                    rt.Mensaje = exx.Message;
-                                    rt.Result = DtoLib.Enumerados.EnumResult.isError;
-                                    return rt;
-                                }
+                                rt.Mensaje = "[ GLOBAL58 ] CONFIGURACION NO ENCONTRADO";
+                                rt.Result = DtoLib.Enumerados.EnumResult.isError;
+                                return rt;
                             }
-                            rt.Mensaje = ex.Message;
+                            ent1.usuario = ficha.valorMaximoDescuentoPermitido;
+                            cnn.SaveChanges();
+
+                            var ent2 = cnn.sistema_configuracion.FirstOrDefault(f => f.codigo == "GLOBAL59");
+                            if (ent2 == null)
+                            {
+                                rt.Mensaje = "[ GLOBAL59 ] CONFIGURACION NO ENCONTRADO";
+                                rt.Result = DtoLib.Enumerados.EnumResult.isError;
+                                return rt;
+                            }
+                            ent2.usuario = ficha.permitirDarDescuentoEnPosUnicamenteSiPagoEnDivisa;
+                            cnn.SaveChanges();
+                            ts.Commit();
+                        }
+                        catch (MySql.Data.MySqlClient.MySqlException ex)
+                        {
+                            rt.Mensaje = Helpers.MYSQL_VerificaError(ex);
+                            rt.Result = DtoLib.Enumerados.EnumResult.isError;
+                        }
+                        catch (DbUpdateException ex)
+                        {
+                            rt.Mensaje = Helpers.ENTITY_VerificaError(ex);
                             rt.Result = DtoLib.Enumerados.EnumResult.isError;
                         }
                     }

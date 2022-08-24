@@ -12,16 +12,17 @@ namespace ServiceSistema.MyService
     public partial class Service : IService
     {
 
-        public DtoLib.ResultadoEntidad<string> Configuracion_TasaCambioActual()
+        public DtoLib.ResultadoEntidad<string> 
+            Configuracion_TasaCambioActual()
         {
             return ServiceProv.Configuracion_TasaCambioActual();
         }
-        public DtoLib.ResultadoEntidad<string> Configuracion_TasaRecepcionPos()
+        public DtoLib.ResultadoEntidad<string> 
+            Configuracion_TasaRecepcionPos()
         {
             return ServiceProv.Configuracion_TasaRecepcionPos();
         }
-
-
+        
         public DtoLib.Resultado
             Configuracion_Actualizar_TasaRecepcionPos(DtoLibSistema.Configuracion.ActualizarTasaRecepcionPos.Ficha ficha)
         {
@@ -42,24 +43,38 @@ namespace ServiceSistema.MyService
         {
             return ServiceProv.Configuracion_Actualizar_TasaDivisa_ActualizarData(ficha);
         }
-
-
-        public DtoLib.ResultadoEntidad<DtoLibSistema.Configuracion.Enumerados.EnumForzarRedondeoPrecioVenta> Configuracion_ForzarRedondeoPrecioVenta()
+        
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Configuracion.Enumerados.EnumForzarRedondeoPrecioVenta> 
+            Configuracion_ForzarRedondeoPrecioVenta()
         {
             return ServiceProv.Configuracion_ForzarRedondeoPrecioVenta();
         }
-        public DtoLib.ResultadoEntidad<DtoLibSistema.Configuracion.Enumerados.EnumPreferenciaRegistroPrecio> Configuracion_PreferenciaRegistroPrecio()
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Configuracion.Enumerados.EnumPreferenciaRegistroPrecio> 
+            Configuracion_PreferenciaRegistroPrecio()
         {
             return ServiceProv.Configuracion_PreferenciaRegistroPrecio();
         }
 
-        public DtoLib.ResultadoEntidad<DtoLibSistema.Configuracion.Modulo.Capturar.Ficha> Configuracion_Modulo_Capturar()
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Configuracion.Modulo.Capturar.Ficha> 
+            Configuracion_Modulo_Capturar()
         {
             return ServiceProv.Configuracion_Modulo_Capturar();
         }
-        public DtoLib.Resultado Configuracion_Modulo_Actualizar(DtoLibSistema.Configuracion.Modulo.Actualizar.Ficha ficha)
+        public DtoLib.Resultado
+            Configuracion_Modulo_Actualizar(DtoLibSistema.Configuracion.Modulo.Actualizar.Ficha ficha)
         {
             return ServiceProv.Configuracion_Modulo_Actualizar(ficha);
+        }
+
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Configuracion.Pos.Capturar.Ficha> 
+            Configuracion_Pos_Capturar()
+        {
+            return ServiceProv.Configuracion_Pos_Capturar();
+        }
+        public DtoLib.Resultado 
+            Configuracion_Pos_Actualizar(DtoLibSistema.Configuracion.Pos.Actualizar.Ficha ficha)
+        {
+            return ServiceProv.Configuracion_Pos_Actualizar(ficha);
         }
 
     }
