@@ -333,6 +333,9 @@ namespace ProvLibSistema
                     cnn.Database.ExecuteSqlCommand(cmd);
 
                     //VENTAS
+                    cmd = "truncate table ventas_medida";
+                    cnn.Database.ExecuteSqlCommand(cmd);
+
                     cmd = "truncate table ventas_detalle";
                     cnn.Database.ExecuteSqlCommand(cmd);
 

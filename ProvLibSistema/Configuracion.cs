@@ -745,6 +745,7 @@ namespace ProvLibSistema
             {
                 using (var cnn = new sistemaEntities(_cnSist.ConnectionString))
                 {
+                    //TASA/BONO PARA PAGO EN DIVISA
                     var ent1 = cnn.sistema_configuracion.FirstOrDefault(f => f.codigo == "GLOBAL58");
                     if (ent1 == null)
                     {
@@ -752,6 +753,7 @@ namespace ProvLibSistema
                         result.Result = DtoLib.Enumerados.EnumResult.isError;
                         return result;
                     }
+                    //HABILITAR TASA/BONO PARA PAGO EN DIVISA
                     var ent2 = cnn.sistema_configuracion.FirstOrDefault(f => f.codigo == "GLOBAL59");
                     if (ent2 == null)
                     {
@@ -759,10 +761,28 @@ namespace ProvLibSistema
                         result.Result = DtoLib.Enumerados.EnumResult.isError;
                         return result;
                     }
+                    //TASA POS
+                    var ent3 = cnn.sistema_configuracion.FirstOrDefault(f => f.codigo == "GLOBAL48");
+                    if (ent3 == null)
+                    {
+                        result.Mensaje = "[ GLOBAL48 ] CONFIGURACION NO ENCONTRADO";
+                        result.Result = DtoLib.Enumerados.EnumResult.isError;
+                        return result;
+                    }
+                    // TASA SISTEMA
+                    var ent4 = cnn.sistema_configuracion.FirstOrDefault(f => f.codigo == "GLOBAL12");
+                    if (ent4 == null)
+                    {
+                        result.Mensaje = "[ GLOBAL12 ] CONFIGURACION NO ENCONTRADO";
+                        result.Result = DtoLib.Enumerados.EnumResult.isError;
+                        return result;
+                    }
                     var rg = new DtoLibSistema.Configuracion.Pos.Capturar.Ficha()
                     {
                         valorMaximoDescuentoPermitido = ent1.usuario,
                         permitirDarDescuentoEnPosUnicamenteSiPagoEnDivisa = ent2.usuario,
+                        tasaManejoDivisaPos = ent3.usuario,
+                        tasaManejoDivisaSist= ent4.usuario,
                     };
                     result.Entidad = rg;
                 }
@@ -788,6 +808,15 @@ namespace ProvLibSistema
                     {
                         try
                         {
+                            var ent0 = cnn.sistema_configuracion.FirstOrDefault(f => f.codigo == "GLOBAL48");
+                            if (ent0 == null)
+                            {
+                                rt.Mensaje = "[ GLOBAL48 ] CONFIGURACION NO ENCONTRADO";
+                                rt.Result = DtoLib.Enumerados.EnumResult.isError;
+                                return rt;
+                            }
+                            ent0.usuario = ficha.tasaRecepcionPos;
+
                             var ent1 = cnn.sistema_configuracion.FirstOrDefault(f => f.codigo == "GLOBAL58");
                             if (ent1 == null)
                             {
@@ -807,6 +836,7 @@ namespace ProvLibSistema
                             }
                             ent2.usuario = ficha.permitirDarDescuentoEnPosUnicamenteSiPagoEnDivisa;
                             cnn.SaveChanges();
+
                             ts.Commit();
                         }
                         catch (MySql.Data.MySqlClient.MySqlException ex)
