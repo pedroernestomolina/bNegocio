@@ -197,12 +197,27 @@ namespace ProvLibSistema
                             var ent = cnn.sistema_configuracion.FirstOrDefault(f => f.codigo == "GLOBAL12");
                             if (ent == null)
                             {
-                                rt.Mensaje = "[ ID ] CONFIGURACION NO ENCONTRADO";
+                                rt.Mensaje = "[ GLOBAL12 ] CONFIGURACION NO ENCONTRADO";
                                 rt.Result = DtoLib.Enumerados.EnumResult.isError;
                                 return rt;
                             }
                             ent.usuario = ficha.ValorDivisa.ToString();
                             cnn.SaveChanges();
+
+
+                            if (ficha.ValorDivisaPos.HasValue)
+                            {
+                                var entDivPos = cnn.sistema_configuracion.FirstOrDefault(f => f.codigo == "GLOBAL48");
+                                if (entDivPos == null)
+                                {
+                                    rt.Mensaje = "[ GLOBAL48] CONFIGURACION NO ENCONTRADO";
+                                    rt.Result = DtoLib.Enumerados.EnumResult.isError;
+                                    return rt;
+                                }
+                                entDivPos.usuario = ficha.ValorDivisaPos.Value.ToString();
+                                cnn.SaveChanges();
+                            }
+
 
                             foreach (var rg in ficha.productosCostoSinDivisa)
                             {
