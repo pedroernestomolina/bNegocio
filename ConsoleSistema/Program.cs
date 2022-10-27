@@ -317,6 +317,9 @@ namespace ConsoleSistema
             //    estatusPago = "0",
             //};
             //var r03 = sistPrv.MediosCobroPago_EditarFicha(ficha);
+            //var r04 = sistPrv.Configuracion_CalculoDiferenciaEntreTasas();
+            //var r05 = sistPrv.Configuracion_Actualizar_CalculoDiferenciaEntreTasas("BCV");
+
         }
 
     }

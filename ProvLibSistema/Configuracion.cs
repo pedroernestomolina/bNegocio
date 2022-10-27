@@ -17,6 +17,90 @@ namespace ProvLibSistema
     {
 
         public DtoLib.ResultadoEntidad<string> 
+            Configuracion_ModuloSistema_Modo()
+        {
+            var result = new DtoLib.ResultadoEntidad<string>();
+
+            try
+            {
+                using (var cnn = new sistemaEntities(_cnSist.ConnectionString))
+                {
+                    var ent = cnn.sistema_configuracion.FirstOrDefault(f => f.codigo == "GLOBAL61");
+                    if (ent == null)
+                    {
+                        result.Mensaje = "[ GLOBAL61 ] CONFIGURACION NO ENCONTRADO";
+                        result.Result = DtoLib.Enumerados.EnumResult.isError;
+                        return result;
+                    }
+                    result.Entidad = ent.usuario.Trim().ToString();
+                }
+            }
+            catch (Exception e)
+            {
+                result.Mensaje = e.Message;
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+
+            return result;
+        }
+        public DtoLib.ResultadoEntidad<string> 
+            Configuracion_CalculoDiferenciaEntreTasas()
+        {
+            var result = new DtoLib.ResultadoEntidad<string>();
+
+            try
+            {
+                using (var cnn = new sistemaEntities(_cnSist.ConnectionString))
+                {
+                    var ent = cnn.sistema_configuracion.FirstOrDefault(f => f.codigo == "GLOBAL62");
+                    if (ent == null)
+                    {
+                        result.Mensaje = "[ GLOBAL62 ] CONFIGURACION NO ENCONTRADO";
+                        result.Result = DtoLib.Enumerados.EnumResult.isError;
+                        return result;
+                    }
+                    result.Entidad = ent.usuario.Trim().ToString();
+                }
+            }
+            catch (Exception e)
+            {
+                result.Mensaje = e.Message;
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+
+            return result;
+        }
+        public DtoLib.Resultado
+            Configuracion_Actualizar_CalculoDiferenciaEntreTasas(string modo)
+        {
+            var result = new DtoLib.Resultado();
+
+            try
+            {
+                using (var cnn = new sistemaEntities(_cnSist.ConnectionString))
+                {
+                    var ent = cnn.sistema_configuracion.FirstOrDefault(f => f.codigo == "GLOBAL62");
+                    if (ent == null)
+                    {
+                        result.Mensaje = "[ GLOBAL62 ] CONFIGURACION NO ENCONTRADO";
+                        result.Result = DtoLib.Enumerados.EnumResult.isError;
+                        return result;
+                    }
+                    ent.usuario = modo;
+                    cnn.SaveChanges();
+                }
+            }
+            catch (Exception e)
+            {
+                result.Mensaje = e.Message;
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+
+            return result;
+        }
+
+
+        public DtoLib.ResultadoEntidad<string> 
             Configuracion_TasaCambioActual()
         {
             var result = new DtoLib.ResultadoEntidad<string>();
@@ -643,6 +727,13 @@ namespace ProvLibSistema
                         result.Result = DtoLib.Enumerados.EnumResult.isError;
                         return result;
                     }
+                    var ent6 = cnn.sistema_configuracion.FirstOrDefault(f => f.codigo == "GLOBAL62");
+                    if (ent6 == null)
+                    {
+                        result.Mensaje = "[ GLOBAL62 ] CONFIGURACION NO ENCONTRADO";
+                        result.Result = DtoLib.Enumerados.EnumResult.isError;
+                        return result;
+                    }
 
                     var rg = new DtoLibSistema.Configuracion.Modulo.Capturar.Ficha()
                     {
@@ -651,6 +742,7 @@ namespace ProvLibSistema
                         claveNivMinimo = ent3.usuario,
                         visualizarPrdInactivos = ent4.usuario,
                         cantDocVisualizar = ent5.usuario,
+                        modoCalculoDifTasa= ent6.usuario,
                     };
                     result.Entidad = rg;
                 }
@@ -725,6 +817,16 @@ namespace ProvLibSistema
                                 return rt;
                             }
                             ent5.usuario = ficha.cantDocVisualizar.ToString();
+                            cnn.SaveChanges();
+
+                            var ent6 = cnn.sistema_configuracion.FirstOrDefault(f => f.codigo == "GLOBAL62");
+                            if (ent6 == null)
+                            {
+                                rt.Mensaje = "[ GLOBAL62 ] CONFIGURACION NO ENCONTRADO";
+                                rt.Result = DtoLib.Enumerados.EnumResult.isError;
+                                return rt;
+                            }
+                            ent6.usuario = ficha.modoCalculoDifTasa.Trim().ToString();
                             cnn.SaveChanges();
 
                             ts.Commit();
@@ -875,6 +977,7 @@ namespace ProvLibSistema
 
             return rt;
         }
+
 
     }
 

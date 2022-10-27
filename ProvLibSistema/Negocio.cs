@@ -15,7 +15,8 @@ namespace ProvLibSistema
     public partial class Provider : ILibSistema.IProvider
     {
 
-        public DtoLib.ResultadoEntidad<DtoLibSistema.Negocio.Entidad.Ficha> Negocio_GetEntidad_ByAuto(string autoEmpresa)
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Negocio.Entidad.Ficha>
+            Negocio_GetEntidad_ByAuto(string autoEmpresa)
         {
             var result = new DtoLib.ResultadoEntidad<DtoLibSistema.Negocio.Entidad.Ficha>();
 
@@ -60,8 +61,8 @@ namespace ProvLibSistema
 
             return result;
         }
-
-        public DtoLib.Resultado Negocio_EditarFicha(DtoLibSistema.Negocio.Editar.Ficha ficha)
+        public DtoLib.Resultado 
+            Negocio_EditarFicha(DtoLibSistema.Negocio.Editar.Ficha ficha)
         {
             var result = new DtoLib.Resultado();
 

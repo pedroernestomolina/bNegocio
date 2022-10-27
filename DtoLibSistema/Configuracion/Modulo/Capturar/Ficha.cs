@@ -16,6 +16,7 @@ namespace DtoLibSistema.Configuracion.Modulo.Capturar
         public string claveNivMinimo { get; set; }
         public string visualizarPrdInactivos { get; set; }
         public string cantDocVisualizar { get; set; }
+        public string modoCalculoDifTasa { get; set; }
 
 
         public Ficha() 
@@ -25,6 +26,7 @@ namespace DtoLibSistema.Configuracion.Modulo.Capturar
             claveNivMinimo = "";
             visualizarPrdInactivos = "";
             cantDocVisualizar = "";
+            modoCalculoDifTasa = "";
         }
 
     }

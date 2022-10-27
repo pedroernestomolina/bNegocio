@@ -11,6 +11,14 @@ namespace ILibSistema
     public interface IConfiguracion
     {
 
+        DtoLib.ResultadoEntidad<string>
+            Configuracion_ModuloSistema_Modo();
+        DtoLib.ResultadoEntidad<string>
+            Configuracion_CalculoDiferenciaEntreTasas();
+        DtoLib.Resultado
+            Configuracion_Actualizar_CalculoDiferenciaEntreTasas(string modo);
+
+
         DtoLib.ResultadoEntidad<DtoLibSistema.Configuracion.Enumerados.EnumForzarRedondeoPrecioVenta> 
             Configuracion_ForzarRedondeoPrecioVenta();
         DtoLib.ResultadoEntidad<DtoLibSistema.Configuracion.Enumerados.EnumPreferenciaRegistroPrecio> 

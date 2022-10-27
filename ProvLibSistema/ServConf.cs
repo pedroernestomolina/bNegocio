@@ -558,9 +558,33 @@ namespace ProvLibSistema
 
                     cmd = @"insert into productos_ext(auto_producto, auto_precio_may_1, auto_precio_may_2, auto_precio_may_3, 
                             contenido_may_1, contenido_may_2, contenido_may_3, utilidad_may_1, utilidad_may_2, utilidad_may_3, 
-                            precio_may_1, precio_may_2, precio_may_3, pdmf_1, pdmf_2, pdmf_3) 
-                            select auto, '0000000001',  '0000000001',  '0000000001', 1,1,1, 0,0,0, 0,0,0, 0,0,0 from productos" ;
+                            precio_may_1, precio_may_2, precio_may_3, pdmf_1, pdmf_2, pdmf_3,
+                            auto_precio_may_4, cont_may_4, utilidad_may_4, precio_may_4, pdmf_4, 
+                            auto_emp_inv_1, cont_emp_inv_1,
+                            auto_precio_dsp_1, cont_dsp_1,
+                            auto_precio_dsp_2, cont_dsp_2,
+                            auto_precio_dsp_3, cont_dsp_3,
+                            auto_precio_dsp_4, cont_dsp_4,
+                            auto_emp_venta_tipo_1, cont_emp_venta_tipo_1,
+                            auto_emp_venta_tipo_2, cont_emp_venta_tipo_2,
+                            auto_emp_venta_tipo_3, cont_emp_venta_tipo_3) 
+                            select auto, '0000000001',  '0000000001',  '0000000001', 1,1,1, 0,0,0, 0,0,0, 0,0,0,
+                            '0000000001',1,0,0,0,
+                            '0000000001',1,
+                            '0000000001',1,
+                            '0000000001',1,
+                            '0000000001',1,
+                            '0000000001',1,
+                            '0000000001',1,
+                            '0000000001',1,
+                            '0000000001',1 
+                            from productos";
                     cnn.Database.ExecuteSqlCommand(cmd);
+
+                    cmd = @"INSERT INTO productos_extra (auto_productos)
+                            select auto from productos";
+                    cnn.Database.ExecuteSqlCommand(cmd);
+
                     
                     //SISTEMA 
                     cmd = "update sistema set deposito_principal='0000000001', codigo_empresa='01', prefijo='0101'";

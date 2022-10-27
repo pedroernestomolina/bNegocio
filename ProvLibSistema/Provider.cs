@@ -44,7 +44,9 @@ namespace ProvLibSistema
             _cnSist.ProviderConnectionString = "data source=" + _Instancia + ";initial catalog=" + _BaseDatos + ";user id=" + _Usuario + ";Password=" + _Password + ";Convert Zero Datetime=True;";
         }
 
-        public DtoLib.ResultadoEntidad<DateTime> FechaServidor()
+
+        public DtoLib.ResultadoEntidad<DateTime> 
+            FechaServidor()
         {
             var result = new DtoLib.ResultadoEntidad<DateTime>();
 
@@ -64,8 +66,8 @@ namespace ProvLibSistema
 
             return result;
         }
-
-        public DtoLib.ResultadoEntidad<DtoLibSistema.Empresa.Data.Ficha> Empresa_Datos()
+        public DtoLib.ResultadoEntidad<DtoLibSistema.Empresa.Data.Ficha> 
+            Empresa_Datos()
         {
             var result = new DtoLib.ResultadoEntidad<DtoLibSistema.Empresa.Data.Ficha>();
 

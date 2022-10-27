@@ -13,6 +13,23 @@ namespace ServiceSistema.MyService
     {
 
         public DtoLib.ResultadoEntidad<string> 
+            Configuracion_ModuloSistema_Modo()
+        {
+            return ServiceProv.Configuracion_ModuloSistema_Modo();
+        }
+        public DtoLib.ResultadoEntidad<string>
+            Configuracion_CalculoDiferenciaEntreTasas()
+        {
+            return ServiceProv.Configuracion_CalculoDiferenciaEntreTasas();
+        }
+        public DtoLib.Resultado
+            Configuracion_Actualizar_CalculoDiferenciaEntreTasas(string modo)
+        {
+            return ServiceProv.Configuracion_Actualizar_CalculoDiferenciaEntreTasas(modo);
+        }
+
+
+        public DtoLib.ResultadoEntidad<string> 
             Configuracion_TasaCambioActual()
         {
             return ServiceProv.Configuracion_TasaCambioActual();
