@@ -113,6 +113,7 @@ namespace LibEntitySistema
         public decimal pdf_3 { get; set; }
         public decimal pdf_4 { get; set; }
         public decimal pdf_pto { get; set; }
+        public decimal volumen { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<productos_costos> productos_costos { get; set; }

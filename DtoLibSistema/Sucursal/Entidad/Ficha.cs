@@ -22,6 +22,8 @@ namespace DtoLibSistema.Sucursal.Entidad
         public string estatusVentaCredito { get; set; }
         public string nombreGrupo { get; set; }
         public string nombreDepositoAsignado { get; set; }
+        public string estatusPosVueltoDivisa { get; set; }
+        public string estatusPosVentaSurtido { get; set; }
 
 
         public Ficha() 
@@ -36,6 +38,8 @@ namespace DtoLibSistema.Sucursal.Entidad
             estatusVentaCredito = "";
             nombreGrupo = "";
             nombreDepositoAsignado = "";
+            estatusPosVentaSurtido = "";
+            estatusPosVueltoDivisa = "";
         }
 
     }

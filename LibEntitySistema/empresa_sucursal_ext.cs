@@ -17,6 +17,10 @@ namespace LibEntitySistema
         public string auto_sucursal { get; set; }
         public string es_activo { get; set; }
         public string estatus_fact_credito { get; set; }
+        public string habilita_surtido_pos { get; set; }
+        public string habilita_vuelto_divisa_pos { get; set; }
+        public string modo_factura_pos { get; set; }
+        public string habilita_modulo_gastos_pos { get; set; }
     
         public virtual empresa_sucursal empresa_sucursal { get; set; }
     }

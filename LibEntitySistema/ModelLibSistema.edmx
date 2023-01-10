@@ -160,6 +160,10 @@ warning 6002: The table/view 'pita.empresa_grupo_ext' does not have a primary ke
           <Property Name="auto_sucursal" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="es_activo" Type="varchar" MaxLength="1" Nullable="false" />
           <Property Name="estatus_fact_credito" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="habilita_surtido_pos" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="habilita_vuelto_divisa_pos" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="modo_factura_pos" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="habilita_modulo_gastos_pos" Type="varchar" MaxLength="1" Nullable="false" />
         </EntityType>
         <EntityType Name="productos">
           <Key>
@@ -256,6 +260,7 @@ warning 6002: The table/view 'pita.empresa_grupo_ext' does not have a primary ke
           <Property Name="pdf_3" Type="decimal" Precision="16" Scale="2" Nullable="false" />
           <Property Name="pdf_4" Type="decimal" Precision="16" Scale="2" Nullable="false" />
           <Property Name="pdf_pto" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="volumen" Type="decimal" Precision="14" Scale="6" Nullable="false" />
         </EntityType>
         <EntityType Name="productos_costos">
           <Key>
@@ -321,6 +326,12 @@ warning 6002: The table/view 'pita.empresa_grupo_ext' does not have a primary ke
           <Property Name="utilidad_dsp_4" Type="decimal" Precision="8" Scale="2" Nullable="false" />
           <Property Name="precio_dsp_4" Type="decimal" Precision="16" Scale="2" Nullable="false" />
           <Property Name="pdivisafull_dsp_4" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="auto_emp_venta_tipo_1" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="auto_emp_venta_tipo_2" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="auto_emp_venta_tipo_3" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="cont_emp_venta_tipo_1" Type="int" Nullable="false" />
+          <Property Name="cont_emp_venta_tipo_2" Type="int" Nullable="false" />
+          <Property Name="cont_emp_venta_tipo_3" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'pita.productos_hnd_precio' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -530,6 +541,7 @@ warning 6002: The table/view 'pita.sistema_contadores' does not have a primary k
             <PropertyRef Name="a_empresa_grupo" />
             <PropertyRef Name="a_usuarios_grupo" />
             <PropertyRef Name="a_productos_movimientos_traslados_dev" />
+            <PropertyRef Name="a_cierre_numero" />
           </Key>
           <Property Name="a_clientes_grupo" Type="int" Nullable="false" />
           <Property Name="a_usuarios" Type="int" Nullable="false" />
@@ -611,6 +623,7 @@ warning 6002: The table/view 'pita.sistema_contadores' does not have a primary k
           <Property Name="a_empresa_grupo" Type="int" Nullable="false" />
           <Property Name="a_usuarios_grupo" Type="int" Nullable="false" />
           <Property Name="a_productos_movimientos_traslados_dev" Type="int" Nullable="false" />
+          <Property Name="a_cierre_numero" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="sistema_funciones">
           <Key>
@@ -951,7 +964,8 @@ FROM `productos_hnd_precio` AS `productos_hnd_precio`</DefiningQuery>
 `sistema_contadores`.`a_cierre_ftp`, 
 `sistema_contadores`.`a_empresa_grupo`, 
 `sistema_contadores`.`a_usuarios_grupo`, 
-`sistema_contadores`.`a_productos_movimientos_traslados_dev`
+`sistema_contadores`.`a_productos_movimientos_traslados_dev`, 
+`sistema_contadores`.`a_cierre_numero`
 FROM `sistema_contadores` AS `sistema_contadores`</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="cxp_ibfk_1" Association="Self.cxp_ibfk_1">
@@ -1237,6 +1251,7 @@ FROM `sistema_contadores` AS `sistema_contadores`</DefiningQuery>
           <NavigationProperty Name="productos_precios" Relationship="Self.productos_precios_ibfk_1" FromRole="productos" ToRole="productos_precios" />
           <NavigationProperty Name="productos_hnd_precio" Relationship="ModelLibSistema.productos_hnd_precio_ibfk_1" FromRole="productos" ToRole="productos_hnd_precio" />
           <NavigationProperty Name="productos_ext" Relationship="ModelLibSistema.productos_ext_ibfk_1" FromRole="productos" ToRole="productos_ext" />
+          <Property Name="volumen" Type="Decimal" Nullable="false" />
         </EntityType>
         <EntityType Name="productos_costos">
           <Key>
@@ -1496,6 +1511,7 @@ FROM `sistema_contadores` AS `sistema_contadores`</DefiningQuery>
             <PropertyRef Name="a_empresa_grupo" />
             <PropertyRef Name="a_usuarios_grupo" />
             <PropertyRef Name="a_productos_movimientos_traslados_dev" />
+            <PropertyRef Name="a_cierre_numero" />
           </Key>
           <Property Name="a_clientes_grupo" Type="Int32" Nullable="false" />
           <Property Name="a_usuarios" Type="Int32" Nullable="false" />
@@ -1577,6 +1593,7 @@ FROM `sistema_contadores` AS `sistema_contadores`</DefiningQuery>
           <Property Name="a_empresa_grupo" Type="Int32" Nullable="false" />
           <Property Name="a_usuarios_grupo" Type="Int32" Nullable="false" />
           <Property Name="a_productos_movimientos_traslados_dev" Type="Int32" Nullable="false" />
+          <Property Name="a_cierre_numero" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="cxp_ibfk_1">
           <End Role="proveedores" Type="Self.proveedores" Multiplicity="1" />
@@ -1870,6 +1887,12 @@ FROM `sistema_contadores` AS `sistema_contadores`</DefiningQuery>
           <Property Name="precio_dsp_4" Type="Decimal" Nullable="false" />
           <Property Name="pdivisafull_dsp_4" Type="Decimal" Nullable="false" />
           <NavigationProperty Name="productos" Relationship="ModelLibSistema.productos_ext_ibfk_1" FromRole="productos_ext" ToRole="productos" />
+          <Property Name="auto_emp_venta_tipo_1" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="auto_emp_venta_tipo_2" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="auto_emp_venta_tipo_3" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="cont_emp_venta_tipo_1" Type="Int32" Nullable="false" />
+          <Property Name="cont_emp_venta_tipo_2" Type="Int32" Nullable="false" />
+          <Property Name="cont_emp_venta_tipo_3" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="productos_ext_ibfk_1">
           <End Type="ModelLibSistema.productos" Role="productos" Multiplicity="1" />
@@ -1890,6 +1913,10 @@ FROM `sistema_contadores` AS `sistema_contadores`</DefiningQuery>
           <Property Name="auto_sucursal" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="es_activo" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="estatus_fact_credito" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="habilita_surtido_pos" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="habilita_vuelto_divisa_pos" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="modo_factura_pos" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="habilita_modulo_gastos_pos" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="empresa_sucursal" Relationship="ModelLibSistema.empresa_sucursal_ext_ibfk_1" FromRole="empresa_sucursal_ext" ToRole="empresa_sucursal" />
         </EntityType>
         <Association Name="empresa_sucursal_ext_ibfk_1">
@@ -2049,6 +2076,7 @@ FROM `sistema_contadores` AS `sistema_contadores`</DefiningQuery>
           <EntitySetMapping Name="productos">
             <EntityTypeMapping TypeName="ModelLibSistema.productos">
               <MappingFragment StoreEntitySet="productos">
+                <ScalarProperty Name="volumen" ColumnName="volumen" />
                 <ScalarProperty Name="auto" ColumnName="auto" />
                 <ScalarProperty Name="codigo" ColumnName="codigo" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
@@ -2328,6 +2356,7 @@ FROM `sistema_contadores` AS `sistema_contadores`</DefiningQuery>
           <EntitySetMapping Name="sistema_contadores">
             <EntityTypeMapping TypeName="ModelLibSistema.sistema_contadores">
               <MappingFragment StoreEntitySet="sistema_contadores">
+                <ScalarProperty Name="a_cierre_numero" ColumnName="a_cierre_numero" />
                 <ScalarProperty Name="a_clientes_grupo" ColumnName="a_clientes_grupo" />
                 <ScalarProperty Name="a_usuarios" ColumnName="a_usuarios" />
                 <ScalarProperty Name="a_empresa_series_fiscales" ColumnName="a_empresa_series_fiscales" />
@@ -2455,6 +2484,12 @@ FROM `sistema_contadores` AS `sistema_contadores`</DefiningQuery>
           <EntitySetMapping Name="productos_ext">
             <EntityTypeMapping TypeName="ModelLibSistema.productos_ext">
               <MappingFragment StoreEntitySet="productos_ext">
+                <ScalarProperty Name="cont_emp_venta_tipo_3" ColumnName="cont_emp_venta_tipo_3" />
+                <ScalarProperty Name="cont_emp_venta_tipo_2" ColumnName="cont_emp_venta_tipo_2" />
+                <ScalarProperty Name="cont_emp_venta_tipo_1" ColumnName="cont_emp_venta_tipo_1" />
+                <ScalarProperty Name="auto_emp_venta_tipo_3" ColumnName="auto_emp_venta_tipo_3" />
+                <ScalarProperty Name="auto_emp_venta_tipo_2" ColumnName="auto_emp_venta_tipo_2" />
+                <ScalarProperty Name="auto_emp_venta_tipo_1" ColumnName="auto_emp_venta_tipo_1" />
                 <ScalarProperty Name="pdivisafull_dsp_4" ColumnName="pdivisafull_dsp_4" />
                 <ScalarProperty Name="precio_dsp_4" ColumnName="precio_dsp_4" />
                 <ScalarProperty Name="utilidad_dsp_4" ColumnName="utilidad_dsp_4" />
@@ -2504,6 +2539,10 @@ FROM `sistema_contadores` AS `sistema_contadores`</DefiningQuery>
           <EntitySetMapping Name="empresa_sucursal_ext">
             <EntityTypeMapping TypeName="ModelLibSistema.empresa_sucursal_ext">
               <MappingFragment StoreEntitySet="empresa_sucursal_ext">
+                <ScalarProperty Name="habilita_modulo_gastos_pos" ColumnName="habilita_modulo_gastos_pos" />
+                <ScalarProperty Name="modo_factura_pos" ColumnName="modo_factura_pos" />
+                <ScalarProperty Name="habilita_vuelto_divisa_pos" ColumnName="habilita_vuelto_divisa_pos" />
+                <ScalarProperty Name="habilita_surtido_pos" ColumnName="habilita_surtido_pos" />
                 <ScalarProperty Name="estatus_fact_credito" ColumnName="estatus_fact_credito" />
                 <ScalarProperty Name="es_activo" ColumnName="es_activo" />
                 <ScalarProperty Name="auto_sucursal" ColumnName="auto_sucursal" />

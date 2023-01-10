@@ -94,5 +94,6 @@ namespace LibEntitySistema
         public int a_empresa_grupo { get; set; }
         public int a_usuarios_grupo { get; set; }
         public int a_productos_movimientos_traslados_dev { get; set; }
+        public int a_cierre_numero { get; set; }
     }
 }

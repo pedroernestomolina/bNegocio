@@ -11,15 +11,12 @@ using System.Transactions;
 
 namespace ProvLibSistema
 {
-    
     public partial class Provider : ILibSistema.IProvider 
     {
-
         public DtoLib.ResultadoLista<DtoLibSistema.Sucursal.Lista.Ficha> 
             Sucursal_GetLista(DtoLibSistema.Sucursal.Lista.Filtro filtro)
         {
             var result = new DtoLib.ResultadoLista<DtoLibSistema.Sucursal.Lista.Ficha>();
-
             try
             {
                 using (var cnn = new sistemaEntities(_cnSist.ConnectionString))
@@ -28,7 +25,9 @@ namespace ProvLibSistema
                     var sql_1 = @"SELECT eSuc.auto, eSuc.codigo, eSuc.nombre, 
                                     eSucExt.es_activo as estatus, eSuc.estatus_facturar_mayor as estatusFactMayor, 
                                     eSucExt.estatus_fact_credito as estatusVentaCredito,
-                                    eDep.nombre as nombreDeposito, eGrupo.nombre as nombreGrupo
+                                    eDep.nombre as nombreDeposito, eGrupo.nombre as nombreGrupo,
+                                    eSucExt.habilita_surtido_pos as estatusPosVentaSurtido,
+                                    eSucExt.habilita_vuelto_divisa_pos as estatusPosVueltoDivisa 
                                     from empresa_sucursal as eSuc
                                     join empresa_sucursal_ext as eSucExt on eSucExt.auto_sucursal=eSuc.auto
                                     join empresa_grupo as eGrupo on eGrupo.auto=eSuc.autoEmpresaGrupo
@@ -50,7 +49,6 @@ namespace ProvLibSistema
                 result.Mensaje = e.Message;
                 result.Result = DtoLib.Enumerados.EnumResult.isError;
             }
-
             return result;
         }
         public DtoLib.ResultadoEntidad<DtoLibSistema.Sucursal.Entidad.Ficha> 
@@ -67,7 +65,9 @@ namespace ProvLibSistema
                                     eSuc.autoDepositoPrincipal as autoDepositoPrincipal,
                                     eSucExt.es_activo as estatus, eSuc.estatus_facturar_mayor as estatusFactMayor,
                                     eSucExt.estatus_fact_credito as estatusVentaCredito,
-                                    eGrupo.nombre as nombreGrupo, eDep.nombre as nombreDepositoAsignado
+                                    eGrupo.nombre as nombreGrupo, eDep.nombre as nombreDepositoAsignado,
+                                    eSucExt.habilita_surtido_pos as estatusPosVentaSurtido,
+                                    eSucExt.habilita_vuelto_divisa_pos as estatusPosVueltoDivisa
                                     from empresa_sucursal as eSuc
                                     join empresa_sucursal_ext as eSucExt on eSucExt.auto_sucursal=eSuc.auto
                                     join empresa_grupo as eGrupo on eGrupo.auto=eSuc.autoEmpresaGrupo 
@@ -96,7 +96,6 @@ namespace ProvLibSistema
             Sucursal_Agregar(DtoLibSistema.Sucursal.Agregar.Ficha ficha)
         {
             var result = new DtoLib.ResultadoAuto();
-
             try
             {
                 using (var cnn = new sistemaEntities(_cnSist.ConnectionString))
@@ -142,13 +141,20 @@ namespace ProvLibSistema
                             return result;
                         }
 
-
                         var xp1 = new MySql.Data.MySqlClient.MySqlParameter("@xp1", autoEmpresaSucursal);
                         var xp2 = new MySql.Data.MySqlClient.MySqlParameter("@xp2", ficha.estatusVentaCredito);
+                        var xp3 = new MySql.Data.MySqlClient.MySqlParameter("@xp3", ficha.estatusPosVentaSurtido);
+                        var xp4 = new MySql.Data.MySqlClient.MySqlParameter("@xp4", ficha.estatusPosVueltoDivisa);
                         var sql_2 = @"INSERT INTO empresa_sucursal_ext (
-                                        auto_sucursal, es_activo, estatus_fact_credito)
-                                        VALUES (@xp1, '1', @xp2)";
-                        var r3 = cnn.Database.ExecuteSqlCommand(sql_2, xp1, xp2);
+                                        auto_sucursal, 
+                                        es_activo, 
+                                        estatus_fact_credito,
+                                        habilita_surtido_pos,
+                                        habilita_vuelto_divisa_pos,
+                                        modo_factura_pos,
+                                        habilita_modulo_gastos_pos)
+                                        VALUES (@xp1, '1', @xp2, @xp3, @xp4, 'D', '0')";
+                        var r3 = cnn.Database.ExecuteSqlCommand(sql_2, xp1, xp2, xp3, xp4);
                         if (r3 == 0)
                         {
                             result.Mensaje = "PROBLEMA AL REGISTRAR SUCURSAL_EXT";
@@ -156,7 +162,6 @@ namespace ProvLibSistema
                             return result;
                         }
                         cnn.SaveChanges();
-
 
                         ts.Complete();
                         result.Auto = autoEmpresaSucursal;
@@ -178,7 +183,6 @@ namespace ProvLibSistema
                 result.Mensaje = e.Message;
                 result.Result = DtoLib.Enumerados.EnumResult.isError;
             }
-
             return result;
         }
         public DtoLib.Resultado 
@@ -206,6 +210,8 @@ namespace ProvLibSistema
 
                         var entExt = cnn.empresa_sucursal_ext.Find(ficha.auto);
                         entExt.estatus_fact_credito = ficha.estatusVentaCredito;
+                        entExt.habilita_surtido_pos = ficha.estatusPosVentaSurtido;
+                        entExt.habilita_vuelto_divisa_pos = ficha.estatusPosVueltoDivisa;
                         cnn.SaveChanges();
 
                         ts.Complete();
@@ -447,7 +453,6 @@ namespace ProvLibSistema
 
             return result;
         }
-
     }
 
 }

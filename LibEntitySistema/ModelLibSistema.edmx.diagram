@@ -38,7 +38,7 @@
         <AssociationConnector Association="ModelLibSistema.productos_hnd_precio_ibfk_1" />
         <EntityTypeShape EntityType="ModelLibSistema.productos_ext" Width="1.5" PointX="3" PointY="33.625" />
         <AssociationConnector Association="ModelLibSistema.productos_ext_ibfk_1" />
-        <EntityTypeShape EntityType="ModelLibSistema.empresa_sucursal_ext" Width="1.5" PointX="8" PointY="10.125" />
+        <EntityTypeShape EntityType="ModelLibSistema.empresa_sucursal_ext" Width="1.5" PointX="8" PointY="17.75" />
         <AssociationConnector Association="ModelLibSistema.empresa_sucursal_ext_ibfk_1" />
       </Diagram>
     </edmx:Diagrams>
