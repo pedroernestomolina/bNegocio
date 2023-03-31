@@ -7,17 +7,14 @@ using System.Threading.Tasks;
 
 namespace ILibSistema
 {
-    
     public interface IProvider: IDeposito, ISucursal, IUsuario, 
         IFuncion, IGrupoUsuario, IServConf, IPermisos, IConfiguracion,
         IVendedor, ICobrador, ISerieFiscal, IReconversionMonetaria,
         INegocio, IControlAcceso, ITablaPrecio, ISucursalGrupo, 
-        IPrecioEtiqueta, IMediosCobroPago
+        IPrecioEtiqueta, IMediosCobroPago,
+        IAjustarTasaDivisa_ModoAdm
     {
-
         DtoLib.ResultadoEntidad<DateTime> FechaServidor();
         DtoLib.ResultadoEntidad<DtoLibSistema.Empresa.Data.Ficha> Empresa_Datos();
-
     }
-
 }

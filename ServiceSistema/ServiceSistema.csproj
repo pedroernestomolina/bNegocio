@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IAjustarTasaDivisa_ModoAdm.cs" />
     <Compile Include="Interfaces\ICobrador.cs" />
     <Compile Include="Interfaces\IConfiguracion.cs" />
     <Compile Include="Interfaces\IControlAcceso.cs" />
@@ -58,6 +59,7 @@
     <Compile Include="Interfaces\IUsuario.cs" />
     <Compile Include="Interfaces\IUsuarioGrupo.cs" />
     <Compile Include="Interfaces\IVendedor.cs" />
+    <Compile Include="MyService\AjustarTasaDivisa_ModoAdm.cs" />
     <Compile Include="MyService\Cobrador.cs" />
     <Compile Include="MyService\Configuracion.cs" />
     <Compile Include="MyService\ControlAcceso.cs" />

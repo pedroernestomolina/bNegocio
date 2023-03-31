@@ -10,8 +10,6 @@ using System.Transactions;
 
 namespace ProvLibSistema
 {
-
-
     public partial class Provider : ILibSistema.IProvider
     {
 

@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AjustarTasaDivisa_ModoAdm.cs" />
     <Compile Include="Cobrador.cs" />
     <Compile Include="Configuracion.cs" />
     <Compile Include="ControlAcceso.cs" />

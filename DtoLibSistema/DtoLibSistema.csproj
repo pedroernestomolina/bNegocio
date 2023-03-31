@@ -39,6 +39,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AjustarTasaDivisa\ModoAdm\Ajustar\Ficha.cs" />
+    <Compile Include="AjustarTasaDivisa\ModoAdm\Ajustar\Historia.cs" />
+    <Compile Include="AjustarTasaDivisa\ModoAdm\Ajustar\NoAdmDivisa.cs" />
+    <Compile Include="AjustarTasaDivisa\ModoAdm\Ajustar\PrdAdmDivisa.cs" />
+    <Compile Include="AjustarTasaDivisa\ModoAdm\Ajustar\PrdNoAdmDivisa.cs" />
+    <Compile Include="AjustarTasaDivisa\ModoAdm\Ajustar\PrdSiAdmDivisa.cs" />
+    <Compile Include="AjustarTasaDivisa\ModoAdm\Ajustar\PrecioNoAdmDivisa.cs" />
+    <Compile Include="AjustarTasaDivisa\ModoAdm\Ajustar\PrecioSiAdmDivisa.cs" />
+    <Compile Include="AjustarTasaDivisa\ModoAdm\Ajustar\SiAdmDivisa.cs" />
+    <Compile Include="AjustarTasaDivisa\ModoAdm\CapturarData.cs" />
     <Compile Include="Cobrador\Agregar\Ficha.cs" />
     <Compile Include="Cobrador\Editar\Ficha.cs" />
     <Compile Include="Cobrador\Entidad\Ficha.cs" />
