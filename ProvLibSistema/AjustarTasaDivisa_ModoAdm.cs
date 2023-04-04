@@ -65,7 +65,7 @@ namespace ProvLibSistema
                         {
                             var fechaSistema = cnn.Database.SqlQuery<DateTime>("select now()").FirstOrDefault();
 
-                            var p1 = new MySql.Data.MySqlClient.MySqlParameter("@ValorNuevo", ficha.TasaDivisaNueva);
+                            var p1 = new MySql.Data.MySqlClient.MySqlParameter("@ValorNuevo", ficha.TasaDivisaNueva.ToString("n3"));
                             var _sql = @"update sistema_configuracion set 
                                             usuario=@ValorNuevo
                                         where codigo='GLOBAL12'";
@@ -79,7 +79,7 @@ namespace ProvLibSistema
 
                             cnn.SaveChanges();
 
-                            var xp1 = new MySql.Data.MySqlClient.MySqlParameter("@ValorNuevo", ficha.TasaDivisaNueva);
+                            var xp1 = new MySql.Data.MySqlClient.MySqlParameter("@ValorNuevo", ficha.TasaDivisaNueva.ToString("n3"));
                             _sql = @"update sistema_configuracion set 
                                             usuario=@ValorNuevo
                                         where codigo='GLOBAL48'";
