@@ -7,9 +7,7 @@ using System.Threading.Tasks;
 
 namespace DtoLibSistema.SerieFiscal.Lista
 {
-    
     public class Filtro
     {
     }
-
 }

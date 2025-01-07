@@ -11,10 +11,8 @@ using System.Transactions;
 
 namespace ProvLibSistema
 {
-    
     public partial class Provider : ILibSistema.IProvider
     {
-
         public DtoLib.ResultadoEntidad<DtoLibSistema.Negocio.Entidad.Ficha>
             Negocio_GetEntidad_ByAuto(string autoEmpresa)
         {
@@ -131,7 +129,5 @@ namespace ProvLibSistema
 
             return result;
         }
-
     }
-
 }

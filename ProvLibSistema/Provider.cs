@@ -9,17 +9,14 @@ using System.Threading.Tasks;
 
 namespace ProvLibSistema
 {
-    
     public partial class Provider : ILibSistema.IProvider 
     {
-
-        
         public static EntityConnectionStringBuilder _cnSist ;
-
+        //
         public static int MaxPrecioSucursalPermitidas = 6;
         public static int MaxSucursalesPermitidas = 90;
         public static int MaxDepositoPermitidas = 90;
-
+        //
         private string _Instancia;
         private string _BaseDatos;
         private string _Usuario;
@@ -43,8 +40,6 @@ namespace ProvLibSistema
             _cnSist.Provider = "MySql.Data.MySqlClient";
             _cnSist.ProviderConnectionString = "data source=" + _Instancia + ";initial catalog=" + _BaseDatos + ";user id=" + _Usuario + ";Password=" + _Password + ";Convert Zero Datetime=True;";
         }
-
-
         public DtoLib.ResultadoEntidad<DateTime> 
             FechaServidor()
         {
@@ -70,7 +65,6 @@ namespace ProvLibSistema
             Empresa_Datos()
         {
             var result = new DtoLib.ResultadoEntidad<DtoLibSistema.Empresa.Data.Ficha>();
-
             try
             {
                 using (var ctx = new sistemaEntities(_cnSist.ConnectionString))
@@ -82,7 +76,6 @@ namespace ProvLibSistema
                         result.Mensaje = "REGISTRO ENTIDAD [ EMPRESA ] NO DEFINIDO";
                         return result;
                     }
-
                     var nr = new DtoLibSistema .Empresa.Data.Ficha()
                     {
                         CiRif = ent.rif,
@@ -90,6 +83,9 @@ namespace ProvLibSistema
                         Nombre = ent.nombre,
                         Telefono = ent.telefono,
                     };
+                    var sql = @"select logo from empresa_extra";
+                    var _logo = ctx.Database.SqlQuery<byte[]>(sql).FirstOrDefault();
+                    nr.logo = _logo;
                     result.Entidad = nr;
                 }
             }
@@ -98,10 +94,7 @@ namespace ProvLibSistema
                 result.Mensaje = e.Message;
                 result.Result = DtoLib.Enumerados.EnumResult.isError;
             }
-
             return result;
         }
-
     }
-
 }

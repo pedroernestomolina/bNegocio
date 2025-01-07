@@ -10,10 +10,8 @@ using System.Transactions;
 
 namespace ProvLibSistema
 {
-    
     public class Helpers
     {
-
         static public string 
             MYSQL_VerificaError(MySql.Data.MySqlClient.MySqlException ex) 
         {
@@ -260,7 +258,5 @@ namespace ProvLibSistema
 
             return result;
         }
-
     }
-
 }

@@ -128,20 +128,6 @@ warning 6002: The table/view 'pita.empresa_grupo_ext' does not have a primary ke
           <Property Name="descrpcion" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="estatus" Type="varchar" MaxLength="1" Nullable="false" />
         </EntityType>
-        <EntityType Name="empresa_series_fiscales">
-          <Key>
-            <PropertyRef Name="auto" />
-          </Key>
-          <Property Name="auto" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="serie" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="correlativo" Type="int" Nullable="false" />
-          <Property Name="estatus_factura" Type="varchar" MaxLength="1" Nullable="false" />
-          <Property Name="estatus_nd" Type="varchar" MaxLength="1" Nullable="false" />
-          <Property Name="estatus_nc" Type="varchar" MaxLength="1" Nullable="false" />
-          <Property Name="estatus_ne" Type="varchar" MaxLength="1" Nullable="false" />
-          <Property Name="estatus" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="control" Type="varchar" MaxLength="10" Nullable="false" />
-        </EntityType>
         <EntityType Name="empresa_sucursal">
           <Key>
             <PropertyRef Name="auto" />
@@ -841,7 +827,6 @@ warning 6002: The table/view 'pita.sistema_contadores' does not have a primary k
           <EntitySet Name="empresa_depositos_ext" EntityType="Self.empresa_depositos_ext" Schema="pita" store:Type="Tables" />
           <EntitySet Name="empresa_grupo" EntityType="Self.empresa_grupo" Schema="pita" store:Type="Tables" />
           <EntitySet Name="empresa_hnd_precios" EntityType="Self.empresa_hnd_precios" Schema="pita" store:Type="Tables" />
-          <EntitySet Name="empresa_series_fiscales" EntityType="Self.empresa_series_fiscales" Schema="pita" store:Type="Tables" />
           <EntitySet Name="empresa_sucursal" EntityType="Self.empresa_sucursal" Schema="pita" store:Type="Tables" />
           <EntitySet Name="empresa_sucursal_ext" EntityType="Self.empresa_sucursal_ext" Schema="pita" store:Type="Tables" />
           <EntitySet Name="productos" EntityType="Self.productos" Schema="pita" store:Type="Tables" />
@@ -1124,20 +1109,6 @@ FROM `sistema_contadores` AS `sistema_contadores`</DefiningQuery>
           <Property Name="estatus" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="empresa_grupo_ext" Relationship="ModelLibSistema.empresa_grupo_ext_ibfk_2" FromRole="empresa_hnd_precios" ToRole="empresa_grupo_ext" />
           <NavigationProperty Name="productos_hnd_precio" Relationship="ModelLibSistema.productos_hnd_precio_ibfk_5" FromRole="empresa_hnd_precios" ToRole="productos_hnd_precio" />
-        </EntityType>
-        <EntityType Name="empresa_series_fiscales">
-          <Key>
-            <PropertyRef Name="auto" />
-          </Key>
-          <Property Name="auto" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="serie" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="correlativo" Type="Int32" Nullable="false" />
-          <Property Name="estatus_factura" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="estatus_nd" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="estatus_nc" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="estatus_ne" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="estatus" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="control" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
         <EntityType Name="empresa_sucursal">
           <Key>
@@ -1642,7 +1613,6 @@ FROM `sistema_contadores` AS `sistema_contadores`</DefiningQuery>
           <EntitySet Name="empresa_depositos" EntityType="Self.empresa_depositos" />
           <EntitySet Name="empresa_depositos_ext" EntityType="Self.empresa_depositos_ext" />
           <EntitySet Name="empresa_hnd_precios" EntityType="Self.empresa_hnd_precios" />
-          <EntitySet Name="empresa_series_fiscales" EntityType="Self.empresa_series_fiscales" />
           <EntitySet Name="empresa_sucursal" EntityType="Self.empresa_sucursal" />
           <EntitySet Name="productos" EntityType="Self.productos" />
           <EntitySet Name="productos_costos" EntityType="Self.productos_costos" />
@@ -2043,21 +2013,6 @@ FROM `sistema_contadores` AS `sistema_contadores`</DefiningQuery>
                 <ScalarProperty Name="codigo" ColumnName="codigo" />
                 <ScalarProperty Name="descrpcion" ColumnName="descrpcion" />
                 <ScalarProperty Name="estatus" ColumnName="estatus" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="empresa_series_fiscales">
-            <EntityTypeMapping TypeName="ModelLibSistema.empresa_series_fiscales">
-              <MappingFragment StoreEntitySet="empresa_series_fiscales">
-                <ScalarProperty Name="auto" ColumnName="auto" />
-                <ScalarProperty Name="serie" ColumnName="serie" />
-                <ScalarProperty Name="correlativo" ColumnName="correlativo" />
-                <ScalarProperty Name="estatus_factura" ColumnName="estatus_factura" />
-                <ScalarProperty Name="estatus_nd" ColumnName="estatus_nd" />
-                <ScalarProperty Name="estatus_nc" ColumnName="estatus_nc" />
-                <ScalarProperty Name="estatus_ne" ColumnName="estatus_ne" />
-                <ScalarProperty Name="estatus" ColumnName="estatus" />
-                <ScalarProperty Name="control" ColumnName="control" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

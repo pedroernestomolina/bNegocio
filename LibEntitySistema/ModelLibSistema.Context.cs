@@ -31,7 +31,6 @@ namespace LibEntitySistema
         public virtual DbSet<empresa_depositos> empresa_depositos { get; set; }
         public virtual DbSet<empresa_depositos_ext> empresa_depositos_ext { get; set; }
         public virtual DbSet<empresa_hnd_precios> empresa_hnd_precios { get; set; }
-        public virtual DbSet<empresa_series_fiscales> empresa_series_fiscales { get; set; }
         public virtual DbSet<empresa_sucursal> empresa_sucursal { get; set; }
         public virtual DbSet<productos> productos { get; set; }
         public virtual DbSet<productos_costos> productos_costos { get; set; }

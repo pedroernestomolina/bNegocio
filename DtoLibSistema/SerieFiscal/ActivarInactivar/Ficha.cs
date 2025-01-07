@@ -7,18 +7,12 @@ using System.Threading.Tasks;
 
 namespace DtoLibSistema.SerieFiscal.ActivarInactivar
 {
-    
     public class Ficha
     {
-
         public string id { get; set; }
-
-
         public Ficha()
         {
             id = "";
         }
-
     }
-
 }

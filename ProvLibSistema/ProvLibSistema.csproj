@@ -72,7 +72,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Provider.cs" />
     <Compile Include="ReconversionMonetaria.cs" />
-    <Compile Include="SerieFiscal.cs" />
+    <Compile Include="SerieFiscal_Agregar.cs" />
+    <Compile Include="SerieFiscal_CambiarEstatus.cs" />
+    <Compile Include="SerieFiscal_Editar.cs" />
+    <Compile Include="SerieFiscal_GetFicha.cs" />
+    <Compile Include="SerieFiscal_GetLista.cs" />
     <Compile Include="ServConf.cs" />
     <Compile Include="Sucursal.cs" />
     <Compile Include="SucursalGrupo.cs" />
