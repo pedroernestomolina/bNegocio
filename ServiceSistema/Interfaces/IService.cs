@@ -12,7 +12,8 @@ namespace ServiceSistema.Interfaces
         IFuncion, IServConf, IPermisos, IConfiguracion, IVendedor, ICobrador, ISerieFiscal, 
         IReconversionMonetaria,
         INegocio, IControlAcceso, ITablaPrecio, IPrecioEtiqueta, IMediosCobroPago ,
-        IAjustarTasaDivisa_ModoAdm
+        IAjustarTasaDivisa_ModoAdm,
+        IAjustarTasaPos
     {
 
         DtoLib.ResultadoEntidad<DateTime> FechaServidor();

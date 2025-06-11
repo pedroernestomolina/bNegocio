@@ -276,6 +276,10 @@ namespace ProvLibSistema
 
                         try
                         {
+                            //
+                            cnn.Database.CommandTimeout = 0;
+
+
                             var fechaSistema = cnn.Database.SqlQuery<DateTime>("select now()").FirstOrDefault();
 
                             var ent = cnn.sistema_configuracion.FirstOrDefault(f => f.codigo == "GLOBAL12");
@@ -925,6 +929,10 @@ namespace ProvLibSistema
                     {
                         try
                         {
+                            var fechaServidor= cnn.Database.SqlQuery<DateTime>("SELECT NOW()").FirstOrDefault();
+                            var fechaSist = fechaServidor.Date;
+                            var horaSist = fechaServidor.ToShortTimeString();
+                            //
                             var ent0 = cnn.sistema_configuracion.FirstOrDefault(f => f.codigo == "GLOBAL48");
                             if (ent0 == null)
                             {
@@ -954,6 +962,133 @@ namespace ProvLibSistema
                             ent2.usuario = ficha.permitirDarDescuentoEnPosUnicamenteSiPagoEnDivisa;
                             cnn.SaveChanges();
 
+
+                            //
+                            if (ficha.productosAjustar != null) 
+                            {
+                                foreach (var it in ficha.productosAjustar) 
+                                {
+                                    var p0 = new MySql.Data.MySqlClient.MySqlParameter("@idPrd", it.idPrd);
+                                    var p1 = new MySql.Data.MySqlClient.MySqlParameter("@p1", it.p1New);
+                                    var p2 = new MySql.Data.MySqlClient.MySqlParameter("@p2", it.p1New);
+                                    var p3 = new MySql.Data.MySqlClient.MySqlParameter("@p3", it.p1New);
+                                    var p4 = new MySql.Data.MySqlClient.MySqlParameter("@p4", it.p1New);
+                                    var p5 = new MySql.Data.MySqlClient.MySqlParameter();
+                                    var p6 = new MySql.Data.MySqlClient.MySqlParameter();
+                                    var p7 = new MySql.Data.MySqlClient.MySqlParameter();
+                                    var p8 = new MySql.Data.MySqlClient.MySqlParameter();
+                                    var sql = @"update productos set 
+                                                    precio_1=@p1, 
+                                                    precio_2=@p2, 
+                                                    precio_3=@p3, 
+                                                    precio_4=@p4
+                                                where auto=@idPrd";
+                                    var ex1 = cnn.Database.ExecuteSqlCommand(sql, p0, p1, p2, p3, p4);
+                                    if (ex1 == 0) 
+                                    {
+                                        var msg ="PROBLEMA AL ACTUALIZAR PRECIO DE PRODUCTO (1): "+it.nombrePrd;
+                                        throw new Exception(msg);
+                                    }
+                                    cnn.SaveChanges();
+
+                                    p0 = new MySql.Data.MySqlClient.MySqlParameter("@idPrd", it.idPrd);
+                                    p1 = new MySql.Data.MySqlClient.MySqlParameter("@p1", it.may1New);
+                                    p2 = new MySql.Data.MySqlClient.MySqlParameter("@p2", it.may2New);
+                                    p3 = new MySql.Data.MySqlClient.MySqlParameter("@p3", it.may3New);
+                                    p4 = new MySql.Data.MySqlClient.MySqlParameter("@p4", it.may4New);
+                                    p5 = new MySql.Data.MySqlClient.MySqlParameter("@p5", it.dsp1New);
+                                    p6 = new MySql.Data.MySqlClient.MySqlParameter("@p6", it.dsp2New);
+                                    p7 = new MySql.Data.MySqlClient.MySqlParameter("@p7", it.dsp3New);
+                                    p8 = new MySql.Data.MySqlClient.MySqlParameter("@p8", it.dsp4New);
+                                    sql = @"update productos_ext set 
+                                                    precio_may_1=@p1, 
+                                                    precio_may_2=@p2, 
+                                                    precio_may_3=@p3, 
+                                                    precio_may_4=@p4,
+                                                    precio_dsp_1=@p5,
+                                                    precio_dsp_2=@p6,
+                                                    precio_dsp_3=@p7,
+                                                    precio_dsp_4=@p8
+                                                where auto_producto=@idPrd";
+                                    var ex2 = cnn.Database.ExecuteSqlCommand(sql, p0, p1, p2, p3, p4, p5, p6, p7, p8);
+                                    if (ex2 == 0)
+                                    {
+                                        var msg = "PROBLEMA AL ACTUALIZAR PRECIO DE PRODUCTO (2): " + it.nombrePrd;
+                                        throw new Exception(msg);
+                                    }
+                                    cnn.SaveChanges();
+                                }
+                            }
+                            if (ficha.historicoPreciosAgregar != null)
+                            {
+                                foreach (var it in ficha.historicoPreciosAgregar)
+                                {
+                                    var p1 = new MySql.Data.MySqlClient.MySqlParameter("@idPrd", it.idPrd);
+                                    var p2 = new MySql.Data.MySqlClient.MySqlParameter("@nota", it.motivoCambio);
+                                    var p3 = new MySql.Data.MySqlClient.MySqlParameter("@fecha", fechaSist);
+                                    var p4 = new MySql.Data.MySqlClient.MySqlParameter("@estacion", ficha.Estacion);
+                                    var p5 = new MySql.Data.MySqlClient.MySqlParameter("@hora", horaSist);
+                                    var p6 = new MySql.Data.MySqlClient.MySqlParameter("@usuario", ficha.Usuario);
+                                    var p7 = new MySql.Data.MySqlClient.MySqlParameter("@precio_id", it.identificadorPrecio);
+                                    var p8 = new MySql.Data.MySqlClient.MySqlParameter("@precio", it.precioNuevo);
+                                    var sql = @"INSERT INTO productos_precios (
+                                                    auto_producto, 
+                                                    nota, 
+                                                    fecha, 
+                                                    estacion, 
+                                                    hora, 
+                                                    usuario, 
+                                                    precio_id, 
+                                                    precio, 
+                                                    id
+                                                ) VALUES (
+                                                    @idPrd, 
+                                                    @nota, 
+                                                    @fecha, 
+                                                    @estacion, 
+                                                    @hora, 
+                                                    @usuario, 
+                                                    @precio_id, 
+                                                    @precio, 
+                                                    NULL
+                                                )";
+                                    var ex1 = cnn.Database.ExecuteSqlCommand(sql, p1, p2, p3, p4, p5, p6, p7, p8);
+                                    if (ex1 == 0)
+                                    {
+                                        var msg = "PROBLEMA AL INSERTAR HISTORICO PRECIO (1): " + it.nombrePrd;
+                                        throw new Exception(msg);
+                                    }
+                                    cnn.SaveChanges();
+                                    //
+                                    var id = cnn.Database.SqlQuery<int>("SELECT LAST_INSERT_ID()").FirstOrDefault();
+                                    //
+                                    p1 = new MySql.Data.MySqlClient.MySqlParameter("@id_producto_precio", id);
+                                    p2 = new MySql.Data.MySqlClient.MySqlParameter("@empaque", it.descEmpq);
+                                    p3 = new MySql.Data.MySqlClient.MySqlParameter("@contenido", it.contEmpq);
+                                    p4 = new MySql.Data.MySqlClient.MySqlParameter("@factor_cambio", ficha.factorCambio);
+                                    sql = @"INSERT INTO productos_precios_ext (
+                                                id, 
+                                                id_producto_precio,
+                                                empaque, 
+                                                contenido, 
+                                                factor_cambio) 
+                                            VALUES (
+                                                NULL,
+                                                @id_producto_precio,
+                                                @empaque, 
+                                                @contenido, 
+                                                @factor_cambio 
+                                                )";
+                                    ex1 = cnn.Database.ExecuteSqlCommand(sql, p1, p2, p3, p4);
+                                    if (ex1 == 0)
+                                    {
+                                        var msg = "PROBLEMA AL INSERTAR HISTORICO PRECIO (2): " + it.nombrePrd;
+                                        throw new Exception(msg);
+                                    }
+                                    cnn.SaveChanges();
+                                }
+                            }
+                            //
                             ts.Commit();
                         }
                         catch (MySql.Data.MySqlClient.MySqlException ex)
@@ -974,11 +1109,7 @@ namespace ProvLibSistema
                 rt.Mensaje = e.Message;
                 rt.Result = DtoLib.Enumerados.EnumResult.isError;
             }
-
             return rt;
         }
-
-
     }
-
 }

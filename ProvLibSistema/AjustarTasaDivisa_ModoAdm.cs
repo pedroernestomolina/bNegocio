@@ -72,7 +72,7 @@ namespace ProvLibSistema
                             var i=cnn.Database.ExecuteSqlCommand(_sql, p1);
                             if (i == 0)
                             {
-                                rt.Mensaje = "PROBLEMA AL ACTUALIZAR CONFIGUTACION [GLOBAL12]";
+                                rt.Mensaje = "PROBLEMA AL ACTUALIZAR CONFIGURACION [GLOBAL12]";
                                 rt.Result = DtoLib.Enumerados.EnumResult.isError;
                                 return rt;
                             }

@@ -49,6 +49,10 @@
     <Compile Include="AjustarTasaDivisa\ModoAdm\Ajustar\PrecioSiAdmDivisa.cs" />
     <Compile Include="AjustarTasaDivisa\ModoAdm\Ajustar\SiAdmDivisa.cs" />
     <Compile Include="AjustarTasaDivisa\ModoAdm\CapturarData.cs" />
+    <Compile Include="AjustarTasaPos\AjustarData\HistoricoPrecio.cs" />
+    <Compile Include="AjustarTasaPos\AjustarData\Producto.cs" />
+    <Compile Include="AjustarTasaPos\CapturarData\Ficha.cs" />
+    <Compile Include="AjustarTasaPos\CapturarData\Item.cs" />
     <Compile Include="Cobrador\Agregar\Ficha.cs" />
     <Compile Include="Cobrador\Editar\Ficha.cs" />
     <Compile Include="Cobrador\Entidad\Ficha.cs" />
