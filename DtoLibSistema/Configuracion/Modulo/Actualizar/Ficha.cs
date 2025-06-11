@@ -7,18 +7,15 @@ using System.Threading.Tasks;
 
 namespace DtoLibSistema.Configuracion.Modulo.Actualizar
 {
-    
     public class Ficha
     {
-
         public string claveNivMaximo { get; set; }
         public string claveNivMedio { get; set; }
         public string claveNivMinimo { get; set; }
         public string visualizarPrdInactivos { get; set; }
         public int cantDocVisualizar { get; set; }
         public string modoCalculoDifTasa { get; set; }
-
-
+        public string modoCalculoPrecioPrdNac { get; set; }
         public Ficha()
         {
             claveNivMaximo = "";
@@ -27,8 +24,7 @@ namespace DtoLibSistema.Configuracion.Modulo.Actualizar
             visualizarPrdInactivos = "";
             cantDocVisualizar = 0;
             modoCalculoDifTasa = "";
+            modoCalculoPrecioPrdNac = "";
         }
-
     }
-
 }

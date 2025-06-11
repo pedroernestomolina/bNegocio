@@ -770,9 +770,7 @@ namespace ProvLibSistema
                             var ent1 = cnn.sistema_configuracion.FirstOrDefault(f => f.codigo == "GLOBAL17");
                             if (ent1 == null)
                             {
-                                rt.Mensaje = "[ GLOBAL17 ] CONFIGURACION NO ENCONTRADO";
-                                rt.Result = DtoLib.Enumerados.EnumResult.isError;
-                                return rt;
+                                throw new Exception("[ GLOBAL17 ] CONFIGURACION NO ENCONTRADO");
                             }
                             ent1.usuario = ficha.claveNivMaximo;
                             cnn.SaveChanges();
@@ -780,9 +778,7 @@ namespace ProvLibSistema
                             var ent2 = cnn.sistema_configuracion.FirstOrDefault(f => f.codigo == "GLOBAL18");
                             if (ent2 == null)
                             {
-                                rt.Mensaje = "[ GLOBAL18 ] CONFIGURACION NO ENCONTRADO";
-                                rt.Result = DtoLib.Enumerados.EnumResult.isError;
-                                return rt;
+                                throw new Exception("[ GLOBAL18 ] CONFIGURACION NO ENCONTRADO");
                             }
                             ent2.usuario = ficha.claveNivMedio;
                             cnn.SaveChanges();
@@ -791,9 +787,7 @@ namespace ProvLibSistema
                             var ent3 = cnn.sistema_configuracion.FirstOrDefault(f => f.codigo == "GLOBAL19");
                             if (ent3 == null)
                             {
-                                rt.Mensaje = "[ GLOBAL19 ] CONFIGURACION NO ENCONTRADO";
-                                rt.Result = DtoLib.Enumerados.EnumResult.isError;
-                                return rt;
+                                throw new Exception("[ GLOBAL19 ] CONFIGURACION NO ENCONTRADO");
                             }
                             ent3.usuario = ficha.claveNivMinimo;
                             cnn.SaveChanges();
@@ -801,9 +795,7 @@ namespace ProvLibSistema
                             var ent4 = cnn.sistema_configuracion.FirstOrDefault(f => f.codigo == "GLOBAL52");
                             if (ent4 == null)
                             {
-                                rt.Mensaje = "[ GLOBAL52 ] CONFIGURACION NO ENCONTRADO";
-                                rt.Result = DtoLib.Enumerados.EnumResult.isError;
-                                return rt;
+                                throw new Exception("[ GLOBAL52 ] CONFIGURACION NO ENCONTRADO");
                             }
                             ent4.usuario = ficha.visualizarPrdInactivos;
                             cnn.SaveChanges();
@@ -811,9 +803,7 @@ namespace ProvLibSistema
                             var ent5 = cnn.sistema_configuracion.FirstOrDefault(f => f.codigo == "GLOBAL53");
                             if (ent5 == null)
                             {
-                                rt.Mensaje = "[ GLOBAL53 ] CONFIGURACION NO ENCONTRADO";
-                                rt.Result = DtoLib.Enumerados.EnumResult.isError;
-                                return rt;
+                                throw new Exception("[ GLOBAL53 ] CONFIGURACION NO ENCONTRADO");
                             }
                             ent5.usuario = ficha.cantDocVisualizar.ToString();
                             cnn.SaveChanges();
@@ -821,11 +811,17 @@ namespace ProvLibSistema
                             var ent6 = cnn.sistema_configuracion.FirstOrDefault(f => f.codigo == "GLOBAL62");
                             if (ent6 == null)
                             {
-                                rt.Mensaje = "[ GLOBAL62 ] CONFIGURACION NO ENCONTRADO";
-                                rt.Result = DtoLib.Enumerados.EnumResult.isError;
-                                return rt;
+                                throw new Exception("[ GLOBAL62 ] CONFIGURACION NO ENCONTRADO");
                             }
                             ent6.usuario = ficha.modoCalculoDifTasa.Trim().ToString();
+                            cnn.SaveChanges();
+
+                            var ent7= cnn.sistema_configuracion.FirstOrDefault(f => f.codigo == "GLOBAL66");
+                            if (ent7 == null)
+                            {
+                                throw new Exception("[ GLOBAL66 ] CONFIGURACION NO ENCONTRADO");
+                            }
+                            ent7.usuario = ficha.modoCalculoPrecioPrdNac;
                             cnn.SaveChanges();
 
                             ts.Commit();
@@ -848,7 +844,7 @@ namespace ProvLibSistema
                 rt.Mensaje = e.Message;
                 rt.Result = DtoLib.Enumerados.EnumResult.isError;
             }
-
+            //
             return rt;
         }
 
