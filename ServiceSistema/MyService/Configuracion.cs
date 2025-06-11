@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 
 namespace ServiceSistema.MyService
 {
-    
     public partial class Service : IService
     {
-
         public DtoLib.ResultadoEntidad<string> 
             Configuracion_ModuloSistema_Modo()
         {
@@ -27,7 +25,6 @@ namespace ServiceSistema.MyService
         {
             return ServiceProv.Configuracion_Actualizar_CalculoDiferenciaEntreTasas(modo);
         }
-
 
         public DtoLib.ResultadoEntidad<string> 
             Configuracion_TasaCambioActual()
@@ -94,6 +91,15 @@ namespace ServiceSistema.MyService
             return ServiceProv.Configuracion_Pos_Actualizar(ficha);
         }
 
+        public DtoLib.ResultadoEntidad<string> 
+            Configuracion_ModoCalculoPrecioProductosNacionales()
+        {
+            return ServiceProv.Configuracion_ModoCalculoPrecioProductosNacionales();
+        }
+        public DtoLib.Resultado 
+            Configuracion_Actualizar_ModoCalculoPrecioProductosNacionales(string modo)
+        {
+            return ServiceProv.Configuracion_Actualizar_ModoCalculoPrecioProductosNacionales(modo);
+        }
     }
-
 }

@@ -12,10 +12,8 @@ using System.Transactions;
 
 namespace ProvLibSistema
 {
-    
     public partial class Provider : ILibSistema.IProvider
     {
-
         public DtoLib.ResultadoEntidad<string> 
             Configuracion_ModuloSistema_Modo()
         {
@@ -74,7 +72,7 @@ namespace ProvLibSistema
             Configuracion_Actualizar_CalculoDiferenciaEntreTasas(string modo)
         {
             var result = new DtoLib.Resultado();
-
+            //
             try
             {
                 using (var cnn = new sistemaEntities(_cnSist.ConnectionString))
@@ -82,9 +80,7 @@ namespace ProvLibSistema
                     var ent = cnn.sistema_configuracion.FirstOrDefault(f => f.codigo == "GLOBAL62");
                     if (ent == null)
                     {
-                        result.Mensaje = "[ GLOBAL62 ] CONFIGURACION NO ENCONTRADO";
-                        result.Result = DtoLib.Enumerados.EnumResult.isError;
-                        return result;
+                        throw new Exception("[ GLOBAL62 ] CONFIGURACION NO ENCONTRADO");
                     }
                     ent.usuario = modo;
                     cnn.SaveChanges();
@@ -95,10 +91,9 @@ namespace ProvLibSistema
                 result.Mensaje = e.Message;
                 result.Result = DtoLib.Enumerados.EnumResult.isError;
             }
-
+            //
             return result;
         }
-
 
         public DtoLib.ResultadoEntidad<string> 
             Configuracion_TasaCambioActual()
@@ -1110,6 +1105,58 @@ namespace ProvLibSistema
                 rt.Result = DtoLib.Enumerados.EnumResult.isError;
             }
             return rt;
+        }
+
+        public DtoLib.ResultadoEntidad<string> 
+            Configuracion_ModoCalculoPrecioProductosNacionales()
+        {
+            var result = new DtoLib.ResultadoEntidad<string>();
+            //
+            try
+            {
+                using (var cnn = new sistemaEntities(_cnSist.ConnectionString))
+                {
+                    var ent = cnn.sistema_configuracion.FirstOrDefault(f => f.codigo == "GLOBAL66");
+                    if (ent == null)
+                    {
+                        throw new Exception("[ ID ] CONFIGURACION NO ENCONTRADO");
+                    }
+                    result.Entidad = ent.usuario.Trim().ToUpper();
+                }
+            }
+            catch (Exception e)
+            {
+                result.Mensaje = e.Message;
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+            //
+            return result;
+        }
+        public DtoLib.Resultado 
+            Configuracion_Actualizar_ModoCalculoPrecioProductosNacionales(string modo)
+        {
+            var result = new DtoLib.Resultado();
+            //
+            try
+            {
+                using (var cnn = new sistemaEntities(_cnSist.ConnectionString))
+                {
+                    var ent = cnn.sistema_configuracion.FirstOrDefault(f => f.codigo == "GLOBAL66");
+                    if (ent == null)
+                    {
+                        throw new Exception("[ GLOBAL66 ] CONFIGURACION NO ENCONTRADO");
+                    }
+                    ent.usuario = modo;
+                    cnn.SaveChanges();
+                }
+            }
+            catch (Exception e)
+            {
+                result.Mensaje = e.Message;
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+            //
+            return result;
         }
     }
 }

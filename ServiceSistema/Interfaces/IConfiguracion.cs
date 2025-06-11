@@ -7,17 +7,14 @@ using System.Threading.Tasks;
 
 namespace ServiceSistema.Interfaces
 {
-    
     public interface IConfiguracion
     {
-
         DtoLib.ResultadoEntidad<string>
             Configuracion_ModuloSistema_Modo();
         DtoLib.ResultadoEntidad<string>
             Configuracion_CalculoDiferenciaEntreTasas();
         DtoLib.Resultado
             Configuracion_Actualizar_CalculoDiferenciaEntreTasas(string modo);
-
 
         DtoLib.ResultadoEntidad<DtoLibSistema.Configuracion.Enumerados.EnumForzarRedondeoPrecioVenta> 
             Configuracion_ForzarRedondeoPrecioVenta();
@@ -48,6 +45,9 @@ namespace ServiceSistema.Interfaces
         DtoLib.Resultado
             Configuracion_Pos_Actualizar(DtoLibSistema.Configuracion.Pos.Actualizar.Ficha ficha);
 
+        DtoLib.ResultadoEntidad<String>
+            Configuracion_ModoCalculoPrecioProductosNacionales();
+        DtoLib.Resultado
+            Configuracion_Actualizar_ModoCalculoPrecioProductosNacionales(string modo);
     }
-
 }
