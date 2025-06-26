@@ -15,6 +15,7 @@ namespace DtoLibSistema.Configuracion.Pos.Actualizar
         public decimal factorCambio  { get; set; }
         public string permitirDarDescuentoEnPosUnicamenteSiPagoEnDivisa { get; set; }
         public string valorMaximoDescuentoPermitido { get; set; }
+        public string porcAumentoPreciosDeProductosNoAdmPorDivisa { get; set; }
         public List<DtoLibSistema.AjustarTasaPos.AjustarData.Producto> productosAjustar  { get; set; }
         public List<DtoLibSistema.AjustarTasaPos.AjustarData.HistoricoPrecio> historicoPreciosAgregar { get; set; }
         //
@@ -26,6 +27,7 @@ namespace DtoLibSistema.Configuracion.Pos.Actualizar
             factorCambio = 0m;
             permitirDarDescuentoEnPosUnicamenteSiPagoEnDivisa = "";
             valorMaximoDescuentoPermitido = "";
+            porcAumentoPreciosDeProductosNoAdmPorDivisa = "";
             productosAjustar = null;
             historicoPreciosAgregar = null;
         }

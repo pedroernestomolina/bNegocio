@@ -261,22 +261,18 @@ namespace ProvLibSistema
             Configuracion_Actualizar_TasaDivisa_ActualizarData(DtoLibSistema.Configuracion.ActualizarTasaDivisa.ActualizarData.Ficha ficha)
         {
             var rt = new DtoLib.Resultado();
-
+            //
             try
             {
                 using (var cnn = new sistemaEntities(_cnSist.ConnectionString))
                 {
                     using (var ts = cnn.Database.BeginTransaction())
                     {
-
                         try
                         {
                             //
                             cnn.Database.CommandTimeout = 0;
-
-
                             var fechaSistema = cnn.Database.SqlQuery<DateTime>("select now()").FirstOrDefault();
-
                             var ent = cnn.sistema_configuracion.FirstOrDefault(f => f.codigo == "GLOBAL12");
                             if (ent == null)
                             {
@@ -312,11 +308,20 @@ namespace ProvLibSistema
                                     return rt;
                                 }
                                 entPrd.divisa = rg.costoDivisa;
+                                entPrd.costo = rg.costoMonActual;
+                                entPrd.costo_proveedor = rg.costoMonActual;
+                                entPrd.costo_proveedor_und = rg.costoMonActualUnd;
+                                entPrd.costo_und = rg.costoMonActualUnd;
                                 entPrd.pdf_1 = rg.precioMonedaEnDivisaFull_1;
                                 entPrd.pdf_2 = rg.precioMonedaEnDivisaFull_2;
                                 entPrd.pdf_3 = rg.precioMonedaEnDivisaFull_3;
                                 entPrd.pdf_4 = rg.precioMonedaEnDivisaFull_4;
                                 entPrd.pdf_pto = rg.precioMonedaEnDivisaFull_5;
+                                entPrd.precio_1 = rg.precio_1;
+                                entPrd.precio_2 = rg.precio_2;
+                                entPrd.precio_3= rg.precio_3;
+                                entPrd.precio_4= rg.precio_4;
+                                entPrd.precio_pto= rg.precio_5;
                                 cnn.SaveChanges();
 
                                 var entPrdExt = cnn.productos_ext.Find(rg.autoPrd);
@@ -330,11 +335,20 @@ namespace ProvLibSistema
                                 entPrdExt.pdmf_2 = rg.precioMonedaEnDivisaFull_May_2;
                                 entPrdExt.pdmf_3 = rg.precioMonedaEnDivisaFull_May_3;
                                 entPrdExt.pdmf_4 = rg.precioMonedaEnDivisaFull_May_4;
-
+                                entPrdExt.precio_may_1 = rg.precioMay_1;
+                                entPrdExt.precio_may_2 = rg.precioMay_2;
+                                entPrdExt.precio_may_3 = rg.precioMay_3;
+                                entPrdExt.precio_may_4= rg.precioMay_4;
+                                //
                                 entPrdExt.pdivisafull_dsp_1 = rg.precioMonedaEnDivisaFull_Dsp_1;
                                 entPrdExt.pdivisafull_dsp_2 = rg.precioMonedaEnDivisaFull_Dsp_2;
                                 entPrdExt.pdivisafull_dsp_3 = rg.precioMonedaEnDivisaFull_Dsp_3;
                                 entPrdExt.pdivisafull_dsp_4 = rg.precioMonedaEnDivisaFull_Dsp_4;
+                                entPrdExt.precio_dsp_1= rg.precioDsp_1;
+                                entPrdExt.precio_dsp_2= rg.precioDsp_2;
+                                entPrdExt.precio_dsp_3= rg.precioDsp_3;
+                                entPrdExt.precio_dsp_4= rg.precioDsp_4;
+                                //
                                 cnn.SaveChanges();
                             }
 
@@ -889,12 +903,22 @@ namespace ProvLibSistema
                         result.Result = DtoLib.Enumerados.EnumResult.isError;
                         return result;
                     }
+                    //
+                    // TASA SISTEMA
+                    var ent5 = cnn.sistema_configuracion.FirstOrDefault(f => f.codigo == "GLOBAL67");
+                    if (ent5 == null)
+                    {
+                        result.Mensaje = "[ GLOBAL67 ] CONFIGURACION NO ENCONTRADO";
+                        result.Result = DtoLib.Enumerados.EnumResult.isError;
+                        return result;
+                    }
                     var rg = new DtoLibSistema.Configuracion.Pos.Capturar.Ficha()
                     {
                         valorMaximoDescuentoPermitido = ent1.usuario,
                         permitirDarDescuentoEnPosUnicamenteSiPagoEnDivisa = ent2.usuario,
                         tasaManejoDivisaPos = ent3.usuario,
                         tasaManejoDivisaSist= ent4.usuario,
+                        porcAumentoEnPreciosProductosNoAdmPorDivisa= ent5.usuario
                     };
                     result.Entidad = rg;
                 }
@@ -932,7 +956,7 @@ namespace ProvLibSistema
                                 return rt;
                             }
                             ent0.usuario = ficha.tasaRecepcionPos;
-
+                            //
                             var ent1 = cnn.sistema_configuracion.FirstOrDefault(f => f.codigo == "GLOBAL58");
                             if (ent1 == null)
                             {
@@ -942,7 +966,7 @@ namespace ProvLibSistema
                             }
                             ent1.usuario = ficha.valorMaximoDescuentoPermitido;
                             cnn.SaveChanges();
-
+                            //
                             var ent2 = cnn.sistema_configuracion.FirstOrDefault(f => f.codigo == "GLOBAL59");
                             if (ent2 == null)
                             {
@@ -952,8 +976,16 @@ namespace ProvLibSistema
                             }
                             ent2.usuario = ficha.permitirDarDescuentoEnPosUnicamenteSiPagoEnDivisa;
                             cnn.SaveChanges();
-
-
+                            //
+                            var ent3 = cnn.sistema_configuracion.FirstOrDefault(f => f.codigo == "GLOBAL67");
+                            if (ent3 == null)
+                            {
+                                rt.Mensaje = "[ GLOBAL67 ] CONFIGURACION NO ENCONTRADO";
+                                rt.Result = DtoLib.Enumerados.EnumResult.isError;
+                                return rt;
+                            }
+                            ent3.usuario = ficha.porcAumentoPreciosDeProductosNoAdmPorDivisa;
+                            cnn.SaveChanges();
                             //
                             if (ficha.productosAjustar != null) 
                             {
