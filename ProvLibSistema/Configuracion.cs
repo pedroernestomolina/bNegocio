@@ -987,6 +987,18 @@ namespace ProvLibSistema
                             ent3.usuario = ficha.porcAumentoPreciosDeProductosNoAdmPorDivisa;
                             cnn.SaveChanges();
                             //
+                            var _sqlMoneda = @"update vl_currencies set 
+                                                    tasa_respecto_mon_referencia=@tasa 
+                                                where 
+                                                    id=@idMoneda";
+                            var mp1 = new MySql.Data.MySqlClient.MySqlParameter("@tasa", ficha.tasaRecepcionPos);
+                            var mp2 = new MySql.Data.MySqlClient.MySqlParameter("@idMoneda", ficha.idMonLocal);
+                            var rstMon = cnn.Database.ExecuteSqlCommand(_sqlMoneda, mp1, mp2);
+                            if (rstMon == 0) 
+                            {
+                                throw new Exception("PROBLEMA AL ACTUALIZAR MONEDA LOCAL");
+                            }
+                            //
                             if (ficha.productosAjustar != null) 
                             {
                                 foreach (var it in ficha.productosAjustar) 
@@ -1176,6 +1188,40 @@ namespace ProvLibSistema
                     }
                     ent.usuario = modo;
                     cnn.SaveChanges();
+                }
+            }
+            catch (Exception e)
+            {
+                result.Mensaje = e.Message;
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+            //
+            return result;
+        }
+
+
+        //
+        //
+        public DtoLib.ResultadoEntidad<string> 
+            Configuracion_MonedaLocal()
+        {
+            var result = new DtoLib.ResultadoEntidad<string>();
+            //
+            try
+            {
+                using (var cnn = new sistemaEntities(_cnSist.ConnectionString))
+                {
+                    var _sql = "select usuario from sistema_configuracion where codigo='GLOBAL68'";
+                    var ent1 = cnn.Database.SqlQuery<string>(_sql).FirstOrDefault();
+                    if (ent1 == null)
+                    {
+                        throw new Exception("[ ID ] CONFIGURACION GLOBAL NO ENCONTRADO");
+                    }
+                    if (ent1.ToString().Trim() == "")
+                    {
+                        throw new Exception("[ ID ] NO CONFIGURADO");
+                    }
+                    result.Entidad = ent1;
                 }
             }
             catch (Exception e)

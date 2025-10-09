@@ -101,5 +101,13 @@ namespace ServiceSistema.MyService
         {
             return ServiceProv.Configuracion_Actualizar_ModoCalculoPrecioProductosNacionales(modo);
         }
+
+        //
+        //
+        public DtoLib.ResultadoEntidad<string> 
+            Configuracion_MonedaLocal()
+        {
+            return ServiceProv.Configuracion_MonedaLocal();
+        }
     }
 }

@@ -49,5 +49,9 @@ namespace ServiceSistema.Interfaces
             Configuracion_ModoCalculoPrecioProductosNacionales();
         DtoLib.Resultado
             Configuracion_Actualizar_ModoCalculoPrecioProductosNacionales(string modo);
+        //
+        //
+        DtoLib.ResultadoEntidad<string>
+            Configuracion_MonedaLocal();
     }
 }

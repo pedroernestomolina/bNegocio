@@ -48,6 +48,7 @@
     <Compile Include="IFuncion.cs" />
     <Compile Include="IGrupoUsuario.cs" />
     <Compile Include="IMediosCobroPago.cs" />
+    <Compile Include="IMoneda.cs" />
     <Compile Include="INegocio.cs" />
     <Compile Include="IPermisos.cs" />
     <Compile Include="IPrecioEtiqueta.cs" />

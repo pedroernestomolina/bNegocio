@@ -16,6 +16,7 @@ namespace DtoLibSistema.Configuracion.Pos.Actualizar
         public string permitirDarDescuentoEnPosUnicamenteSiPagoEnDivisa { get; set; }
         public string valorMaximoDescuentoPermitido { get; set; }
         public string porcAumentoPreciosDeProductosNoAdmPorDivisa { get; set; }
+        public int idMonLocal { get; set; }
         public List<DtoLibSistema.AjustarTasaPos.AjustarData.Producto> productosAjustar  { get; set; }
         public List<DtoLibSistema.AjustarTasaPos.AjustarData.HistoricoPrecio> historicoPreciosAgregar { get; set; }
         //
@@ -30,6 +31,7 @@ namespace DtoLibSistema.Configuracion.Pos.Actualizar
             porcAumentoPreciosDeProductosNoAdmPorDivisa = "";
             productosAjustar = null;
             historicoPreciosAgregar = null;
+            idMonLocal = -1;
         }
     }
 }

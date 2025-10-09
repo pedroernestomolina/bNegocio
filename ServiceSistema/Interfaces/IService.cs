@@ -7,18 +7,15 @@ using System.Threading.Tasks;
 
 namespace ServiceSistema.Interfaces
 {
-
     public interface IService: ISucursal, IDeposito, ISucursalGrupo, IUsuario, IUsuarioGrupo,
         IFuncion, IServConf, IPermisos, IConfiguracion, IVendedor, ICobrador, ISerieFiscal, 
         IReconversionMonetaria,
         INegocio, IControlAcceso, ITablaPrecio, IPrecioEtiqueta, IMediosCobroPago ,
         IAjustarTasaDivisa_ModoAdm,
-        IAjustarTasaPos
+        IAjustarTasaPos,
+        IMoneda
     {
-
         DtoLib.ResultadoEntidad<DateTime> FechaServidor();
         DtoLib.ResultadoEntidad<DtoLibSistema.Empresa.Data.Ficha> Empresa_Datos();
-
     }
-
 }

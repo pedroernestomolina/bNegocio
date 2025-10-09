@@ -67,6 +67,7 @@
     <Compile Include="GrupoUsuario.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="MediosCobroPago.cs" />
+    <Compile Include="Moneda.cs" />
     <Compile Include="Negocio.cs" />
     <Compile Include="Permisos.cs" />
     <Compile Include="PrecioEtiqueta.cs" />

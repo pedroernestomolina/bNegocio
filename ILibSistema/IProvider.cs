@@ -13,7 +13,8 @@ namespace ILibSistema
         INegocio, IControlAcceso, ITablaPrecio, ISucursalGrupo, 
         IPrecioEtiqueta, IMediosCobroPago,
         IAjustarTasaDivisa_ModoAdm,
-        IAjustarTasaPos
+        IAjustarTasaPos,
+        IMoneda
     {
         DtoLib.ResultadoEntidad<DateTime> FechaServidor();
         DtoLib.ResultadoEntidad<DtoLibSistema.Empresa.Data.Ficha> Empresa_Datos();
