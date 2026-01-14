@@ -7,17 +7,9 @@ using System.Threading.Tasks;
 
 namespace DtoLibSistema.MediosCobroPago.Entidad
 {
-    
-    public class Ficha
+    public class Ficha: baseAgregarEditar
     {
-
         public string auto { get; set; }
-        public string codigo { get; set; }
-        public string descripcion { get; set; }
-        public string estatusCobro { get; set; }
-        public string estatusPago { get; set; }
-
-
         public Ficha()
         {
             auto = "";
@@ -25,8 +17,13 @@ namespace DtoLibSistema.MediosCobroPago.Entidad
             descripcion = "";
             estatusCobro = "";
             estatusPago = "";
+            idMoneda = 0;
+            aplicaParaEl_ModuloCobroAnticipo = "0";
+            aplicaParaEl_POS = "0";
+            aplicaParaEl_SolicitarLoteReferencia = "0";
+            aplicaParaEl_BonoPagoEnDivisa = "0";
+            aplicaParaEl_IGTF = "0";
+            aplicaParaEl_RetornoCambioVuelto = "0";
         }
-
     }
-
 }

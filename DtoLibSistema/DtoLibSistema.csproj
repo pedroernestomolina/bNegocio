@@ -101,6 +101,7 @@
     <Compile Include="MediosCobroPago\Lista\Ficha.cs" />
     <Compile Include="MediosCobroPago\Lista\Filtro.cs" />
     <Compile Include="Moneda\Entidad\Ficha.cs" />
+    <Compile Include="Moneda\Filtro.cs" />
     <Compile Include="Negocio\Editar\Ficha.cs" />
     <Compile Include="Negocio\Entidad\Ficha.cs" />
     <Compile Include="Permiso\Enumerados.cs" />

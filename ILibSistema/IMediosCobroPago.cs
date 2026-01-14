@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace ILibSistema
 {
-    
     public interface IMediosCobroPago
     {
-
         DtoLib.ResultadoLista<DtoLibSistema.MediosCobroPago.Lista.Ficha>
             MediosCobroPago_GetLista(DtoLibSistema.MediosCobroPago.Lista.Filtro filtro);
         DtoLib.ResultadoEntidad<DtoLibSistema.MediosCobroPago.Entidad.Ficha>
@@ -19,7 +17,5 @@ namespace ILibSistema
             MediosCobroPago_AgregarFicha(DtoLibSistema.MediosCobroPago.Agregar.Ficha ficha);
         DtoLib.Resultado 
             MediosCobroPago_EditarFicha(DtoLibSistema.MediosCobroPago.Editar.Ficha ficha);
-
     }
-
 }

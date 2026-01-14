@@ -11,7 +11,7 @@ namespace DtoLibSistema.Configuracion.Pos.Actualizar
     {
         public string Estacion { get; set; }
         public string Usuario { get; set; }
-        public string tasaRecepcionPos { get; set; }
+        public decimal tasaRecepcionPos { get; set; }
         public decimal factorCambio  { get; set; }
         public string permitirDarDescuentoEnPosUnicamenteSiPagoEnDivisa { get; set; }
         public string valorMaximoDescuentoPermitido { get; set; }
@@ -20,11 +20,21 @@ namespace DtoLibSistema.Configuracion.Pos.Actualizar
         public List<DtoLibSistema.AjustarTasaPos.AjustarData.Producto> productosAjustar  { get; set; }
         public List<DtoLibSistema.AjustarTasaPos.AjustarData.HistoricoPrecio> historicoPreciosAgregar { get; set; }
         //
+        public decimal ValorAnterior { get; set; }
+        public decimal FactorVariacion { get; set; }
+        public string MonedaCodigo { get; set; }
+        public string MonedaSimbolo { get; set; }
+        public string UsuarioCodigo { get; set; }
+        public decimal TasaDivisaSistema { get; set; }
+        public decimal PorctDiferenciaTasaSistemaTasaPos { get; set; }
+        public decimal PorctBono { get; set; }
+        public string HabilitarBono { get; set; }
+        public decimal PorctAumentoPrdNoDivisa { get; set; }
         public Ficha()
         {
             Estacion = "";
             Usuario = "";
-            tasaRecepcionPos = "";
+            tasaRecepcionPos = 0m;
             factorCambio = 0m;
             permitirDarDescuentoEnPosUnicamenteSiPagoEnDivisa = "";
             valorMaximoDescuentoPermitido = "";
@@ -32,6 +42,17 @@ namespace DtoLibSistema.Configuracion.Pos.Actualizar
             productosAjustar = null;
             historicoPreciosAgregar = null;
             idMonLocal = -1;
+            //
+            ValorAnterior = 0m;
+            FactorVariacion = 0m;
+            MonedaCodigo = "";
+            MonedaSimbolo = "";
+            UsuarioCodigo = "";
+            TasaDivisaSistema = 0m;
+            PorctDiferenciaTasaSistemaTasaPos = 0m;
+            PorctBono = 0m;
+            HabilitarBono = "";
+            PorctAumentoPrdNoDivisa = 0m;
         }
     }
 }

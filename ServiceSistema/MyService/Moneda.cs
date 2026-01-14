@@ -15,5 +15,10 @@ namespace ServiceSistema.MyService
         {
             return ServiceProv.Moneda_GetFichaById(id);
         }
+        public DtoLib.ResultadoLista<DtoLibSistema.Moneda.Entidad.Ficha> 
+            Moneda_GetLista(DtoLibSistema.Moneda.Filtro filtro)
+        {
+            return ServiceProv.Moneda_GetLista(filtro);
+        }
     }
 }

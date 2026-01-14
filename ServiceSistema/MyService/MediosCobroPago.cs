@@ -8,8 +8,6 @@ using System.Threading.Tasks;
 
 namespace ServiceSistema.MyService
 {
-
-   
     public partial class Service : IService
     {
         public DtoLib.ResultadoLista<DtoLibSistema.MediosCobroPago.Lista.Ficha> 
@@ -32,7 +30,5 @@ namespace ServiceSistema.MyService
         {
             return ServiceProv.MediosCobroPago_EditarFicha(ficha);
         }
-
     }
-
 }

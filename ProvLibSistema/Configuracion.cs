@@ -1,4 +1,5 @@
 ﻿using LibEntitySistema;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
@@ -298,6 +299,55 @@ namespace ProvLibSistema
                             }
 
 
+                            //
+                            // INSERTAR REGISTRO DE CAMBIO
+                            //
+                            var _sqlInsert = @"INSERT INTO s_tasa_log (
+                                                id,
+                                                fecha_registro, 
+                                                hora_registro, 
+                                                tasa_anterior, 
+                                                tasa_nueva, 
+                                                factor_variacion, 
+                                                moneda_codigo, 
+                                                moneda_simbolo, 
+                                                usuario_codigo, 
+                                                usuario_nombre, 
+                                                estacion)
+                                            VALUES (
+                                                NULL, 
+                                                @fecha_registro, 
+                                                @hora_registro, 
+                                                @tasa_anterior, 
+                                                @tasa_nueva, 
+                                                @factor_variacion, 
+                                                @moneda_codigo, 
+                                                @moneda_simbolo, 
+                                                @usuario_codigo, 
+                                                @usuario_nombre, 
+                                                @estacion)";
+                            var parametros = new List<MySqlParameter>();
+                            parametros.Add(new MySqlParameter("@fecha_registro", fechaSistema.Date));
+                            parametros.Add(new MySqlParameter("@hora_registro", fechaSistema.ToShortTimeString()));
+                            parametros.Add(new MySqlParameter("@tasa_anterior", ficha.ValorDivisaAnterior));
+                            parametros.Add(new MySqlParameter("@tasa_nueva", ficha.ValorDivisa));
+                            parametros.Add(new MySqlParameter("@factor_variacion", ficha.FactorVariacion));
+                            parametros.Add(new MySqlParameter("@moneda_codigo", ficha.MonedaCodigo));
+                            parametros.Add(new MySqlParameter("@moneda_simbolo", ficha.MonedaSimbolo));
+                            parametros.Add(new MySqlParameter("@usuario_codigo", ficha.codigoUsuario));
+                            parametros.Add(new MySqlParameter("@usuario_nombre", ficha.nombreUsuario));
+                            parametros.Add(new MySqlParameter("@estacion", ficha.EstacionEquipo));
+                            //
+                            var rg_insert = cnn.Database.ExecuteSqlCommand(_sqlInsert, parametros.ToArray());
+                            if (rg_insert == 0)
+                            {
+                                throw new Exception("PROBLEMA AL INSERTAR REGISTRO DE CONTROL LOG");
+                            }
+                            cnn.SaveChanges();
+
+                            //
+                            //
+                            //
                             foreach (var rg in ficha.productosCostoSinDivisa)
                             {
                                 var entPrd = cnn.productos.Find(rg.autoPrd);
@@ -422,34 +472,6 @@ namespace ProvLibSistema
                                 }
                             }
 
-                            //foreach (var rg in ficha.productosCostoPrecioDivisa)
-                            //{
-                            //    var entPrd = cnn.productos.Find(rg.autoPrd);
-                            //    if (entPrd == null)
-                            //    {
-                            //        rt.Mensaje = "[ ID ] Producto, No Encontrado";
-                            //        rt.Result = DtoLib.Enumerados.EnumResult.isError;
-                            //        return rt;
-                            //    }
-                            //    entPrd.costo_proveedor = rg.costoProveedor;
-                            //    entPrd.costo_proveedor_und = rg.costoProveedorUnd;
-                            //    entPrd.costo_importacion = rg.costoImportacion;
-                            //    entPrd.costo_importacion_und = rg.costoImportacionUnd;
-                            //    entPrd.costo_varios = rg.costoVario;
-                            //    entPrd.costo_varios_und = rg.costoVarioUnd;
-                            //    entPrd.costo = rg.costo;
-                            //    entPrd.costo_und = rg.costoUnd;
-                            //    entPrd.fecha_ult_costo = fechaSistema.Date;
-                            //    entPrd.fecha_cambio = fechaSistema.Date;
-
-                            //    entPrd.precio_1 = rg.precio_1;
-                            //    entPrd.precio_2 = rg.precio_2;
-                            //    entPrd.precio_3 = rg.precio_3;
-                            //    entPrd.precio_4 = rg.precio_4;
-                            //    entPrd.precio_pto = rg.precio_5;
-                            //    cnn.SaveChanges();
-                            //}
-
                             cnn.Configuration.AutoDetectChangesEnabled = false;
                             var lentHist = new List<productos_costos>();
                             foreach (var rg in ficha.productosCostoPrecioDivisa)
@@ -569,35 +591,6 @@ namespace ProvLibSistema
                             rt.Mensaje = Helpers.ENTITY_VerificaError(ex);
                             rt.Result = DtoLib.Enumerados.EnumResult.isError;
                         }
-                        //catch (DbUpdateException ex)
-                        //{
-                        //    var dbUpdateEx = ex as DbUpdateException;
-                        //    var sqlEx = dbUpdateEx.InnerException;
-                        //    if (sqlEx != null)
-                        //    {
-                        //        var exx = (MySql.Data.MySqlClient.MySqlException)sqlEx.InnerException;
-                        //        if (exx != null)
-                        //        {
-                        //            if (exx.Number == 1451)
-                        //            {
-                        //                rt.Mensaje = "REGISTRO CONTIENE DATA RELACIONADA";
-                        //                rt.Result = DtoLib.Enumerados.EnumResult.isError;
-                        //                return rt;
-                        //            }
-                        //            if (exx.Number == 1062)
-                        //            {
-                        //                rt.Mensaje = exx.Message;
-                        //                rt.Result = DtoLib.Enumerados.EnumResult.isError;
-                        //                return rt;
-                        //            }
-                        //            rt.Mensaje = exx.Message;
-                        //            rt.Result = DtoLib.Enumerados.EnumResult.isError;
-                        //            return rt;
-                        //        }
-                        //    }
-                        //    rt.Mensaje = ex.Message;
-                        //    rt.Result = DtoLib.Enumerados.EnumResult.isError;
-                        //}
                         finally
                         {
                             cnn.Configuration.AutoDetectChangesEnabled = false;
@@ -935,7 +928,7 @@ namespace ProvLibSistema
             Configuracion_Pos_Actualizar(DtoLibSistema.Configuracion.Pos.Actualizar.Ficha ficha)
         {
             var rt = new DtoLib.Resultado();
-
+            //
             try
             {
                 using (var cnn = new sistemaEntities(_cnSist.ConnectionString))
@@ -955,7 +948,7 @@ namespace ProvLibSistema
                                 rt.Result = DtoLib.Enumerados.EnumResult.isError;
                                 return rt;
                             }
-                            ent0.usuario = ficha.tasaRecepcionPos;
+                            ent0.usuario = ficha.tasaRecepcionPos.ToString();
                             //
                             var ent1 = cnn.sistema_configuracion.FirstOrDefault(f => f.codigo == "GLOBAL58");
                             if (ent1 == null)
@@ -998,6 +991,73 @@ namespace ProvLibSistema
                             {
                                 throw new Exception("PROBLEMA AL ACTUALIZAR MONEDA LOCAL");
                             }
+                            //
+                            // INSERTAR REGISTRO DE CAMBIO
+                            //
+                            var _sqlInsert = @"INSERT INTO s_tasa_log (
+                                                id,
+                                                fecha_registro, 
+                                                hora_registro, 
+                                                tasa_anterior, 
+                                                tasa_nueva, 
+                                                factor_variacion, 
+                                                moneda_codigo, 
+                                                moneda_simbolo, 
+                                                usuario_codigo, 
+                                                usuario_nombre, 
+                                                estacion,
+                                                estatus_pos,
+                                                tasa_divisa_sistema,
+                                                porct_diferencia_tasasistema_tasapos,
+                                                porct_bono,
+                                                habilitar_bono,
+                                                porct_aumento_prd_no_divisa
+                                            )
+                                            VALUES (
+                                                NULL, 
+                                                @fecha_registro, 
+                                                @hora_registro, 
+                                                @tasa_anterior, 
+                                                @tasa_nueva, 
+                                                @factor_variacion, 
+                                                @moneda_codigo, 
+                                                @moneda_simbolo, 
+                                                @usuario_codigo, 
+                                                @usuario_nombre, 
+                                                @estacion,
+                                                '1',
+                                                @tasa_divisa_sistema,
+                                                @porct_diferencia_tasasistema_tasapos,
+                                                @porct_bono,
+                                                @habilitar_bono,
+                                                @porct_aumento_prd_no_divisa
+                                            )";
+                            var parametros = new List<MySqlParameter>();
+                            parametros.Add(new MySqlParameter("@fecha_registro", fechaSist));
+                            parametros.Add(new MySqlParameter("@hora_registro", horaSist));
+                            parametros.Add(new MySqlParameter("@tasa_anterior", ficha.ValorAnterior));
+                            parametros.Add(new MySqlParameter("@tasa_nueva", ficha.factorCambio));
+                            parametros.Add(new MySqlParameter("@factor_variacion", ficha.FactorVariacion));
+                            parametros.Add(new MySqlParameter("@moneda_codigo", ficha.MonedaCodigo));
+                            parametros.Add(new MySqlParameter("@moneda_simbolo", ficha.MonedaSimbolo));
+                            parametros.Add(new MySqlParameter("@usuario_codigo", ficha.UsuarioCodigo));
+                            parametros.Add(new MySqlParameter("@usuario_nombre", ficha.Usuario));
+                            parametros.Add(new MySqlParameter("@estacion", ficha.Estacion));
+                            //
+                            parametros.Add(new MySqlParameter("@tasa_divisa_sistema", ficha.TasaDivisaSistema));
+                            parametros.Add(new MySqlParameter("@porct_diferencia_tasasistema_tasapos", ficha.PorctDiferenciaTasaSistemaTasaPos));
+                            parametros.Add(new MySqlParameter("@porct_bono", ficha.PorctBono));
+                            parametros.Add(new MySqlParameter("@habilitar_bono", ficha.HabilitarBono));
+                            parametros.Add(new MySqlParameter("@porct_aumento_prd_no_divisa", ficha.PorctAumentoPrdNoDivisa));
+                            //
+                            var rg_insert = cnn.Database.ExecuteSqlCommand(_sqlInsert, parametros.ToArray());
+                            if (rg_insert == 0)
+                            {
+                                throw new Exception("PROBLEMA AL INSERTAR REGISTRO DE CONTROL LOG");
+                            }
+                            cnn.SaveChanges();
+
+
                             //
                             if (ficha.productosAjustar != null) 
                             {
@@ -1144,6 +1204,7 @@ namespace ProvLibSistema
                 rt.Mensaje = e.Message;
                 rt.Result = DtoLib.Enumerados.EnumResult.isError;
             }
+            //
             return rt;
         }
 
@@ -1212,6 +1273,36 @@ namespace ProvLibSistema
                 using (var cnn = new sistemaEntities(_cnSist.ConnectionString))
                 {
                     var _sql = "select usuario from sistema_configuracion where codigo='GLOBAL68'";
+                    var ent1 = cnn.Database.SqlQuery<string>(_sql).FirstOrDefault();
+                    if (ent1 == null)
+                    {
+                        throw new Exception("[ ID ] CONFIGURACION GLOBAL NO ENCONTRADO");
+                    }
+                    if (ent1.ToString().Trim() == "")
+                    {
+                        throw new Exception("[ ID ] NO CONFIGURADO");
+                    }
+                    result.Entidad = ent1;
+                }
+            }
+            catch (Exception e)
+            {
+                result.Mensaje = e.Message;
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+            //
+            return result;
+        }
+        public DtoLib.ResultadoEntidad<string> 
+            Configuracion_MonedaReferencia()
+        {
+            var result = new DtoLib.ResultadoEntidad<string>();
+            //
+            try
+            {
+                using (var cnn = new sistemaEntities(_cnSist.ConnectionString))
+                {
+                    var _sql = "select usuario from sistema_configuracion where codigo='GLOBAL70'";
                     var ent1 = cnn.Database.SqlQuery<string>(_sql).FirstOrDefault();
                     if (ent1 == null)
                     {

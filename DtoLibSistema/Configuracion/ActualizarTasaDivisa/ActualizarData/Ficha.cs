@@ -7,31 +7,33 @@ using System.Threading.Tasks;
 
 namespace DtoLibSistema.Configuracion.ActualizarTasaDivisa.ActualizarData
 {
-    
     public class Ficha
     {
-
         public string autoUsuario { get; set; }
         public string codigoUsuario { get; set; }
         public string nombreUsuario { get; set; }
         public string EstacionEquipo { get; set; }
+        public decimal ValorDivisaAnterior { get; set; }
         public decimal ValorDivisa { get; set; }
         public decimal? ValorDivisaPos { get; set; }
+        public decimal FactorVariacion { get; set; }
+        public string MonedaCodigo { get; set; }
+        public string MonedaSimbolo { get; set; }
         public List<FichaProductoCostoSinDivisa> productosCostoSinDivisa { get; set; }
         public List<FichaProductoCostoPrecioDivisa> productosCostoPrecioDivisa { get; set; }
         public List<FichaProductoPrecioHistorico> productosPrecioHistorico { get; set; }
         public List<FichaHndPrecio> productosHndPrecio{ get; set; }
-
-
         public Ficha()
         {
+            ValorDivisaAnterior = 0m;
             ValorDivisaPos = null;
+            FactorVariacion = 0m;
+            MonedaCodigo = "";
+            MonedaSimbolo = "";
             productosCostoSinDivisa = new List<FichaProductoCostoSinDivisa>();
             productosCostoPrecioDivisa = new List<FichaProductoCostoPrecioDivisa>();
             productosPrecioHistorico = new List<FichaProductoPrecioHistorico>();
             productosHndPrecio = new List<FichaHndPrecio>();
         }
-
     }
-
 }

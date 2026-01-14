@@ -109,5 +109,10 @@ namespace ServiceSistema.MyService
         {
             return ServiceProv.Configuracion_MonedaLocal();
         }
+        public DtoLib.ResultadoEntidad<string> 
+            Configuracion_MonedaReferencia()
+        {
+            return ServiceProv.Configuracion_MonedaReferencia();
+        }
     }
 }

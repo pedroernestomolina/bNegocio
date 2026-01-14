@@ -11,5 +11,7 @@ namespace ILibSistema
     {
         DtoLib.ResultadoEntidad<DtoLibSistema.Moneda.Entidad.Ficha>
             Moneda_GetFichaById(int id);
+        DtoLib.ResultadoLista<DtoLibSistema.Moneda.Entidad.Ficha>
+            Moneda_GetLista(DtoLibSistema.Moneda.Filtro filtro);
     }
 }

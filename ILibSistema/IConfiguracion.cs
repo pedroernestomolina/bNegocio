@@ -53,5 +53,7 @@ namespace ILibSistema
         //
         DtoLib.ResultadoEntidad<string>
             Configuracion_MonedaLocal();
+        DtoLib.ResultadoEntidad<string>
+            Configuracion_MonedaReferencia();
     }
 }
