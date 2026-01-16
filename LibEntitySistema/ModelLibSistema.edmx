@@ -12,7 +12,7 @@
           <Property Name="auto" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="fecha" Type="date" Nullable="false" />
           <Property Name="tipo_documento" Type="varchar" MaxLength="3" Nullable="false" />
-          <Property Name="documento" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="documento" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="fecha_vencimiento" Type="date" Nullable="false" />
           <Property Name="nota" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="importe" Type="decimal" Precision="14" Scale="2" Nullable="false" />
@@ -34,6 +34,11 @@
           <Property Name="anexo" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="estatus_cierre_contable" Type="varchar" MaxLength="1" Nullable="false" />
           <Property Name="importeDivisa" Type="decimal" Precision="14" Scale="2" Nullable="false" />
+          <Property Name="acumulado_divisa" Type="decimal" Precision="14" Scale="2" Nullable="false" />
+          <Property Name="resta_divisa" Type="decimal" Precision="14" Scale="2" Nullable="false" />
+          <Property Name="tasa_divisa" Type="decimal" Precision="14" Scale="2" Nullable="false" />
+          <Property Name="fecha_registro" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="auto_sistema_documento" Type="varchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <EntityType Name="empresa">
           <Key>
@@ -247,6 +252,7 @@ warning 6002: The table/view 'pita.empresa_grupo_ext' does not have a primary ke
           <Property Name="pdf_4" Type="decimal" Precision="16" Scale="2" Nullable="false" />
           <Property Name="pdf_pto" Type="decimal" Precision="16" Scale="2" Nullable="false" />
           <Property Name="volumen" Type="decimal" Precision="14" Scale="6" Nullable="false" />
+          <Property Name="estatus_talla_color_sabor" Type="varchar" MaxLength="1" Nullable="false" />
         </EntityType>
         <EntityType Name="productos_costos">
           <Key>
@@ -372,6 +378,7 @@ warning 6002: The table/view 'pita.productos_hnd_precio' does not have a primary
           <Property Name="precio_id" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="precio" Type="decimal" Precision="14" Scale="2" Nullable="false" />
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="estatus_cambio_masivo" Type="varchar" MaxLength="1" Nullable="false" />
         </EntityType>
         <EntityType Name="proveedores">
           <Key>
@@ -528,6 +535,10 @@ warning 6002: The table/view 'pita.sistema_contadores' does not have a primary k
             <PropertyRef Name="a_usuarios_grupo" />
             <PropertyRef Name="a_productos_movimientos_traslados_dev" />
             <PropertyRef Name="a_cierre_numero" />
+            <PropertyRef Name="a_toma_inventario" />
+            <PropertyRef Name="a_toma_inventario_numero" />
+            <PropertyRef Name="a_toma_inventario_solicitud" />
+            <PropertyRef Name="a_toma_inventario_solicitud_numero" />
           </Key>
           <Property Name="a_clientes_grupo" Type="int" Nullable="false" />
           <Property Name="a_usuarios" Type="int" Nullable="false" />
@@ -610,6 +621,10 @@ warning 6002: The table/view 'pita.sistema_contadores' does not have a primary k
           <Property Name="a_usuarios_grupo" Type="int" Nullable="false" />
           <Property Name="a_productos_movimientos_traslados_dev" Type="int" Nullable="false" />
           <Property Name="a_cierre_numero" Type="int" Nullable="false" />
+          <Property Name="a_toma_inventario" Type="int" Nullable="false" />
+          <Property Name="a_toma_inventario_numero" Type="int" Nullable="false" />
+          <Property Name="a_toma_inventario_solicitud" Type="int" Nullable="false" />
+          <Property Name="a_toma_inventario_solicitud_numero" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="sistema_funciones">
           <Key>
@@ -950,7 +965,11 @@ FROM `productos_hnd_precio` AS `productos_hnd_precio`</DefiningQuery>
 `sistema_contadores`.`a_empresa_grupo`, 
 `sistema_contadores`.`a_usuarios_grupo`, 
 `sistema_contadores`.`a_productos_movimientos_traslados_dev`, 
-`sistema_contadores`.`a_cierre_numero`
+`sistema_contadores`.`a_cierre_numero`, 
+`sistema_contadores`.`a_toma_inventario`, 
+`sistema_contadores`.`a_toma_inventario_numero`, 
+`sistema_contadores`.`a_toma_inventario_solicitud`, 
+`sistema_contadores`.`a_toma_inventario_solicitud_numero`
 FROM `sistema_contadores` AS `sistema_contadores`</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="cxp_ibfk_1" Association="Self.cxp_ibfk_1">
@@ -1032,6 +1051,11 @@ FROM `sistema_contadores` AS `sistema_contadores`</DefiningQuery>
           <Property Name="estatus_cierre_contable" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="importeDivisa" Type="Decimal" Nullable="false" />
           <NavigationProperty Name="proveedores" Relationship="Self.cxp_ibfk_1" FromRole="cxp" ToRole="proveedores" />
+          <Property Name="acumulado_divisa" Type="Decimal" Nullable="false" />
+          <Property Name="resta_divisa" Type="Decimal" Nullable="false" />
+          <Property Name="tasa_divisa" Type="Decimal" Nullable="false" />
+          <Property Name="fecha_registro" Type="DateTime" Nullable="false" />
+          <Property Name="auto_sistema_documento" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="empresa">
           <Key>
@@ -1219,10 +1243,11 @@ FROM `sistema_contadores` AS `sistema_contadores`</DefiningQuery>
           <Property Name="pdf_4" Type="Decimal" Nullable="false" />
           <Property Name="pdf_pto" Type="Decimal" Nullable="false" />
           <NavigationProperty Name="productos_costos" Relationship="Self.productos_costos_ibfk_1" FromRole="productos" ToRole="productos_costos" />
-          <NavigationProperty Name="productos_precios" Relationship="Self.productos_precios_ibfk_1" FromRole="productos" ToRole="productos_precios" />
           <NavigationProperty Name="productos_hnd_precio" Relationship="ModelLibSistema.productos_hnd_precio_ibfk_1" FromRole="productos" ToRole="productos_hnd_precio" />
           <NavigationProperty Name="productos_ext" Relationship="ModelLibSistema.productos_ext_ibfk_1" FromRole="productos" ToRole="productos_ext" />
           <Property Name="volumen" Type="Decimal" Nullable="false" />
+          <Property Name="estatus_talla_color_sabor" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="productos_precios" Relationship="ModelLibSistema.productos_precios_ibfk_1" FromRole="productos" ToRole="productos_precios" />
         </EntityType>
         <EntityType Name="productos_costos">
           <Key>
@@ -1241,21 +1266,6 @@ FROM `sistema_contadores` AS `sistema_contadores`</DefiningQuery>
           <Property Name="documento" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="productos" Relationship="Self.productos_costos_ibfk_1" FromRole="productos_costos" ToRole="productos" />
-        </EntityType>
-        <EntityType Name="productos_precios">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="auto_producto" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="nota" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="fecha" Type="DateTime" Nullable="false" />
-          <Property Name="estacion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="hora" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="usuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="precio_id" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="precio" Type="Decimal" Nullable="false" />
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="productos" Relationship="Self.productos_precios_ibfk_1" FromRole="productos_precios" ToRole="productos" />
         </EntityType>
         <EntityType Name="proveedores">
           <Key>
@@ -1483,6 +1493,10 @@ FROM `sistema_contadores` AS `sistema_contadores`</DefiningQuery>
             <PropertyRef Name="a_usuarios_grupo" />
             <PropertyRef Name="a_productos_movimientos_traslados_dev" />
             <PropertyRef Name="a_cierre_numero" />
+            <PropertyRef Name="a_toma_inventario" />
+            <PropertyRef Name="a_toma_inventario_numero" />
+            <PropertyRef Name="a_toma_inventario_solicitud" />
+            <PropertyRef Name="a_toma_inventario_solicitud_numero" />
           </Key>
           <Property Name="a_clientes_grupo" Type="Int32" Nullable="false" />
           <Property Name="a_usuarios" Type="Int32" Nullable="false" />
@@ -1565,6 +1579,10 @@ FROM `sistema_contadores` AS `sistema_contadores`</DefiningQuery>
           <Property Name="a_usuarios_grupo" Type="Int32" Nullable="false" />
           <Property Name="a_productos_movimientos_traslados_dev" Type="Int32" Nullable="false" />
           <Property Name="a_cierre_numero" Type="Int32" Nullable="false" />
+          <Property Name="a_toma_inventario" Type="Int32" Nullable="false" />
+          <Property Name="a_toma_inventario_numero" Type="Int32" Nullable="false" />
+          <Property Name="a_toma_inventario_solicitud" Type="Int32" Nullable="false" />
+          <Property Name="a_toma_inventario_solicitud_numero" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="cxp_ibfk_1">
           <End Role="proveedores" Type="Self.proveedores" Multiplicity="1" />
@@ -1592,20 +1610,6 @@ FROM `sistema_contadores` AS `sistema_contadores`</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="productos_precios_ibfk_1">
-          <End Role="productos" Type="Self.productos" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="productos_precios" Type="Self.productos_precios" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="productos">
-              <PropertyRef Name="auto" />
-            </Principal>
-            <Dependent Role="productos_precios">
-              <PropertyRef Name="auto_producto" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="sistemaEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="cxp" EntityType="Self.cxp" />
           <EntitySet Name="empresa" EntityType="Self.empresa" />
@@ -1616,7 +1620,6 @@ FROM `sistema_contadores` AS `sistema_contadores`</DefiningQuery>
           <EntitySet Name="empresa_sucursal" EntityType="Self.empresa_sucursal" />
           <EntitySet Name="productos" EntityType="Self.productos" />
           <EntitySet Name="productos_costos" EntityType="Self.productos_costos" />
-          <EntitySet Name="productos_precios" EntityType="Self.productos_precios" />
           <EntitySet Name="proveedores" EntityType="Self.proveedores" />
           <EntitySet Name="reconversion_monetaria" EntityType="Self.reconversion_monetaria" />
           <EntitySet Name="sistema_configuracion" EntityType="Self.sistema_configuracion" />
@@ -1632,10 +1635,6 @@ FROM `sistema_contadores` AS `sistema_contadores`</DefiningQuery>
           <AssociationSet Name="productos_costos_ibfk_1" Association="Self.productos_costos_ibfk_1">
             <End Role="productos" EntitySet="productos" />
             <End Role="productos_costos" EntitySet="productos_costos" />
-          </AssociationSet>
-          <AssociationSet Name="productos_precios_ibfk_1" Association="Self.productos_precios_ibfk_1">
-            <End Role="productos" EntitySet="productos" />
-            <End Role="productos_precios" EntitySet="productos_precios" />
           </AssociationSet>
           <EntitySet Name="empresa_grupo" EntityType="ModelLibSistema.empresa_grupo" />
           <EntitySet Name="empresa_grupo_ext" EntityType="ModelLibSistema.empresa_grupo_ext" />
@@ -1673,6 +1672,11 @@ FROM `sistema_contadores` AS `sistema_contadores`</DefiningQuery>
           <AssociationSet Name="empresa_sucursal_ext_ibfk_1" Association="ModelLibSistema.empresa_sucursal_ext_ibfk_1">
             <End Role="empresa_sucursal" EntitySet="empresa_sucursal" />
             <End Role="empresa_sucursal_ext" EntitySet="empresa_sucursal_ext" />
+          </AssociationSet>
+          <EntitySet Name="productos_precios" EntityType="ModelLibSistema.productos_precios" />
+          <AssociationSet Name="productos_precios_ibfk_1" Association="ModelLibSistema.productos_precios_ibfk_1">
+            <End Role="productos" EntitySet="productos" />
+            <End Role="productos_precios" EntitySet="productos_precios" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="empresa_grupo">
@@ -1901,6 +1905,36 @@ FROM `sistema_contadores` AS `sistema_contadores`</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="productos_precios">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="auto_producto" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="nota" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="fecha" Type="DateTime" Nullable="false" />
+          <Property Name="estacion" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="hora" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="usuario" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="precio_id" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="precio" Type="Decimal" Nullable="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="estatus_cambio_masivo" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="productos" Relationship="ModelLibSistema.productos_precios_ibfk_1" FromRole="productos_precios" ToRole="productos" />
+        </EntityType>
+        <Association Name="productos_precios_ibfk_1">
+          <End Type="ModelLibSistema.productos" Role="productos" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ModelLibSistema.productos_precios" Role="productos_precios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="productos">
+              <PropertyRef Name="auto" />
+            </Principal>
+            <Dependent Role="productos_precios">
+              <PropertyRef Name="auto_producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1910,6 +1944,11 @@ FROM `sistema_contadores` AS `sistema_contadores`</DefiningQuery>
           <EntitySetMapping Name="cxp">
             <EntityTypeMapping TypeName="ModelLibSistema.cxp">
               <MappingFragment StoreEntitySet="cxp">
+                <ScalarProperty Name="auto_sistema_documento" ColumnName="auto_sistema_documento" />
+                <ScalarProperty Name="fecha_registro" ColumnName="fecha_registro" />
+                <ScalarProperty Name="tasa_divisa" ColumnName="tasa_divisa" />
+                <ScalarProperty Name="resta_divisa" ColumnName="resta_divisa" />
+                <ScalarProperty Name="acumulado_divisa" ColumnName="acumulado_divisa" />
                 <ScalarProperty Name="auto" ColumnName="auto" />
                 <ScalarProperty Name="fecha" ColumnName="fecha" />
                 <ScalarProperty Name="tipo_documento" ColumnName="tipo_documento" />
@@ -2031,6 +2070,7 @@ FROM `sistema_contadores` AS `sistema_contadores`</DefiningQuery>
           <EntitySetMapping Name="productos">
             <EntityTypeMapping TypeName="ModelLibSistema.productos">
               <MappingFragment StoreEntitySet="productos">
+                <ScalarProperty Name="estatus_talla_color_sabor" ColumnName="estatus_talla_color_sabor" />
                 <ScalarProperty Name="volumen" ColumnName="volumen" />
                 <ScalarProperty Name="auto" ColumnName="auto" />
                 <ScalarProperty Name="codigo" ColumnName="codigo" />
@@ -2140,21 +2180,6 @@ FROM `sistema_contadores` AS `sistema_contadores`</DefiningQuery>
                 <ScalarProperty Name="divisa" ColumnName="divisa" />
                 <ScalarProperty Name="serie" ColumnName="serie" />
                 <ScalarProperty Name="documento" ColumnName="documento" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="productos_precios">
-            <EntityTypeMapping TypeName="ModelLibSistema.productos_precios">
-              <MappingFragment StoreEntitySet="productos_precios">
-                <ScalarProperty Name="auto_producto" ColumnName="auto_producto" />
-                <ScalarProperty Name="nota" ColumnName="nota" />
-                <ScalarProperty Name="fecha" ColumnName="fecha" />
-                <ScalarProperty Name="estacion" ColumnName="estacion" />
-                <ScalarProperty Name="hora" ColumnName="hora" />
-                <ScalarProperty Name="usuario" ColumnName="usuario" />
-                <ScalarProperty Name="precio_id" ColumnName="precio_id" />
-                <ScalarProperty Name="precio" ColumnName="precio" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2311,6 +2336,10 @@ FROM `sistema_contadores` AS `sistema_contadores`</DefiningQuery>
           <EntitySetMapping Name="sistema_contadores">
             <EntityTypeMapping TypeName="ModelLibSistema.sistema_contadores">
               <MappingFragment StoreEntitySet="sistema_contadores">
+                <ScalarProperty Name="a_toma_inventario_solicitud_numero" ColumnName="a_toma_inventario_solicitud_numero" />
+                <ScalarProperty Name="a_toma_inventario_solicitud" ColumnName="a_toma_inventario_solicitud" />
+                <ScalarProperty Name="a_toma_inventario_numero" ColumnName="a_toma_inventario_numero" />
+                <ScalarProperty Name="a_toma_inventario" ColumnName="a_toma_inventario" />
                 <ScalarProperty Name="a_cierre_numero" ColumnName="a_cierre_numero" />
                 <ScalarProperty Name="a_clientes_grupo" ColumnName="a_clientes_grupo" />
                 <ScalarProperty Name="a_usuarios" ColumnName="a_usuarios" />
@@ -2501,6 +2530,22 @@ FROM `sistema_contadores` AS `sistema_contadores`</DefiningQuery>
                 <ScalarProperty Name="estatus_fact_credito" ColumnName="estatus_fact_credito" />
                 <ScalarProperty Name="es_activo" ColumnName="es_activo" />
                 <ScalarProperty Name="auto_sucursal" ColumnName="auto_sucursal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="productos_precios">
+            <EntityTypeMapping TypeName="ModelLibSistema.productos_precios">
+              <MappingFragment StoreEntitySet="productos_precios">
+                <ScalarProperty Name="estatus_cambio_masivo" ColumnName="estatus_cambio_masivo" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
+                <ScalarProperty Name="precio_id" ColumnName="precio_id" />
+                <ScalarProperty Name="usuario" ColumnName="usuario" />
+                <ScalarProperty Name="hora" ColumnName="hora" />
+                <ScalarProperty Name="estacion" ColumnName="estacion" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="nota" ColumnName="nota" />
+                <ScalarProperty Name="auto_producto" ColumnName="auto_producto" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

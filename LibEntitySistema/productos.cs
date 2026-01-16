@@ -18,8 +18,8 @@ namespace LibEntitySistema
         public productos()
         {
             this.productos_costos = new HashSet<productos_costos>();
-            this.productos_precios = new HashSet<productos_precios>();
             this.productos_hnd_precio = new HashSet<productos_hnd_precio>();
+            this.productos_precios = new HashSet<productos_precios>();
         }
     
         public string auto { get; set; }
@@ -114,13 +114,14 @@ namespace LibEntitySistema
         public decimal pdf_4 { get; set; }
         public decimal pdf_pto { get; set; }
         public decimal volumen { get; set; }
+        public string estatus_talla_color_sabor { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<productos_costos> productos_costos { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<productos_precios> productos_precios { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<productos_hnd_precio> productos_hnd_precio { get; set; }
         public virtual productos_ext productos_ext { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<productos_precios> productos_precios { get; set; }
     }
 }

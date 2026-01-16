@@ -23,6 +23,7 @@ namespace LibEntitySistema
         public string precio_id { get; set; }
         public decimal precio { get; set; }
         public int id { get; set; }
+        public string estatus_cambio_masivo { get; set; }
     
         public virtual productos productos { get; set; }
     }

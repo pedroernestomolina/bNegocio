@@ -508,6 +508,7 @@ namespace ProvLibSistema
                                     nota = rg.nota,
                                     precio = rg.precio,
                                     precio_id = rg.idPrecio,
+                                    estatus_cambio_masivo="1",
                                 };
                                 lentHist_2.Add(entHist);
                             }
@@ -1135,7 +1136,8 @@ namespace ProvLibSistema
                                                     usuario, 
                                                     precio_id, 
                                                     precio, 
-                                                    id
+                                                    id,
+                                                    estatus_cambio_masivo
                                                 ) VALUES (
                                                     @idPrd, 
                                                     @nota, 
@@ -1145,7 +1147,8 @@ namespace ProvLibSistema
                                                     @usuario, 
                                                     @precio_id, 
                                                     @precio, 
-                                                    NULL
+                                                    NULL,
+                                                    '1'
                                                 )";
                                     var ex1 = cnn.Database.ExecuteSqlCommand(sql, p1, p2, p3, p4, p5, p6, p7, p8);
                                     if (ex1 == 0)

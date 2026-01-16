@@ -95,5 +95,9 @@ namespace LibEntitySistema
         public int a_usuarios_grupo { get; set; }
         public int a_productos_movimientos_traslados_dev { get; set; }
         public int a_cierre_numero { get; set; }
+        public int a_toma_inventario { get; set; }
+        public int a_toma_inventario_numero { get; set; }
+        public int a_toma_inventario_solicitud { get; set; }
+        public int a_toma_inventario_solicitud_numero { get; set; }
     }
 }
